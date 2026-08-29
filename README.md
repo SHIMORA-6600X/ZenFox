@@ -46,5 +46,5 @@ _if You like MY project please leave a Star_ ⭐
 Giving Some Ideas
 
 ### 🧾 _LICENSE_
-_This project is under_ [MIT](https://github.com/SHIMORA-6600X/NitroFox/blob/main/LICENSE)
+_This project is under_ [MIT](https://github.com/SHIMORA-6600X/NitroFox/blob/main/LICENSE)_License_
 
