@@ -45,6 +45,6 @@ _if You like MY project please leave a Star_ ⭐
 [iAHMED](https://github.com/A7md70242602GH)
 Giving Some Ideas
 
-### _LICENSE_
+### 🧾 _LICENSE_
 [MIT](https://github.com/SHIMORA-6600X/NitroFox/blob/main/LICENSE)
 
