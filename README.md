@@ -1,4 +1,4 @@
-## NitroFox
+### NitroFox
 
 <p align="center">
   <a href="https://discord.gg/y7NqB8VUAG"><img src="https://img.shields.io/badge/Discord-Join-5865F2?logo=discord&logoColor=white" alt="Discord"></a>
@@ -9,7 +9,7 @@ it's a Custom user.js that's make your browser more faster give feel like a chro
 
 [about:config](https://support.mozilla.org/en-US/kb/about-config-editor-firefox) tweaks for [MozillaFirefox](https://www.mozilla.org/en-US/firefox/new/)
 
-### 📖 _Required reading_
+#### 📖 _Required reading_
 
    1. Create a backup profile.
    
@@ -31,20 +31,20 @@ it's a Custom user.js that's make your browser more faster give feel like a chro
 |  *Download it*      |  *NitroFox.zip* ✔️| *This is the real Version in Releases*  |
 
 
-### ✨ _Features_
+#### ✨ _Features_
 
-• _Performace_: get firefox more speed like chrome
+• _Performace_: _give firefox more speed like chrome_
  
-• _Smooth_: make firefox smooth scrolling
+• _Smooth_: _make firefox smooth scrolling_
  
-### 💎 _SUPPORT_
+#### 💎 _SUPPORT_
 
 _if You like MY project please leave a Star_ ⭐ 
 
-### 🌹 _SPECIAL THANKS FOR_ 
+#### 🌹 _SPECIAL THANKS FOR_ 
 [iAHMED](https://github.com/A7md70242602GH)
 Giving Some Ideas
 
-### 🧾 _LICENSE_
+#### 🧾 _LICENSE_
 _This project is under_ [MIT](https://github.com/SHIMORA-6600X/NitroFox/blob/main/LICENSE)_License_
 
