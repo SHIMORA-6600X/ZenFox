@@ -2,11 +2,11 @@
 /****************************************************************************************
 INFORMATION                                   *
  ***************************************************************************************/
-// NitroFox                                                                             
+// ZenFox                                                                            
 // SHIMORA                                                                     
 // priority: Fastest browsing                                                          
 // version: 152                                                                         
-// url: https://github.com/SHIMORA-6600X/NitroFox 
+// url: https://github.com/SHIMORA-6600X/ZenFox 
 // License : MIT
 /****************************************************************************
  * SECTION: GENERAL                                                        *
