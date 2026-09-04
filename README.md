@@ -33,7 +33,7 @@ it's a Custom user.js that's make your browser more faster give feel like a chro
 
 #### ✨ _Features_
 
-• ⚡️ _Faster Page Loads – Tweaks network and rendering settings for instant site access_
+•  ⚡️ _Faster Page Loads – Tweaks network and rendering settings for instant site access_
 
 • 🛠 _Optimized Cache Performance – Smarter storage strategies to reduce load times on repeat visits_
 
