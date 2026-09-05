@@ -1,8 +1,8 @@
 ### ZenFox
 
 <p align="center">
-  <a href="https://discord.gg/y7NqB8VUAG"><img src="https://img.shields.io/badge/Discord-Join-5865F2?logo=discord&logoColor=white" alt="Discord"></a>
-  <a href="https://t.me/+ZdUQRojBn0xjZTQ0"><img src="https://img.shields.io/badge/Telegram-Join-26A5E4?logo=telegram&logoColor=white" alt="Join Telegram"></a>
+  <a href="https://discord.gg/y7NqB8VUAG"><img src="https://img.shields.io/badge/Discord-Join-5865F2?logo=discord&logoColor=blue" alt="Discord"></a>
+  <a href="https://t.me/+JYvGi9C53lMzNWNk"><img src="https://img.shields.io/badge/Telegram-Join-26A5E4?logo=telegram&logoColor=sky" alt="Join Telegram"></a>
 </p>
 
 it's a Custom user.js that's make your browser more faster give feel like a chrome
