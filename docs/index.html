@@ -29,7 +29,19 @@
         
         /* Header */
         header { text-align: center; padding: 40px 0; border-bottom: 1px solid var(--surface); }
-        header img { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 15px; }
+        
+        /* تم تعديل حجم وشكل الشعار ليبدو احترافياً ومتناسقاً */
+        header img { 
+            width: 96px; 
+            height: 96px; 
+            object-fit: contain; 
+            border-radius: 20px;
+            background-color: var(--surface);
+            padding: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
         h1 { font-size: 2.5rem; color: var(--mauve); margin-bottom: 10px; }
         .tagline { color: var(--subtext); font-size: 1.1rem; max-width: 600px; margin: 0 auto 20px; }
         
@@ -112,7 +124,8 @@
 
 <div class="container">
     <header>
-        <img src="https://assets.turbologo.com/blog/en/2021/07/22032919/mozilla-firefox-logo-2019.png" alt="Firefox Logo">
+        <!-- تم استبدال الرابط بشعار فايرفوكس الرسمي عالي الجودة (SVG) -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg" alt="Firefox Logo">
         <h1>ZenFox</h1>
         <p class="tagline">A meticulously optimized Firefox configuration preset designed to supercharge page loading speeds, enhance cache efficiency, and minimize resource usage.</p>
         <div>
@@ -125,7 +138,7 @@
         <div class="stat-item"><div class="stat-number">5</div><div class="stat-label">Core Features</div></div>
         <div class="stat-item"><div class="stat-number">53+</div><div class="stat-label">Commits</div></div>
         <div class="stat-item"><div class="stat-number">2</div><div class="stat-label">Contributors</div></div>
-        <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">Free & Open Source</div></div></div>
+        <div class="stat-item"><div class="stat-number">100%</div><div class="stat-label">Free & Open Source</div></div>
     </div>
 
     <h2 style="text-align: center; color: var(--mauve); margin-top: 40px;">✨ Features</h2>
