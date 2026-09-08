@@ -49,7 +49,7 @@ _if You like MY project please leave a Star_ ⭐
 
 #### 🌹 _SPECIAL THANKS FOR_ 
 [iAHMED](https://github.com/A7md70242602GH)
-Giving Some Ideas
+_Giving Some Ideas & Testing The Project_
 
 #### 🧾 _LICENSE_
 _This project is under_ [MIT](https://github.com/SHIMORA-6600X/NitroFox/blob/main/LICENSE) _License_
