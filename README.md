@@ -51,6 +51,9 @@ _if You like MY project please leave a Star_ ⭐
 [iAHMED](https://github.com/A7md70242602GH)
 _Giving Some Ideas & Testing The Project_
 
+[Kenjaku](https://github.com/kenjaku-dev)
+_For Making a Website For My Projects_
+
 #### 🧾 _LICENSE_
 _This project is under_ [MIT](https://github.com/SHIMORA-6600X/NitroFox/blob/main/LICENSE) _License_
 
