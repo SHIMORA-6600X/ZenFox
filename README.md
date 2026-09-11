@@ -52,7 +52,7 @@ _if You like MY project please leave a Star_ ⭐
 _Giving Some Ideas & Testing The Project_
 
 [Kenjaku](https://github.com/kenjaku-dev)
-_For Making a Website For My Projects_
+_For Helping Me To Making a Website For My Projects_
 
 #### 🧾 _LICENSE_
 _This project is under_ [MIT](https://github.com/SHIMORA-6600X/NitroFox/blob/main/LICENSE) _License_
