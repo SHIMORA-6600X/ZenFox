@@ -1,694 +1,758 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SHIMORA — SHIMORA-6600X | Creative Developer &amp; Open Source</title>
-<meta name="description" content="SHIMORA (@SHIMORA-6600X) — clean, efficient code, performance optimization, Linux, open source, cybersecurity and digital privacy.">
-<meta name="theme-color" content="#080b10">
-<link rel="icon" href="https://github.com/SHIMORA-6600X.png?size=64">
-<meta property="og:title" content="SHIMORA — SHIMORA-6600X">
-<meta property="og:description" content="Review The Software and strict testing and analysing the code.">
-<meta property="og:image" content="https://github.com/SHIMORA-6600X.png?size=400">
-
-<style>
-/* ============ RESET & TOKENS ============ */
-*,*::before,*::after{box-sizing:border-box}
-:root{
-  --bg:#080b10;
-  --bg-soft:#0d1117;
-  --card:#0f141c;
-  --line:#1e2632;
-  --txt:#e6edf3;
-  --muted:#8b96a5;
-  --accent:#58a6ff;
-  --accent2:#a371f7;
-  --green:#3fb950;
-  --radius:16px;
-  --max:1120px;
-  --font:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,"Noto Sans Arabic",sans-serif;
-  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
-}
-html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--bg);color:var(--txt);
-  font-family:var(--font);font-size:16px;line-height:1.65;
-  -webkit-font-smoothing:antialiased;overflow-x:hidden;
-}
-img{max-width:100%;display:block}
-a{color:inherit}
-::selection{background:rgba(88,166,255,.3)}
-
-.wrap{width:min(100% - 40px,var(--max));margin-inline:auto}
-.muted{color:var(--muted)}
-
-/* ============ NAV ============ */
-.nav{
-  position:fixed;inset:0 0 auto 0;z-index:60;
-  background:rgba(8,11,16,.55);
-  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-bottom:1px solid transparent;transition:.3s ease;
-}
-.nav.scrolled{background:rgba(8,11,16,.9);border-bottom-color:var(--line)}
-.nav-inner{display:flex;align-items:center;gap:24px;height:66px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.4px;text-decoration:none;font-size:16px}
-.brand-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 0 14px rgba(88,166,255,.85);flex:none}
-.brand-x{color:var(--muted);font-weight:600}
-.links{display:flex;gap:24px;margin-inline-start:auto}
-.links a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:500;transition:.2s;position:relative}
-.links a::after{content:"";position:absolute;left:0;right:100%;bottom:-6px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:right .3s ease}
-.links a:hover{color:var(--txt)}
-.links a:hover::after{right:0}
-
-/* ============ BUTTONS ============ */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  padding:12px 22px;border-radius:999px;font-size:14.5px;font-weight:600;
-  text-decoration:none;border:1px solid transparent;cursor:pointer;
-  transition:transform .25s ease,border-color .25s ease,color .25s ease,box-shadow .25s ease;
-  white-space:nowrap;
-}
-.btn-primary{
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#06090e;box-shadow:0 14px 34px -16px rgba(88,166,255,.9);
-}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 20px 40px -18px rgba(163,113,247,.95)}
-.btn-ghost{border-color:var(--line);color:var(--txt);background:rgba(255,255,255,.02)}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
-.nav-cta{padding:9px 18px;font-size:13.5px}
-
-/* ============ HERO ============ */
-.hero{position:relative;padding:158px 0 96px;text-align:center;overflow:hidden}
-.hero::before{
-  content:"";position:absolute;inset:0;
-  background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
-  background-size:56px 56px;
-  -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 20%,#000,transparent 75%);
-  mask-image:radial-gradient(ellipse 80% 60% at 50% 20%,#000,transparent 75%);
-  pointer-events:none;
-}
-.glow{position:absolute;border-radius:50%;filter:blur(95px);opacity:.34;pointer-events:none;z-index:0}
-.glow-1{width:520px;height:520px;background:#1f6feb;top:-180px;left:-140px;animation:float 15s ease-in-out infinite}
-.glow-2{width:460px;height:460px;background:#8957e5;top:-90px;right:-150px;animation:float 19s ease-in-out infinite reverse}
-@keyframes float{50%{transform:translate3d(34px,44px,0) scale(1.1)}}
-.hero-inner{position:relative;z-index:1}
-
-.avatar{
-  position:relative;width:132px;height:132px;margin:0 auto 26px;
-  border-radius:50%;padding:3px;display:grid;place-items:center;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  box-shadow:0 0 70px -12px rgba(88,166,255,.75);
-}
-.avatar-fallback{
-  position:absolute;inset:3px;border-radius:50%;display:grid;place-items:center;
-  background:#0d1117;font-size:48px;line-height:1;
-}
-.avatar img{
-  position:relative;z-index:1;width:100%;height:100%;border-radius:50%;
-  object-fit:cover;background:#0d1117;
-}
-.eyebrow{
-  display:inline-flex;align-items:center;gap:8px;margin:0 0 20px;
-  padding:6px 15px;border-radius:999px;border:1px solid var(--line);
-  background:rgba(255,255,255,.03);color:var(--muted);
-  font-size:13px;letter-spacing:.6px;text-transform:lowercase;
-}
-.hero h1{
-  margin:0;font-size:clamp(44px,9vw,80px);line-height:.98;
-  letter-spacing:-2px;font-weight:800;
-  background:linear-gradient(180deg,#ffffff 20%,#93a7bd);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.handle{margin:12px 0 0;font-family:var(--mono);font-size:15px;color:var(--accent);letter-spacing:.5px}
-.tagline{max-width:640px;margin:20px auto 0;color:var(--muted);font-size:clamp(15px,2.1vw,18px)}
-.hero-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:36px}
-
-.stats{
-  list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
-  max-width:780px;margin:56px auto 0;padding:0;
-}
-.stats li{
-  padding:20px 12px;border:1px solid var(--line);border-radius:14px;
-  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.008));
-  transition:.3s ease;
-}
-.stats li:hover{border-color:rgba(88,166,255,.45);transform:translateY(-3px)}
-.stats b{
-  display:block;font-size:27px;line-height:1.2;letter-spacing:-.6px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.stats span{font-size:12.5px;color:var(--muted)}
-
-/* ============ SECTIONS ============ */
-.sec{padding:92px 0;position:relative;scroll-margin-top:88px}
-.sec-head{max-width:660px;margin-bottom:46px}
-.sec-tag{
-  margin:0 0 12px;font-size:12.5px;font-weight:700;letter-spacing:2.6px;
-  text-transform:uppercase;color:var(--accent);
-}
-.sec-title{margin:0 0 12px;font-size:clamp(26px,4vw,38px);letter-spacing:-.9px;line-height:1.15}
-.sec-sub{margin:0;color:var(--muted);font-size:15.5px}
-
-/* ============ ABOUT ============ */
-.about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:start}
-.list{display:grid;gap:12px;padding:0;margin:0;list-style:none}
-.list li{
-  display:flex;gap:13px;align-items:flex-start;
-  padding:15px 18px;border:1px solid var(--line);border-radius:13px;
-  background:var(--card);color:#c9d4e0;font-size:15px;
-  transition:transform .28s ease,border-color .28s ease;
-}
-.list li:hover{transform:translateX(5px);border-color:rgba(88,166,255,.45)}
-.list .ico{font-size:17px;line-height:1.45;flex:none}
-
-.fact-card{
-  padding:26px;border:1px solid var(--line);border-radius:var(--radius);
-  background:linear-gradient(180deg,var(--card),rgba(15,20,28,.35));
-}
-.fact-card h3{margin:0 0 18px;font-size:17px;letter-spacing:-.2px}
-.fact-row{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px dashed var(--line);font-size:14px}
-.fact-row:last-of-type{border-bottom:0}
-.fact-row span{color:var(--muted)}
-.fact-row b{font-weight:600}
-.fact-card .btn{width:100%;margin-top:18px}
-
-/* ============ VALUES ============ */
-.grid-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(228px,1fr));gap:18px}
-.value-card{
-  position:relative;padding:26px 24px;border:1px solid var(--line);
-  border-radius:var(--radius);background:var(--card);overflow:hidden;
-  transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
-}
-.value-card::before{
-  content:"";position:absolute;top:-60px;right:-60px;width:150px;height:150px;
-  border-radius:50%;background:radial-gradient(circle,rgba(88,166,255,.22),transparent 70%);
-  opacity:0;transition:.35s ease;
-}
-.value-card:hover{transform:translateY(-5px);border-color:rgba(88,166,255,.42);box-shadow:0 26px 50px -34px rgba(88,166,255,.85)}
-.value-card:hover::before{opacity:1}
-.value-card .vc-ico{font-size:26px;line-height:1;margin-bottom:14px;display:block}
-.value-card h3{margin:0 0 6px;font-size:16.5px;letter-spacing:-.2px}
-.value-card p{margin:0;font-size:14px;color:var(--muted);line-height:1.6}
-
-/* ============ PROJECTS / REPOS ============ */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
-.proj{
-  display:flex;flex-direction:column;gap:14px;padding:26px;
-  border:1px solid var(--line);border-radius:var(--radius);background:var(--card);
-  transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
-}
-.proj:hover{transform:translateY(-6px);border-color:rgba(88,166,255,.5);box-shadow:0 30px 60px -40px rgba(88,166,255,.95)}
-.proj-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.proj h3{margin:0;font-size:20px;letter-spacing:-.4px}
-.proj h3 a{text-decoration:none}
-.proj h3 a:hover{color:var(--accent)}
-.stars{display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);white-space:nowrap}
-.proj p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.65}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
-.tag{
-  display:inline-flex;align-items:center;font-size:12px;padding:4px 12px;
-  border-radius:999px;border:1px solid var(--line);color:#a9b6c6;
-  background:rgba(255,255,255,.02);
-}
-.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:7px;flex:none}
-.dot-js{background:#f1e05a}
-.dot-html{background:#e34c26}
-.dot-none{background:#6e7681}
-.badge{
-  display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.8px;
-  text-transform:uppercase;color:var(--accent2);
-  border:1px solid rgba(163,113,247,.35);background:rgba(163,113,247,.1);
-  padding:3px 10px;border-radius:999px;
-}
-
-/* ============ ACTIVITY ============ */
-.activity{display:grid;grid-template-columns:.95fr 1.05fr;gap:30px;align-items:center}
-.panel{
-  padding:28px;border:1px solid var(--line);border-radius:var(--radius);
-  background:linear-gradient(180deg,var(--card),rgba(15,20,28,.4));
-}
-.big-num{
-  font-size:56px;line-height:1;letter-spacing:-2px;font-weight:800;margin:0 0 6px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.heat{display:grid;grid-template-columns:repeat(26,1fr);gap:4px;margin-top:22px}
-.heat i{aspect-ratio:1;border-radius:3px;background:rgba(255,255,255,.055);display:block}
-.heat i.l1{background:rgba(88,166,255,.28)}
-.heat i.l2{background:rgba(88,166,255,.5)}
-.heat i.l3{background:rgba(88,166,255,.75)}
-.heat i.l4{background:linear-gradient(135deg,var(--accent),var(--accent2))}
-.heat-legend{display:flex;align-items:center;gap:7px;margin-top:14px;font-size:12px;color:var(--muted)}
-.heat-legend i{width:11px;height:11px;border-radius:3px;display:block}
-.timeline{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-.timeline li{
-  display:flex;gap:14px;align-items:flex-start;padding:15px 18px;
-  border:1px solid var(--line);border-radius:13px;background:var(--card);
-  transition:border-color .25s ease,transform .25s ease;
-}
-.timeline li:hover{border-color:rgba(88,166,255,.42);transform:translateX(5px)}
-.timeline .t-dot{
-  width:9px;height:9px;border-radius:50%;margin-top:9px;flex:none;
-  background:var(--green);box-shadow:0 0 12px rgba(63,185,80,.9);
-}
-.timeline b{font-weight:600;display:block;font-size:14.5px}
-.timeline small{color:var(--muted);font-size:12.5px}
-
-/* ============ CTA ============ */
-.cta{
-  position:relative;overflow:hidden;text-align:center;
-  padding:64px 30px;border:1px solid var(--line);border-radius:24px;
-  background:
-    radial-gradient(600px 260px at 50% 0%,rgba(88,166,255,.16),transparent 70%),
-    radial-gradient(500px 240px at 80% 120%,rgba(163,113,247,.16),transparent 70%),
-    var(--card);
-}
-.cta h2{margin:0 0 12px;font-size:clamp(24px,3.6vw,34px);letter-spacing:-.8px}
-.cta p{margin:0 auto 30px;max-width:520px;color:var(--muted)}
-.cta-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
-
-/* ============ FOOTER ============ */
-.footer{margin-top:96px;border-top:1px solid var(--line);background:var(--bg-soft)}
-.footer-inner{
-  display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;
-  align-items:flex-start;padding:46px 0 26px;
-}
-.footer p{margin:8px 0 0;font-size:14px;max-width:380px;color:var(--muted)}
-.foot-links{display:flex;flex-wrap:wrap;gap:22px}
-.foot-links a{color:var(--muted);text-decoration:none;font-size:14px;transition:.2s}
-.foot-links a:hover{color:var(--accent)}
-.copy{
-  border-top:1px solid var(--line);padding:20px 0;margin:0;
-  font-size:13px;color:var(--muted);text-align:center;
-}
-.copy .wrap{padding:0}
-
-/* ============ REVEAL ANIMATION ============ */
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
-.reveal.in{opacity:1;transform:none}
-
-/* ============ RESPONSIVE ============ */
-@media (max-width:960px){
-  .about-grid,.activity{grid-template-columns:1fr}
-  .links{display:none}
-}
-@media (max-width:620px){
-  .hero{padding:130px 0 70px}
-  .sec{padding:70px 0}
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .avatar{width:112px;height:112px}
-  .heat{grid-template-columns:repeat(18,1fr)}
-  .cta{padding:48px 20px;border-radius:20px}
-  .brand{font-size:14.5px}
-}
-@media (prefers-reduced-motion:reduce){
-  *{animation:none!important;transition-duration:.01ms!important}
-  html{scroll-behavior:auto}
-  .reveal{opacity:1;transform:none}
-}
-</style>
-</head>
-<body>
-
-<!-- ================= NAV ================= -->
-<header class="nav" id="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" href="#top">
-      <span class="brand-dot" aria-hidden="true"></span>
-      <span>SHIMORA<span class="brand-x">-6600X</span></span>
-    </a>
-    <nav class="links" aria-label="Main navigation">
-      <a href="#about">About</a>
-      <a href="#values">Values</a>
-      <a href="#projects">Projects</a>
-      <a href="#repos">Repos</a>
-      <a href="#activity">Activity</a>
-    </nav>
-    <a class="btn btn-ghost nav-cta" href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">GitHub ↗</a>
-  </div>
-</header>
-
-<!-- ================= HERO ================= -->
-<section class="hero" id="top">
-  <div class="glow glow-1" aria-hidden="true"></div>
-  <div class="glow glow-2" aria-hidden="true"></div>
-
-  <div class="wrap hero-inner">
-    <div class="avatar">
-      <span class="avatar-fallback" aria-hidden="true">🖌️</span>
-      <img src="https://github.com/SHIMORA-6600X.png?size=240"
-           alt="SHIMORA profile avatar" width="240" height="240" loading="eager"
-           onerror="this.style.display='none'">
-    </div>
-
-    <p class="eyebrow">🖌️ creativity</p>
-    <h1>SHIMORA</h1>
-    <p class="handle">@SHIMORA-6600X</p>
-    <p class="tagline">
-      Review The Software and strict testing and analysing the code —
-      building fast, stable and thoughtfully engineered open-source tools.
-    </p>
-
-    <div class="hero-actions">
-      <a class="btn btn-primary" href="https://github.com/SHIMORA-6600X?tab=repositories" target="_blank" rel="noopener">
-        Explore Repositories
-      </a>
-      <a class="btn btn-ghost" href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">
-        Follow on GitHub
-      </a>
-    </div>
-
-    <ul class="stats reveal">
-      <li><b>04</b><span>Contributors</span></li>
-      <li><b>60+</b><span>Commit</span></li>
-      <li><b>02</b><span>Featured projects</span></li>
-      <li><b>100%</b><span>Open source</span></li>
-    </ul>
-  </div>
-</section>
-
-<!-- ================= ABOUT ================= -->
-<section class="sec" id="about">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="sec-tag">About me</p>
-      <h2 class="sec-title">Clean code, real performance, steady progress.</h2>
-      <p class="sec-sub">A few principles that shape everything I build and ship.</p>
-    </div>
-
-    <div class="about-grid">
-      <ul class="list reveal">
-        <li><span class="ico">🛠</span><span>Making projects that are both functional and powerful</span></li>
-        <li><span class="ico">⚙️</span><span>Optimizing performance with clean, efficient code</span></li>
-        <li><span class="ico">💪</span><span>Fast, stable, and thoughtfully built</span></li>
-        <li><span class="ico">❤️</span><span>Creating with care</span></li>
-        <li><span class="ico">💡</span><span>Focused on clean work and steady progress</span></li>
-        <li><span class="ico">⏳</span><span>From time to time I create projects and make them open source</span></li>
-      </ul>
-
-      <aside class="fact-card reveal">
-        <h3>Quick facts</h3>
-        <div class="fact-row"><span>Handle</span><b>@SHIMORA-6600X</b></div>
-        <div class="fact-row"><span>Focus</span><b>Performance &amp; Privacy</b></div>
-        <div class="fact-row"><span>Main stack</span><b>Conifg Settings user.js</b></div>
-        <div class="fact-row"><span>System</span><b>Windows </b></div>
-        <div class="fact-row"><span>Status</span><b style="color:#3fb950">Online</b></div>
-        <a class="btn btn-ghost" href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">View full profile ↗</a>
-      </aside>
-    </div>
-  </div>
-</section>
-
-<!-- ================= VALUES ================= -->
-<section class="sec" id="values">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="sec-tag">What I care about</p>
-      <h2 class="sec-title">Things worth building for.</h2>
-      <p class="sec-sub">The ideas behind the code — from the kernel to the browser.</p>
-    </div>
-
-    <div class="grid-auto">
-      <article class="value-card reveal">
-        <span class="vc-ico" aria-hidden="true">🐧</span>
-        <h3>Linux Lover</h3>
-        <p>Freedom, control and performance — the system that gets out of your way.</p>
-      </article>
-      <article class="value-card reveal">
-        <span class="vc-ico" aria-hidden="true">⚙️</span>
-        <h3>Open Source</h3>
-        <p>Code that anyone can read, audit, fork and improve. Transparency by default.</p>
-      </article>
-      <article class="value-card reveal">
-        <span class="vc-ico" aria-hidden="true">🖥️</span>
-        <h3>Computer Engineering</h3>
-        <p>Understanding what happens under the hood, from hardware up to the app layer.</p>
-      </article>
-      <article class="value-card reveal">
-        <span class="vc-ico" aria-hidden="true">🛡️</span>
-        <h3>CyberSecurity</h3>
-        <p>Strict testing and deep analysis of code before trusting it in production.</p>
-      </article>
-      <article class="value-card reveal">
-        <span class="vc-ico" aria-hidden="true">🔓</span>
-        <h3>Digital Privacy</h3>
-        <p>Privacy is a right, not a feature. It should be the default, not an option.</p>
-      </article>
-      <article class="value-card reveal">
-        <span class="vc-ico" aria-hidden="true">🎥</span>
-        <h3>Content Creator</h3>
-        <p>Sharing knowledge and the process behind every project that gets built.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FEATURED PROJECTS ================= -->
-<section class="sec" id="projects">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="sec-tag">✨ Featured projects</p>
-      <h2 class="sec-title">Built for a faster, safer browser.</h2>
-      <p class="sec-sub">Configuration presets tuned for real-world performance and privacy.</p>
-    </div>
-
-    <div class="cards">
-      <article class="proj reveal">
-        <div class="proj-top">
-          <h3><a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener">ZenFox</a></h3>
-          <span class="badge">Performance</span>
-        </div>
-        <p>
-          ZenFox is a Firefox configuration preset designed to optimize performance,
-          improve caching, and reduce resource usage for a smoother browsing experience.
-        </p>
-        <div class="tags">
-          <span class="tag"><i class="dot dot-js"></i>JavaScript</span>
-          <span class="tag">Config Settings</span>
-          <span class="tag">Performance &amp; Smooth</span>
-          <span class="tag">⭐ 8</span>
-          <span class="tag">🍴 1</span>
-        </div>
-      </article>
-
-      <article class="proj reveal">
-        <div class="proj-top">
-          <h3><a href="https://github.com/SHIMORA-6600X?tab=repositories" target="_blank" rel="noopener">AdvancedFox</a></h3>
-          <span class="badge">Privacy</span>
-        </div>
-        <p>
-          An advanced Firefox configuration preset focused on privacy, security and
-          performance — hardened defaults without sacrificing speed.
-        </p>
-        <div class="tags">
-          <span class="tag">Config Settings</span>
-          <span class="tag">Privacy</span>
-          <span class="tag">Security</span>
-          <span class="tag">Performance</span>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ================= REPOSITORIES ================= -->
-<section class="sec" id="repos">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="sec-tag">Popular repositories</p>
-      <h2 class="sec-title">Everything is public.</h2>
-      <p class="sec-sub">Browse, fork, test — and report anything that breaks.</p>
-    </div>
-
-    <div class="cards">
-      <article class="proj reveal">
-        <div class="proj-top">
-          <h3><a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener">ZenFox</a></h3>
-          <span class="stars">⭐ 8 · 🍴 1</span>
-        </div>
-        <p>Firefox configuration preset for performance, caching and lower resource usage.</p>
-        <div class="tags">
-          <span class="tag"><i class="dot dot-js"></i>JavaScript</span>
-          <span class="tag">Public</span>
-        </div>
-      </article>
-
-      <article class="proj reveal">
-        <div class="proj-top">
-          <h3><a href="https://github.com/SHIMORA-6600X/SHIMORA-6600X" target="_blank" rel="noopener">SHIMORA-6600X</a></h3>
-          <span class="stars">Profile</span>
-        </div>
-        <p><em>*ABOUT ME*</em> — the profile README: who I am and what I care about.</p>
-        <div class="tags">
-          <span class="tag"><i class="dot dot-none"></i>Markdown</span>
-          <span class="tag">Public</span>
-        </div>
-      </article>
-
-      <article class="proj reveal">
-        <div class="proj-top">
-          <h3><a href="https://github.com/SHIMORA-6600X/Desktop-OSS" target="_blank" rel="noopener">Desktop-OSS</a></h3>
-          <span class="stars">New</span>
-        </div>
-        <p>Free and open-source alternatives for desktop.</p>
-        <div class="tags">
-          <span class="tag"><i class="dot dot-none"></i>Open Source</span>
-          <span class="tag">Public</span>
-        </div>
-      </article>
-
-      <article class="proj reveal">
-        <div class="proj-top">
-          <h3><a href="https://github.com/SHIMORA-6600X/website-" target="_blank" rel="noopener">website-</a></h3>
-          <span class="stars">New</span>
-        </div>
-        <p>Web project built with plain HTML.</p>
-        <div class="tags">
-          <span class="tag"><i class="dot dot-html"></i>HTML</span>
-          <span class="tag">Public</span>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ================= ACTIVITY ================= -->
-<section class="sec" id="activity">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <p class="sec-tag">Contribution activity</p>
-      <h2 class="sec-title">115 contributions in the last year.</h2>
-      <p class="sec-sub">Steady commits, new repositories, and continuous polishing.</p>
-    </div>
-
-    <div class="activity">
-      <div class="panel reveal">
-        <p class="big-num">115</p>
-        <p class="muted" style="margin:0">contributions in the last year</p>
-        <div class="heat" id="heat" aria-hidden="true"></div>
-        <div class="heat-legend" aria-hidden="true">
-          <span>Less</span>
-          <i style="background:rgba(255,255,255,.055)"></i>
-          <i style="background:rgba(88,166,255,.28)"></i>
-          <i style="background:rgba(88,166,255,.5)"></i>
-          <i style="background:rgba(88,166,255,.75)"></i>
-          <i style="background:linear-gradient(135deg,#58a6ff,#a371f7)"></i>
-          <span>More</span>
-        </div>
-      </div>
-
-      <ul class="timeline reveal">
-        <li>
-          <span class="t-dot" aria-hidden="true"></span>
-          <span>
-            <b>Created repository — SHIMORA-6600X/website-</b>
-            <small>HTML · September 4</small>
-          </span>
-        </li>
-        <li>
-          <span class="t-dot" aria-hidden="true"></span>
-          <span>
-            <b>Created repository — SHIMORA-6600X/Desktop-OSS</b>
-            <small>Free and open-source alternatives for desktop · September 1</small>
-          </span>
-        </li>
-        <li>
-          <span class="t-dot" aria-hidden="true"></span>
-          <span>
-            <b>ZenFox — performance &amp; caching preset</b>
-            <small>JavaScript · ⭐ 8 · 🍴 1</small>
-          </span>
-        </li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ================= CTA ================= -->
-<section class="sec" style="padding-top:0">
-  <div class="wrap">
-    <div class="cta reveal">
-      <h2>Let's build something fast, stable and open.</h2>
-      <p>Check the code, test it strictly, and open an issue if something can be better.</p>
-      <div class="cta-actions">
-        <a class="btn btn-primary" href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">Follow @SHIMORA-6600X</a>
-        <a class="btn btn-ghost" href="https://github.com/SHIMORA-6600X?tab=repositories" target="_blank" rel="noopener">All repositories ↗</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <div>
-      <a class="brand" href="#top">
-        <span class="brand-dot" aria-hidden="true"></span>
-        <span>SHIMORA<span class="brand-x">-6600X</span></span>
-      </a>
-      <p>Review The Software and strict testing and analysing the code.</p>
-    </div>
-    <nav class="foot-links" aria-label="Footer navigation">
-      <a href="#about">About</a>
-      <a href="#values">Values</a>
-      <a href="#projects">Projects</a>
-      <a href="#repos">Repos</a>
-      <a href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">GitHub ↗</a>
-    </nav>
-  </div>
-  <p class="copy"><span class="wrap">© 2026 SHIMORA-6600X · Built with ❤️ and clean code.</span></p>
-</footer>
-
-<script>
-(function () {
-  "use strict";
-
-  /* ---- Navbar shadow on scroll ---- */
-  var nav = document.getElementById("nav");
-  var onScroll = function () {
-    nav.classList.toggle("scrolled", window.scrollY > 20);
-  };
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
-
-  /* ---- Reveal on scroll ---- */
-  var items = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry, i) {
-        if (entry.isIntersecting) {
-          entry.target.style.transitionDelay = (i % 5) * 70 + "ms";
-          entry.target.classList.add("in");
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
-    items.forEach(function (el) { io.observe(el); });
-  } else {
-    items.forEach(function (el) { el.classList.add("in"); });
-  }
-
-  /* ---- Decorative contribution heatmap ---- */
-  var heat = document.getElementById("heat");
-  if (heat) {
-    var seed = 6600;
-    var rnd = function () {
-      seed = (seed * 1103515245 + 12345) % 2147483648;
-      return seed / 2147483648;
-    };
-    var frag = document.createDocumentFragment();
-    for (var i = 0; i < 104; i++) {
-      var cell = document.createElement("i");
-      var r = rnd();
-      cell.className = r > 0.86 ? "l4" : r > 0.72 ? "l3" : r > 0.55 ? "l2" : r > 0.34 ? "l1" : "";
-      frag.appendChild(cell);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHIMORA-6600X — quiet, fast, private software</title>
+  <meta name="description" content="SHIMORA-6600X builds quiet, fast, private open-source software: the ZenFox Firefox tuning preset, curated FOSS desktop alternatives, and minimal web experiments.">
+  <meta name="theme-color" content="#0A0E1F">
+  <link rel="preload" href="fonts/fraunces_5.3.0_latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ibm-plex-sans_5.2.5_latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    @layer tokens, base, layout, components, motion, utilities;
+    @font-face{font-family:'Fraunces';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/fraunces_5.3.0_latin-400-normal.woff2') format('woff2')}
+    @font-face{font-family:'Fraunces';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/fraunces_5.3.0_latin-600-normal.woff2') format('woff2')}
+    @font-face{font-family:'Fraunces';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/fraunces_5.3.0_latin-400-italic.woff2') format('woff2')}
+    @font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/ibm-plex-sans_5.2.5_latin-400-normal.woff2') format('woff2')}
+    @font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/ibm-plex-sans_5.2.5_latin-500-normal.woff2') format('woff2')}
+    @font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/ibm-plex-sans_5.2.5_latin-600-normal.woff2') format('woff2')}
+    @font-face{font-family:'IBM Plex Sans';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/ibm-plex-sans_5.2.5_latin-700-normal.woff2') format('woff2')}
+    @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/ibm-plex-mono_5.2.5_latin-400-normal.woff2') format('woff2')}
+    @font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/ibm-plex-mono_5.2.5_latin-500-normal.woff2') format('woff2')}
+    @layer tokens {
+      :root {
+        --night:#0A0E1F; --deep:#0F1630; --raise:#17224A;
+        --ion:#5B8DFF; --ember:#F0A15E; --star:#E9EFFF; --haze:#99A5CC; --aurora:#6EE7C8;
+        --glow-ion:color-mix(in oklch, var(--ion) 26%, transparent);
+        --line:color-mix(in oklch, var(--star) 10%, transparent);
+        --line-strong:color-mix(in oklch, var(--star) 20%, transparent);
+        --wash:color-mix(in oklch, var(--deep) 84%, transparent);
+        --display:'Fraunces', Georgia, 'Times New Roman', serif;
+        --sans:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        --mono:'IBM Plex Mono', ui-monospace, 'Cascadia Code', Menlo, monospace;
+        --ease-out:cubic-bezier(.16,1,.3,1);
+        --ease-spring:cubic-bezier(.34,1.56,.64,1);
+        --d1:150ms; --d2:260ms; --d3:420ms; --d4:720ms;
+        --measure:68ch; --radius:18px; --nav-h:68px; --max:1120px;
+      }
+      @property --beam { syntax:'<percentage>'; inherits:false; initial-value:0%; }
+      @property --tilt-x { syntax:'<number>'; inherits:false; initial-value:0; }
+      @property --tilt-y { syntax:'<number>'; inherits:false; initial-value:0; }
     }
-    heat.appendChild(frag);
-  }
-})();
-</script>
+    @layer base {
+      *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+      html { scroll-behavior:smooth; scroll-padding-top:120px; }
+      body {
+        font-family:var(--sans); background:var(--night); color:var(--star);
+        line-height:1.65; overflow-x:hidden;
+        -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+      }
+      a { color:inherit; text-decoration:none; }
+      img { display:block; max-width:100%; }
+      ::selection { background:var(--ion); color:#061020; }
+      :focus-visible { outline:2px solid var(--ion); outline-offset:3px; border-radius:8px; }
+      ::-webkit-scrollbar { width:10px; }
+      ::-webkit-scrollbar-track { background:var(--night); }
+      ::-webkit-scrollbar-thumb { background:var(--raise); border-radius:8px; border:2px solid var(--night); }
+      ::-webkit-scrollbar-thumb:hover { background:var(--ion); }
+    }
+    @layer layout {
+      .container { position:relative; z-index:1; max-width:1120px; margin-inline:auto; padding-inline:clamp(20px, 4vw, 32px); }
+      .starfield {
+        position:fixed; inset:0; z-index:0; pointer-events:none;
+        background:
+          radial-gradient(1100px 520px at 85% -6%, color-mix(in oklch, var(--ion) 13%, transparent), transparent 62%),
+          radial-gradient(880px 460px at 6% 14%, color-mix(in oklch, var(--ember) 7%, transparent), transparent 56%),
+          radial-gradient(980px 700px at 50% 115%, color-mix(in oklch, var(--ion) 8%, transparent), transparent 60%),
+          radial-gradient(1.6px 1.6px at 11% 20%, color-mix(in oklch, var(--star) 60%, transparent), transparent),
+          radial-gradient(1.2px 1.2px at 23% 8%, color-mix(in oklch, var(--star) 45%, transparent), transparent),
+          radial-gradient(1.8px 1.8px at 34% 30%, color-mix(in oklch, var(--ion) 70%, transparent), transparent),
+          radial-gradient(1.2px 1.2px at 47% 12%, color-mix(in oklch, var(--star) 50%, transparent), transparent),
+          radial-gradient(1.5px 1.5px at 61% 26%, color-mix(in oklch, var(--ember) 65%, transparent), transparent),
+          radial-gradient(1.1px 1.1px at 72% 9%, color-mix(in oklch, var(--star) 45%, transparent), transparent),
+          radial-gradient(1.7px 1.7px at 84% 32%, color-mix(in oklch, var(--ion) 60%, transparent), transparent),
+          radial-gradient(1.2px 1.2px at 93% 18%, color-mix(in oklch, var(--star) 50%, transparent), transparent),
+          radial-gradient(1.2px 1.2px at 6% 55%, color-mix(in oklch, var(--ion) 45%, transparent), transparent),
+          radial-gradient(1.2px 1.2px at 95% 62%, color-mix(in oklch, var(--ember) 50%, transparent), transparent);
+      }
+      .scroll-progress {
+        position:fixed; top:0; left:0; height:2px; width:0%; z-index:1200;
+        background:linear-gradient(90deg, var(--ion), var(--ember));
+        box-shadow:0 0 12px var(--glow-ion);
+      }
+      nav.topbar { position:fixed; top:0; left:0; right:0; z-index:1000; padding:14px 0 0; transition:transform .55s var(--ease-out), padding var(--d2) var(--ease-out); }
+      nav.topbar.hide { transform:translateY(-135%); }
+      nav.topbar .container { position:relative; display:flex; align-items:center; gap:10px; max-width:1120px; margin-inline:auto; width:calc(100% - clamp(24px, 5vw, 56px)); padding:7px 7px 7px 13px; border-radius:18px; background:linear-gradient(180deg, color-mix(in oklch, var(--raise) 38%, transparent), color-mix(in oklch, var(--deep) 72%, transparent)); border:1px solid color-mix(in oklch, var(--star) 13%, transparent); backdrop-filter:blur(24px) saturate(160%); -webkit-backdrop-filter:blur(24px) saturate(160%); box-shadow:0 20px 55px rgba(2,4,12,.55), inset 0 1px 0 rgba(255,255,255,.08); transition:background var(--d2) var(--ease-out), border-color var(--d2) var(--ease-out), box-shadow var(--d2) var(--ease-out), padding var(--d2) var(--ease-out), transform var(--d2) var(--ease-out); overflow:clip; }
+      nav.topbar .container::before { content:''; position:absolute; inset:0 0 auto; height:1px; background:linear-gradient(90deg, transparent 8%, rgba(255,255,255,.42) 50%, transparent 92%); opacity:.55; pointer-events:none; }
+      nav.topbar .container::after { content:''; position:absolute; inset:auto 14px 0; height:1px; background:linear-gradient(90deg, transparent, color-mix(in oklch, var(--ion) 55%, transparent), transparent); opacity:0; transition:opacity var(--d2) var(--ease-out); pointer-events:none; }
+      nav.topbar.scrolled { padding-top:10px; }
+      nav.topbar.scrolled .container { background:linear-gradient(180deg, color-mix(in oklch, var(--raise) 46%, transparent), color-mix(in oklch, var(--deep) 88%, transparent)); border-color:color-mix(in oklch, var(--star) 19%, transparent); box-shadow:0 16px 44px rgba(2,4,12,.66), inset 0 1px 0 rgba(255,255,255,.1); padding-top:6px; padding-bottom:6px; }
+      nav.topbar.scrolled .container::after { opacity:.9; }
+      .nav-logo { display:flex; align-items:center; gap:11px; border-radius:12px; margin-right:auto; min-width:0; padding:3px 6px 3px 0; }
+      .nav-logo:focus-visible { outline:2px solid var(--ion); outline-offset:3px; }
+      .logo-mark {
+        width:37px; height:37px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+        font-family:var(--display); font-weight:600; font-size:1.02rem; color:#fff; flex:none;
+        background:
+          radial-gradient(130% 130% at 22% 12%, color-mix(in oklch, var(--ion) 62%, #fff 12%), transparent 56%),
+          radial-gradient(120% 120% at 85% 90%, color-mix(in oklch, var(--aurora) 34%, transparent), transparent 55%),
+          linear-gradient(152deg, #22346E, #0B122C 72%);
+        border:1px solid color-mix(in oklch, #fff 26%, var(--ion) 30%);
+        box-shadow:0 8px 26px color-mix(in oklch, var(--ion) 34%, transparent), inset 0 1px 0 rgba(255,255,255,.34), inset 0 -8px 16px rgba(2,4,12,.4);
+        transition:transform var(--d2) var(--ease-spring), box-shadow var(--d2) var(--ease-out);
+      }
+      .nav-logo:hover .logo-mark { transform:rotate(-7deg) scale(1.06); }
+      .logo-live { width:7px; height:7px; border-radius:50%; background:var(--aurora); box-shadow:0 0 10px color-mix(in oklch, var(--aurora) 80%, transparent); align-self:center; flex:none; animation:livePulse 3.2s ease-in-out infinite; }
+      @keyframes livePulse { 0%,100% { opacity:1; } 50% { opacity:.35; } }
+      .logo-text { display:flex; flex-direction:column; line-height:1.15; min-width:0; }
+      .logo-text .main { font-weight:700; letter-spacing:-.01em; font-size:.96rem; white-space:nowrap; }
+      .logo-text .sub { font-family:var(--mono); font-size:.64rem; color:var(--haze); letter-spacing:.22em; }
+      .nav-rail { position:relative; display:flex; align-items:center; padding:4px; border-radius:14px; background:color-mix(in oklch, #050816 52%, transparent); border:1px solid color-mix(in oklch, var(--star) 9%, transparent); box-shadow:inset 0 1px 0 rgba(255,255,255,.06); }
+      .nav-links { position:relative; display:flex; gap:2px; list-style:none; align-items:center; }
+      .nav-thumb { position:absolute; top:4px; bottom:4px; left:0; width:0; border-radius:10px; background:linear-gradient(180deg, color-mix(in oklch, var(--ion) 30%, #fff 6%), color-mix(in oklch, var(--ion) 16%, transparent)); border:1px solid color-mix(in oklch, var(--ion) 42%, #fff 12%); box-shadow:0 4px 16px color-mix(in oklch, var(--ion) 30%, transparent), inset 0 1px 0 rgba(255,255,255,.28); opacity:0; transition:left var(--d3) var(--ease-spring), width var(--d3) var(--ease-spring), opacity var(--d2) var(--ease-out); pointer-events:none; }
+      .nav-rail.has-active .nav-thumb { opacity:1; }
+      .nav-links a { position:relative; z-index:1; display:block; padding:8px 16px; font-size:.86rem; font-weight:500; color:var(--haze); border-radius:9px; transition:color var(--d1) var(--ease-out); }
+      .nav-links a::after { content:''; position:absolute; left:16px; right:16px; bottom:5px; height:2px; border-radius:2px; background:linear-gradient(90deg, var(--ion), var(--aurora)); transform:scaleX(0); transform-origin:left; transition:transform var(--d2) var(--ease-spring); opacity:.9; }
+      .nav-links a:hover { color:var(--star); }
+      .nav-links a:hover::after { transform:scaleX(.45); }
+      .nav-links a.active { color:#fff; }
+      .nav-links a.active::after { transform:scaleX(1); }
+      .nav-links a:focus-visible { outline:2px solid var(--ion); outline-offset:2px; }
+      .nav-actions { display:flex; align-items:center; gap:9px; margin-left:4px; flex:none; }
+      .nav-status { display:inline-flex; align-items:center; gap:8px; padding:9px 13px; border-radius:999px; font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; color:var(--haze); background:color-mix(in oklch, #050816 55%, transparent); border:1px solid color-mix(in oklch, var(--star) 10%, transparent); white-space:nowrap; }
+      .nav-status i { width:7px; height:7px; border-radius:50%; background:var(--aurora); box-shadow:0 0 12px var(--aurora); animation:livePulse 3.2s ease-in-out infinite; flex:none; }
+      .nav-cta { position:relative; display:inline-flex; align-items:center; gap:9px; padding:11px 18px; font-size:.84rem; font-weight:600; border-radius:12px; color:#061020; background:linear-gradient(135deg, #9DBCFF 0%, var(--ion) 42%, color-mix(in oklch, var(--ion) 62%, #fff) 100%); border:1px solid rgba(255,255,255,.4); box-shadow:0 8px 24px color-mix(in oklch, var(--ion) 40%, transparent), inset 0 1px 0 rgba(255,255,255,.55); transition:transform var(--d2) var(--ease-spring), box-shadow var(--d2) var(--ease-out); white-space:nowrap; overflow:hidden; isolation:isolate; }
+      .nav-cta::before { content:''; position:absolute; inset:0; z-index:-1; background:linear-gradient(115deg, transparent 30%, rgba(255,255,255,.55) 48%, transparent 62%); transform:translateX(-110%); transition:transform .8s var(--ease-out); }
+      .nav-cta::after { content:''; position:absolute; inset:2px 2px auto; height:1px; border-radius:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.8), transparent); opacity:.8; }
+      .nav-cta:hover { transform:translateY(-2px); box-shadow:0 14px 34px color-mix(in oklch, var(--ion) 52%, transparent), inset 0 1px 0 rgba(255,255,255,.6); }
+      .nav-cta:hover::before { transform:translateX(110%); }
+      .nav-cta:active { transform:translateY(0) scale(.97); }
+      .nav-cta:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+      .nav-cta .count { font-family:var(--mono); font-size:.66rem; font-weight:500; letter-spacing:.04em; background:rgba(6,16,32,.24); border:1px solid rgba(6,16,32,.14); border-radius:999px; padding:3px 9px; }
+      .hamburger { display:none; flex-direction:column; justify-content:center; align-items:center; gap:5px; width:43px; height:43px; border-radius:13px; background:color-mix(in oklch, #050816 52%, transparent); border:1px solid color-mix(in oklch, var(--star) 12%, transparent); cursor:pointer; transition:border-color var(--d1) var(--ease-out), background var(--d1) var(--ease-out), transform var(--d2) var(--ease-spring); flex:none; box-shadow:inset 0 1px 0 rgba(255,255,255,.07); }
+      .hamburger:hover { border-color:color-mix(in oklch, var(--ion) 50%, transparent); background:color-mix(in oklch, var(--raise) 55%, transparent); }
+      .hamburger:active { transform:scale(.94); }
+      .hamburger span { display:block; width:18px; height:2px; border-radius:2px; background:var(--star); transition:transform var(--d2) var(--ease-spring), opacity var(--d1) var(--ease-out), width var(--d2) var(--ease-out), margin var(--d2) var(--ease-out); }
+      .hamburger span:nth-child(2) { width:13px; margin-left:5px; }
+      .hamburger:hover span:nth-child(2) { width:18px; margin-left:0; }
+      .hamburger.active span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+      .hamburger.active span:nth-child(2) { opacity:0; transform:translateX(8px); }
+      .hamburger.active span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+      .mobile-overlay { position:fixed; inset:0; z-index:990; background:rgba(3,5,12,.62); backdrop-filter:blur(6px) saturate(120%); -webkit-backdrop-filter:blur(6px) saturate(120%); opacity:0; pointer-events:none; transition:opacity var(--d3) var(--ease-out); }
+      .mobile-overlay.show { opacity:1; pointer-events:auto; }
+      .mobile-menu { position:fixed; top:12px; right:12px; bottom:12px; z-index:995; width:min(360px, calc(100vw - 24px)); padding:22px 20px 18px; background:linear-gradient(180deg, color-mix(in oklch, var(--raise) 62%, transparent), color-mix(in oklch, var(--deep) 92%, transparent)); backdrop-filter:blur(30px) saturate(150%); -webkit-backdrop-filter:blur(30px) saturate(150%); border:1px solid color-mix(in oklch, var(--star) 15%, transparent); border-radius:22px; transform:translateX(calc(100% + 24px)); transition:transform .55s var(--ease-spring); display:flex; flex-direction:column; gap:6px; box-shadow:-30px 0 80px rgba(2,4,12,.55), inset 0 1px 0 rgba(255,255,255,.09); overflow:hidden; }
+      .mobile-menu.open { transform:translateX(0); }
+      .mobile-menu::before { content:''; position:absolute; inset:0 0 auto; height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent); opacity:.6; pointer-events:none; }
+      .mobile-head { position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:0 4px 14px; border-bottom:1px solid var(--line); margin-bottom:10px; }
+      .mobile-head .who { display:flex; align-items:center; gap:10px; }
+      .mobile-head .who .logo-mark { width:32px; height:32px; font-size:.85rem; border-radius:10px; }
+      .mobile-head .who b { display:block; font-size:.86rem; letter-spacing:-.01em; }
+      .mobile-head .who small { display:block; font-family:var(--mono); font-size:.6rem; letter-spacing:.2em; color:var(--haze); }
+      .mobile-close { width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:var(--star); background:color-mix(in oklch, #050816 50%, transparent); border:1px solid color-mix(in oklch, var(--star) 12%, transparent); cursor:pointer; font-size:1.05rem; line-height:1; transition:border-color var(--d1) var(--ease-out), transform .5s var(--ease-spring); }
+      .mobile-close:hover { border-color:var(--ion); transform:rotate(90deg); }
+      .mobile-kicker { position:relative; z-index:1; font-family:var(--mono); font-size:.62rem; letter-spacing:.22em; color:var(--haze); padding:2px 6px 8px; }
+      .mobile-menu a.row { position:relative; z-index:1; display:flex; align-items:center; gap:12px; padding:15px 12px; font-family:var(--display); font-size:1.5rem; letter-spacing:-.01em; color:var(--star); border:1px solid transparent; border-radius:14px; opacity:0; transform:translateX(22px); transition:opacity var(--d2) var(--ease-out), transform var(--d3) var(--ease-spring), color var(--d1) var(--ease-out), background var(--d1) var(--ease-out), border-color var(--d1) var(--ease-out); }
+      .mobile-menu.open a.row { opacity:1; transform:none; }
+      .mobile-menu.open a.row:nth-of-type(1) { transition-delay:.07s; } .mobile-menu.open a.row:nth-of-type(2) { transition-delay:.13s; } .mobile-menu.open a.row:nth-of-type(3) { transition-delay:.19s; }
+      .mobile-menu a.row:hover { color:#fff; background:color-mix(in oklch, var(--ion) 12%, transparent); border-color:color-mix(in oklch, var(--ion) 26%, transparent); }
+      .mobile-menu a.row small { font-family:var(--mono); font-size:.66rem; color:var(--haze); margin-left:auto; }
+      .mobile-menu a.row .arr { font-size:1rem; color:var(--haze); transition:transform var(--d2) var(--ease-spring), color var(--d1); }
+      .mobile-menu a.row:hover .arr { transform:translate(3px,-3px); color:var(--ion); }
+      .mobile-status { position:relative; z-index:1; margin:14px 6px 0; font-family:var(--mono); font-size:.68rem; letter-spacing:.06em; color:var(--haze); display:flex; gap:8px; align-items:center; }
+      .mobile-status i { width:7px; height:7px; border-radius:50%; background:var(--aurora); box-shadow:0 0 10px color-mix(in oklch, var(--aurora) 80%, transparent); animation:livePulse 3.2s ease-in-out infinite; }
+      .mobile-menu .go { position:relative; z-index:1; margin-top:auto; display:flex; align-items:center; justify-content:center; gap:10px; padding:16px; border-radius:14px; font-weight:600; font-size:.92rem; color:#061020; background:linear-gradient(135deg, #9DBCFF, var(--ion) 45%, color-mix(in oklch, var(--ion) 62%, #fff)); border:1px solid rgba(255,255,255,.4); box-shadow:0 10px 30px color-mix(in oklch, var(--ion) 38%, transparent), inset 0 1px 0 rgba(255,255,255,.55); transition:transform var(--d2) var(--ease-spring), box-shadow var(--d2); }
+      .mobile-menu .go:hover { transform:translateY(-2px); box-shadow:0 16px 40px color-mix(in oklch, var(--ion) 50%, transparent); }
+    }
+    @layer components {
+      .btn { display:inline-flex; align-items:center; gap:10px; padding:15px 30px; font-size:.94rem; font-weight:600; font-family:var(--sans); border-radius:14px; border:1px solid transparent; cursor:pointer; transition:transform var(--d2) var(--ease-spring), box-shadow var(--d2) var(--ease-out), background var(--d1) var(--ease-out), border-color var(--d1) var(--ease-out); }
+      .btn svg { transition:transform var(--d2) var(--ease-spring); }
+      .btn:hover svg { transform:translate(2px,-2px); }
+      .btn:active { transform:scale(.97); }
+      .btn-primary { color:#061020; background:linear-gradient(135deg, var(--ion), color-mix(in oklch, var(--ion) 55%, #fff)); box-shadow:0 10px 34px color-mix(in oklch, var(--ion) 40%, transparent); }
+      .btn-primary:hover { transform:translateY(-3px); box-shadow:0 18px 46px color-mix(in oklch, var(--ion) 52%, transparent); }
+      .btn-quiet { color:var(--star); background:var(--wash); border-color:var(--line-strong); backdrop-filter:blur(8px); }
+      .btn-quiet:hover { transform:translateY(-3px); border-color:var(--ion); box-shadow:0 14px 34px rgba(0,0,0,.45); }
+      .hero { position:relative; padding:clamp(150px, 20vh, 190px) 0 clamp(70px, 9vh, 100px); overflow:clip; }
+      .hero-inner { display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(40px, 6vw, 84px); align-items:center; }
+      .hero-kicker { display:flex; align-items:center; gap:10px; font-size:.86rem; color:var(--haze); margin-bottom:22px; }
+      .hero-kicker .dot { width:7px; height:7px; border-radius:50%; background:var(--aurora); box-shadow:0 0 10px var(--aurora); flex:none; }
+      .hero h1 { font-family:var(--display); font-weight:600; font-size:clamp(2.7rem, 5.6vw, 4.4rem); line-height:1.04; letter-spacing:-.015em; text-wrap:balance; margin-bottom:24px; }
+      .hero h1 em { font-style:italic; font-weight:400; }
+      .hero .deck { font-size:clamp(1rem, 1.4vw, 1.12rem); color:var(--haze); max-width:var(--measure); margin-bottom:38px; }
+      .hero .deck strong { color:var(--star); font-weight:600; }
+      .hero-actions { display:flex; flex-wrap:wrap; gap:14px; margin-bottom:34px; }
+      .hero-note { display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:.76rem; color:var(--haze); }
+      .hero-note .star { color:var(--ember); }
+      .portrait { position:relative; justify-self:end; width:min(400px, 100%); }
+      .portrait .frame {
+        position:relative; border-radius:calc(var(--radius) + 8px); overflow:hidden; aspect-ratio:1/1;
+        border:1px solid var(--line-strong);
+        box-shadow:0 40px 100px rgba(0,0,0,.55), 0 0 90px color-mix(in oklch, var(--ion) 22%, transparent);
+        transform:perspective(1100px) rotateY(calc(var(--tilt-x, 0) * 7deg)) rotateX(calc(var(--tilt-y, 0) * -7deg));
+        transition:transform var(--d2) var(--ease-out);
+        will-change:transform;
+      }
+      .portrait img { width:100%; height:100%; object-fit:cover; scale:1.04; }
+      .portrait .sheen { position:absolute; inset:0; background:linear-gradient(115deg, transparent 30%, color-mix(in oklch, #fff 16%, transparent) 46%, transparent 60%); background-size:280% 280%; background-position:120% 0; transition:background-position 1.1s var(--ease-out); pointer-events:none; }
+      .portrait:hover .sheen { background-position:-40% 0; }
+      .portrait figcaption { position:relative; z-index:2; display:flex; justify-content:space-between; gap:12px; margin-top:14px; padding-top:6px; font-family:var(--mono); font-size:.72rem; color:var(--haze); background:var(--night); }
+      .portrait figcaption a { color:var(--ion); }
+      .orbit { position:absolute; top:-26px; left:-26px; right:-26px; aspect-ratio:1/1; pointer-events:none; opacity:.8; }
+      .orbit svg { width:100%; height:100%; overflow:visible; }
+      .orbit .trail { fill:none; stroke:var(--line-strong); stroke-width:1; stroke-dasharray:3 7; }
+      .orbit .sat { fill:var(--ember); filter:drop-shadow(0 0 6px var(--ember)); }
+    }
+      section.block { padding:clamp(72px, 10vh, 116px) 0; position:relative; z-index:1; }
+      .sec-head { max-width:var(--measure); margin-bottom:clamp(34px, 5vh, 54px); }
+      .sec-head h2 { font-family:var(--display); font-weight:600; font-size:clamp(1.9rem, 3.6vw, 2.7rem); line-height:1.1; letter-spacing:-.015em; text-wrap:balance; margin-bottom:14px; }
+      .sec-head h2 em { font-style:italic; font-weight:400; }
+      .sec-head p { color:var(--haze); font-size:1.02rem; }
+      .focus-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:14px; }
+      .focus-card {
+        position:relative; border-radius:var(--radius); padding:28px;
+        background:linear-gradient(180deg, color-mix(in oklch, var(--raise) 55%, transparent), color-mix(in oklch, var(--deep) 70%, transparent));
+        border:1px solid var(--line); overflow:hidden;
+        transition:transform var(--d2) var(--ease-spring), border-color var(--d1) var(--ease-out), box-shadow var(--d2) var(--ease-out);
+      }
+      .focus-card::before { content:''; position:absolute; inset:0 0 auto 0; height:2px; background:linear-gradient(90deg, transparent, var(--edge, var(--ion)), transparent); opacity:0; transition:opacity var(--d2) var(--ease-out); }
+      .focus-card:hover { transform:translateY(-5px); border-color:var(--line-strong); box-shadow:0 22px 50px rgba(0,0,0,.45); }
+      .focus-card:hover::before { opacity:1; }
+      .focus-card h3 { font-size:1.04rem; font-weight:600; letter-spacing:-.01em; margin-bottom:8px; }
+      .focus-card p { font-size:.92rem; color:var(--haze); }
+      .focus-card .tick { position:absolute; top:24px; right:26px; font-family:var(--mono); font-size:.7rem; color:var(--edge, var(--ion)); }
+      .proj-flag {
+        position:relative; display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(28px, 4vw, 56px);
+        border-radius:calc(var(--radius) + 6px); padding:clamp(30px, 4vw, 52px); overflow:hidden;
+        background:
+          radial-gradient(560px 300px at 88% 8%, color-mix(in oklch, var(--ember) 16%, transparent), transparent 65%),
+          linear-gradient(180deg, color-mix(in oklch, var(--raise) 60%, transparent), color-mix(in oklch, var(--deep) 78%, transparent));
+        border:1px solid color-mix(in oklch, var(--ember) 32%, var(--line));
+        box-shadow:0 30px 80px rgba(0,0,0,.5);
+      }
+      .proj-flag .kicker { display:flex; align-items:center; gap:10px; font-size:.82rem; color:var(--ember); font-weight:600; margin-bottom:14px; }
+      .proj-flag .kicker .star { color:var(--ember); }
+      .proj-flag h3 { font-family:var(--display); font-weight:600; font-size:clamp(2rem, 4.4vw, 3rem); letter-spacing:-.02em; line-height:1.05; margin-bottom:14px; }
+      .proj-flag .what { color:var(--haze); font-size:1.02rem; max-width:52ch; margin-bottom:22px; }
+      .proj-flag .what strong { color:var(--star); font-weight:600; }
+      .chiprow { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:28px; }
+      .chip { font-family:var(--mono); font-size:.7rem; padding:5px 12px; border-radius:999px; color:var(--haze); background:color-mix(in oklch, var(--star) 6%, transparent); border:1px solid var(--line); }
+      .chip.warm { color:var(--ember); border-color:color-mix(in oklch, var(--ember) 40%, transparent); background:color-mix(in oklch, var(--ember) 10%, transparent); }
+      .chip.cool { color:var(--ion); border-color:color-mix(in oklch, var(--ion) 40%, transparent); background:color-mix(in oklch, var(--ion) 10%, transparent); }
+      .proj-flag .meta { display:flex; flex-direction:column; gap:16px; justify-content:center; border-left:1px dashed var(--line-strong); padding-left:clamp(20px, 3vw, 36px); }
+      .proj-flag .meta .row { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding-bottom:14px; border-bottom:1px solid var(--line); font-size:.86rem; }
+      .proj-flag .meta .row:last-child { border-bottom:0; padding-bottom:0; }
+      .proj-flag .meta dt { color:var(--haze); }
+      .proj-flag .meta dd { font-family:var(--mono); font-size:.8rem; color:var(--star); }
+      .proj-rows { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:14px; }
+      .proj-row {
+        position:relative; display:flex; flex-direction:column; gap:12px; padding:28px; border-radius:var(--radius);
+        background:linear-gradient(180deg, color-mix(in oklch, var(--raise) 50%, transparent), color-mix(in oklch, var(--deep) 70%, transparent));
+        border:1px solid var(--line); min-height:100%;
+        transition:transform var(--d2) var(--ease-spring), border-color var(--d1) var(--ease-out), box-shadow var(--d2) var(--ease-out);
+      }
+      .proj-row:hover { transform:translateY(-5px); border-color:var(--line-strong); box-shadow:0 22px 50px rgba(0,0,0,.45); }
+      .proj-row h3 { font-family:var(--display); font-weight:600; font-size:1.5rem; letter-spacing:-.015em; }
+      .proj-row .what { font-size:.92rem; color:var(--haze); flex:1; }
+      .proj-row .what strong { color:var(--star); font-weight:600; }
+      .proj-row .foot { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+      .link-arrow { display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:.9rem; color:var(--ion); }
+      .link-arrow svg { transition:transform var(--d2) var(--ease-spring); }
+      .link-arrow:hover svg { transform:translate(3px,-3px); }
+      .codecard {
+        margin-top:clamp(40px, 6vh, 64px); border-radius:var(--radius); overflow:hidden;
+        border:1px solid var(--line-strong); background:#070B18;
+        box-shadow:0 24px 60px rgba(0,0,0,.5);
+      }
+      .codecard .bar { display:flex; align-items:center; gap:8px; padding:12px 18px; border-bottom:1px solid var(--line); background:color-mix(in oklch, var(--raise) 45%, transparent); }
+      .codecard .bar i { width:10px; height:10px; border-radius:50%; background:var(--line-strong); }
+      .codecard .bar i:first-child { background:var(--ember); }
+      .codecard .bar span { margin-left:8px; font-family:var(--mono); font-size:.72rem; color:var(--haze); }
+      .codecard pre { padding:22px 24px; overflow-x:auto; font-family:var(--mono); font-size:.82rem; line-height:1.75; color:var(--star); }
+      .codecard .c { color:color-mix(in oklch, var(--haze) 80%, transparent); }
+      .codecard .k { color:var(--ion); }
+      .codecard .s { color:var(--ember); }
+      .codecard .f { color:var(--aurora); }
+      .stats { display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; margin-top:clamp(40px, 6vh, 64px); background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+      .stat { background:color-mix(in oklch, var(--deep) 82%, transparent); padding:30px 26px; text-align:left; transition:background var(--d1) var(--ease-out); }
+      .stat:hover { background:color-mix(in oklch, var(--raise) 60%, transparent); }
+      .stat .n { font-family:var(--display); font-weight:600; font-size:clamp(2rem, 4vw, 2.8rem); letter-spacing:-.02em; line-height:1; margin-bottom:8px; font-variant-numeric:tabular-nums; }
+      .stat .n .warm { color:var(--ember); }
+      .stat .t { font-size:.82rem; color:var(--haze); }
+      .cta { position:relative; margin:clamp(72px, 10vh, 116px) 0 0; border-radius:calc(var(--radius) + 8px); padding:clamp(48px, 7vw, 88px) clamp(28px, 6vw, 80px); text-align:center; overflow:hidden; border:1px solid var(--line-strong);
+        background:
+          radial-gradient(640px 320px at 50% 120%, color-mix(in oklch, var(--ion) 20%, transparent), transparent 65%),
+          radial-gradient(420px 240px at 12% -20%, color-mix(in oklch, var(--ember) 12%, transparent), transparent 60%),
+          linear-gradient(180deg, color-mix(in oklch, var(--raise) 55%, transparent), color-mix(in oklch, var(--deep) 80%, transparent));
+      }
+      .cta h2 { font-family:var(--display); font-weight:600; font-size:clamp(2.1rem, 4.6vw, 3.4rem); line-height:1.06; letter-spacing:-.02em; text-wrap:balance; margin-bottom:16px; }
+      .cta h2 em { font-style:italic; font-weight:400; }
+      .cta p { color:var(--haze); max-width:52ch; margin:0 auto 34px; }
+      .cta .row { display:flex; flex-wrap:wrap; gap:14px; justify-content:center; }
+      footer.site { position:relative; z-index:1; margin-top:clamp(80px, 11vh, 128px); padding:0 clamp(12px, 3vw, 28px) 26px; }
+      .foot-panel { position:relative; max-width:var(--max); margin:0 auto; border-radius:28px; border:1px solid color-mix(in oklch, var(--star) 16%, transparent); background:linear-gradient(180deg, color-mix(in oklch, var(--raise) 58%, transparent), color-mix(in oklch, #070B1D 88%, transparent)); box-shadow:0 34px 100px rgba(2,4,12,.6), inset 0 1px 0 rgba(255,255,255,.09); overflow:hidden; }
+      .foot-panel::before { content:''; position:absolute; inset:0 0 auto; height:1px; background:linear-gradient(90deg, transparent 6%, rgba(255,255,255,.5) 30%, color-mix(in oklch, var(--ion) 70%, #fff) 50%, rgba(255,255,255,.5) 70%, transparent 94%); opacity:.85; pointer-events:none; }
+      .foot-panel::after { content:''; position:absolute; width:620px; height:320px; right:-180px; top:-160px; background:radial-gradient(closest-side, color-mix(in oklch, var(--ion) 24%, transparent), transparent); pointer-events:none; animation:footGlow 9s ease-in-out infinite alternate; }
+      @keyframes footGlow { from { transform:translate(0,0) scale(1); opacity:.85; } to { transform:translate(-46px,30px) scale(1.12); opacity:1; } }
+      .foot-stars { position:absolute; inset:0; pointer-events:none; opacity:.9; background:
+        radial-gradient(1.4px 1.4px at 8% 22%, rgba(255,255,255,.5), transparent),
+        radial-gradient(1.1px 1.1px at 18% 68%, rgba(255,255,255,.34), transparent),
+        radial-gradient(1.6px 1.6px at 30% 30%, color-mix(in oklch, var(--ion) 70%, #fff), transparent),
+        radial-gradient(1.1px 1.1px at 44% 74%, rgba(255,255,255,.3), transparent),
+        radial-gradient(1.3px 1.3px at 58% 24%, rgba(255,255,255,.42), transparent),
+        radial-gradient(1.2px 1.2px at 72% 66%, color-mix(in oklch, var(--aurora) 70%, #fff), transparent),
+        radial-gradient(1px 1px at 86% 34%, rgba(255,255,255,.36), transparent),
+        radial-gradient(1.4px 1.4px at 94% 72%, rgba(255,255,255,.4), transparent); }
+      .foot-top { position:relative; z-index:1; display:grid; grid-template-columns:1.25fr .75fr; gap:clamp(28px, 4vw, 48px); padding:clamp(32px, 4.4vw, 52px) clamp(22px, 4vw, 48px) 26px; }
+      .foot-brand { display:flex; flex-direction:column; gap:16px; max-width:46ch; }
+      .foot-brand-row { display:flex; align-items:center; gap:12px; }
+      .foot-brand .logo-mark { width:40px; height:40px; font-size:1rem; flex:none; }
+      .foot-name { font-weight:700; letter-spacing:-.01em; font-size:1.02rem; }
+      .foot-name small { display:block; font-family:var(--mono); font-weight:400; font-size:.62rem; letter-spacing:.24em; color:var(--haze); margin-top:2px; }
+      .who { font-size:.92rem; color:var(--haze); max-width:38ch; }
+      .who strong { color:var(--star); font-weight:600; }
+      .foot-chips { display:flex; flex-wrap:wrap; gap:8px; }
+      .foot-chip { font-family:var(--mono); font-size:.64rem; letter-spacing:.1em; color:var(--haze); border:1px solid var(--line); border-radius:999px; padding:6px 12px; background:color-mix(in oklch, #050816 46%, transparent); transition:border-color var(--d1), color var(--d1), transform var(--d2) var(--ease-spring); }
+      .foot-chip:hover { color:var(--star); border-color:color-mix(in oklch, var(--ion) 50%, transparent); transform:translateY(-2px); }
+      .foot-signal { display:inline-flex; align-items:center; gap:9px; font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; color:var(--haze); border:1px solid color-mix(in oklch, var(--aurora) 28%, var(--line)); border-radius:999px; padding:8px 14px; background:color-mix(in oklch, var(--aurora) 8%, transparent); width:fit-content; }
+      .foot-signal i { width:7px; height:7px; border-radius:50%; background:var(--aurora); box-shadow:0 0 10px color-mix(in oklch, var(--aurora) 80%, transparent); animation:livePulse 3.2s ease-in-out infinite; }
+      .foot-cols { display:grid; grid-template-columns:1fr 1fr; gap:clamp(20px, 3vw, 34px); align-content:start; padding-top:4px; }
+      .foot-col h3 { font-family:var(--mono); font-size:.62rem; font-weight:500; letter-spacing:.24em; color:var(--haze); margin-bottom:13px; display:flex; align-items:center; gap:10px; }
+      .foot-col h3::after { content:''; height:1px; width:26px; background:linear-gradient(90deg, color-mix(in oklch, var(--ion) 60%, transparent), transparent); }
+      .foot-col ul { list-style:none; display:flex; flex-direction:column; gap:2px; }
+      .foot-col a { display:inline-flex; align-items:center; gap:8px; padding:7px 10px; margin-left:-10px; font-size:.9rem; color:var(--star); opacity:.84; border-radius:10px; border:1px solid transparent; transition:opacity var(--d1) var(--ease-out), transform var(--d2) var(--ease-spring), color var(--d1) var(--ease-out), background var(--d1), border-color var(--d1); }
+      .foot-col a svg { opacity:0; transform:translate(-3px,3px); transition:opacity var(--d1) var(--ease-out), transform var(--d2) var(--ease-spring); }
+      .foot-col a:hover { opacity:1; color:#fff; transform:translateX(4px); background:color-mix(in oklch, var(--ion) 10%, transparent); border-color:color-mix(in oklch, var(--ion) 22%, transparent); }
+      .foot-col a:hover svg { opacity:1; transform:none; }
+      .foot-col a:focus-visible { outline:2px solid var(--ion); outline-offset:2px; border-radius:8px; }
+      .foot-meta { position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:12px 20px; flex-wrap:wrap; padding:18px clamp(22px, 4vw, 48px); border-top:1px solid var(--line); font-family:var(--mono); font-size:.68rem; letter-spacing:.06em; color:var(--haze); background:color-mix(in oklch, #040612 50%, transparent); }
+      .foot-meta .sep { opacity:.45; margin:0 8px; }
+      #utcClock { color:var(--star); font-variant-numeric:tabular-nums; }
+      .foot-meta .dot-ok { color:var(--aurora); }
+      .topline { display:inline-flex; align-items:center; gap:7px; border-radius:8px; color:var(--haze); transition:color var(--d1), gap var(--d2) var(--ease-spring); }
+      .topline:hover { color:var(--star); gap:11px; }
+      .watermark { position:relative; z-index:0; text-align:center; padding:10px 0 30px; user-select:none; pointer-events:none; overflow:hidden; margin-top:-4px; }
+      .watermark span { display:block; font-family:var(--display); font-weight:600; font-size:clamp(3.4rem, 13.5vw, 10rem); letter-spacing:-.045em; line-height:.94; color:transparent; -webkit-text-stroke:1px color-mix(in oklch, var(--star) 16%, transparent); mask-image:linear-gradient(180deg, #000 30%, transparent 96%); -webkit-mask-image:linear-gradient(180deg, #000 30%, transparent 96%); transform:translateY(12px); transition:letter-spacing 1s var(--ease-out); }
+      .foot-panel:hover .watermark span { letter-spacing:-.03em; }
+      .to-top { position:fixed; right:26px; bottom:26px; z-index:900; width:50px; height:50px; border-radius:15px; display:flex; align-items:center; justify-content:center; color:var(--star); background:color-mix(in oklch, var(--deep) 88%, transparent); border:1px solid var(--line-strong); backdrop-filter:blur(16px); cursor:pointer; opacity:0; transform:translateY(18px) scale(.92); pointer-events:none; transition:opacity var(--d2) var(--ease-out), transform var(--d2) var(--ease-spring), border-color var(--d1) var(--ease-out); }
+      .to-top.show { opacity:1; transform:none; pointer-events:auto; }
+      .to-top:hover { border-color:var(--ion); transform:translateY(-4px); }
+    }
+    @layer motion {
+      @keyframes resolve { from { opacity:0; transform:translateY(26px); filter:blur(10px); } to { opacity:1; transform:none; filter:blur(0); } }
+      @keyframes drift { to { transform:translateY(-14px); } }
+      .boot .rv { opacity:0; }
+      .boot.ready .rv { animation:resolve var(--d4) var(--ease-out) forwards; animation-delay:var(--rv-d, 0ms); }
+      .rise { opacity:0; transform:translateY(16px); transition:opacity 640ms var(--ease-out), transform 640ms var(--ease-out); transition-delay:var(--rv-d, 0ms); }
+      .rise.in { opacity:1; transform:none; }
+      @supports (animation-timeline:view()) {
+        .rise { opacity:1; transform:none; transition:none; animation:resolve 640ms var(--ease-out) both; animation-timeline:view(); animation-range:entry 4% entry 32%; animation-delay:0ms; }
+        .boot .rv, .boot.ready .rv { opacity:1; animation:none; }
+        .portrait .frame { animation:drift 9s ease-in-out infinite alternate; }
+      }
+      @supports (animation-timeline:scroll()) {
+        .portrait { animation:plift linear both; animation-timeline:scroll(); animation-range:0 700px; }
+        @keyframes plift { from { transform:translateY(0); } to { transform:translateY(-46px); } }
+      }
+    }
+    @layer utilities {
+      @media (max-width:1020px) {
+        .nav-status { display:none; }
+        .hero-inner { grid-template-columns:1fr; gap:56px; text-align:left; }
+        .portrait { justify-self:start; width:min(360px, 100%); }
+        .proj-flag { grid-template-columns:1fr; }
+        .proj-flag .meta { border-left:0; border-top:1px dashed var(--line-strong); padding-left:0; padding-top:22px; }
+        .focus-grid { grid-template-columns:1fr 1fr; }
+      }
+      @media (max-width:760px) {
+        .nav-rail, .nav-actions { display:none; }
+        .hamburger { display:flex; }
+        section.block { padding:64px 0; }
+        .focus-grid, .proj-rows, .stats { grid-template-columns:1fr; }
+        .foot-cols { grid-template-columns:1fr; gap:20px; }
+        .foot-meta { font-size:.66rem; }
+        .watermark { padding-bottom:22px; }
+        .stat { padding:24px 22px; }
+        .stat .n { font-size:2.2rem; }
+        .foot-top { grid-template-columns:1fr; gap:28px; }
+        .foot-cols { grid-template-columns:1fr 1fr; }
+        .to-top { right:18px; bottom:18px; }
+      }
+      @media (prefers-reduced-motion:reduce) {
+        html { scroll-behavior:auto; }
+        *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+        .boot .rv, .rise { opacity:1 !important; transform:none !important; filter:none !important; }
+      }
+    }
+  </style>
+</head>
+<body class="boot">
+  <a href="#main" style="position:absolute;left:-9999px;top:0;background:var(--ion);color:#061020;padding:10px 16px;border-radius:10px;z-index:2000" onfocus="this.style.left='12px'" onblur="this.style.left='-9999px'">Skip to content</a>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <div class="starfield" aria-hidden="true"></div>
 
+  <nav class="topbar" id="nav" aria-label="Primary">
+    <div class="container">
+      <a href="#top" class="nav-logo" aria-label="SHIMORA-6600X home">
+        <span class="logo-mark" aria-hidden="true">S</span>
+        <span class="logo-text"><span class="main">SHIMORA</span><span class="sub">6600X</span></span>
+        <span class="logo-live" aria-hidden="true"></span>
+      </a>
+      <div class="nav-rail" id="navRail">
+        <span class="nav-thumb" id="navThumb" aria-hidden="true"></span>
+      <ul class="nav-links">
+        <li><a href="#focus" data-nav>Focus</a></li>
+        <li><a href="#work" data-nav>Work</a></li>
+        <li><a href="#contact" data-nav>Contact</a></li>
+      </ul>
+      </div>
+      <div class="nav-actions">
+      <span class="nav-status" aria-hidden="true"><i></i>NOMINAL</span>
+      <a class="nav-cta" href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub <span class="count">8★</span>
+      </a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <aside class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+    <div class="mobile-head">
+      <span class="who"><span class="logo-mark" aria-hidden="true">S</span><span><b>SHIMORA</b><small>6600X</small></span></span>
+      <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+    </div>
+    <p class="mobile-kicker">Night observatory — menu</p>
+    <a class="row" href="#focus">Focus <small>what I care about</small><span class="arr" aria-hidden="true">↗</span></a>
+    <a class="row" href="#work">Work <small>shipped projects</small><span class="arr" aria-hidden="true">↗</span></a>
+    <a class="row" href="#contact">Contact <small>say hello</small><span class="arr" aria-hidden="true">↗</span></a>
+    <a class="go" href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+      Open GitHub profile
+    </a>
+    <p class="mobile-status"><i aria-hidden="true"></i> open source · ships in the open</p>
+  </aside>
+
+  <main id="main">
+  <header class="hero" id="top">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="hero-kicker rv" style="--rv-d:40ms"><span class="dot" aria-hidden="true"></span> Open source, Linux, and digital privacy</p>
+          <h1 class="rv" style="--rv-d:120ms">Computer engineer.<br><em>Quiet, fast, private</em> software.</h1>
+          <p class="deck rv" style="--rv-d:200ms">I tune slow tools until they feel instant and replace closed ones with open ones. The flagship is <strong>ZenFox</strong>, a Firefox preset that makes the browser load faster and sip memory. Everything ships open source.</p>
+          <div class="hero-actions rv" style="--rv-d:280ms">
+            <a class="btn btn-primary" href="#work">See the work
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+            </a>
+            <a class="btn btn-quiet" href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">GitHub profile</a>
+          </div>
+          <p class="hero-note rv" style="--rv-d:360ms"><span class="star" aria-hidden="true">✦</span> Currently tuning ZenFox and mapping privacy-respecting desktop tools.</p>
+        </div>
+        <figure class="portrait rv" style="--rv-d:240ms" id="portrait">
+          <div class="orbit" aria-hidden="true">
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+              <ellipse class="trail" cx="50" cy="50" rx="56" ry="56"/>
+              <circle class="sat" cx="50" cy="-6" r="1.6">
+                <animateMotion dur="11s" repeatCount="indefinite" path="M 50 -6 A 56 56 0 1 1 49.9 -6"/>
+              </circle>
+            </svg>
+          </div>
+          <div class="frame">
+            <img src="hero.jpg" alt="Portrait of SHIMORA: a figure wreathed in a deep-blue starfield" fetchpriority="high">
+            <span class="sheen" aria-hidden="true"></span>
+          </div>
+          <figcaption><span>fig. 01 — the night shift</span><a href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">@SHIMORA-6600X</a></figcaption>
+        </figure>
+      </div>
+    </div>
+  </header>
+  <section class="block" id="focus" aria-labelledby="focus-h">
+    <div class="container">
+      <div class="sec-head rise">
+        <h2 id="focus-h">Three things I <em>refuse to compromise.</em></h2>
+        <p>Every project gets judged against the same bar: does it run fast, can anyone inspect it, and does it respect the person using it.</p>
+      </div>
+      <div class="focus-grid">
+        <article class="focus-card rise" style="--edge:var(--ion)"><span class="tick" aria-hidden="true">F.01</span>
+          <h3>Performance is a feature</h3>
+          <p>Slow software is broken software. I profile, trim, and tune until tools feel instant — starting with the browser, where most days are spent.</p>
+        </article>
+        <article class="focus-card rise" style="--edge:var(--aurora);--rv-d:70ms"><span class="tick" aria-hidden="true">F.02</span>
+          <h3>Open by default</h3>
+          <p>If it can't be read, forked, and fixed by a stranger, it isn't finished. Public repos, permissive habits, documented configs.</p>
+        </article>
+        <article class="focus-card rise" style="--edge:var(--ember);--rv-d:140ms"><span class="tick" aria-hidden="true">F.03</span>
+          <h3>Privacy is the baseline</h3>
+          <p>No trackers, no dark patterns, minimal data. Replacements for closed tools are chosen the way a lock is chosen — by what they keep out.</p>
+        </article>
+        <article class="focus-card rise" style="--edge:var(--ion);--rv-d:210ms"><span class="tick" aria-hidden="true">F.04</span>
+          <h3>Learn in the open</h3>
+          <p>Notes, dotfiles, and experiments ship publicly — half-finished included — so the next person starts further along.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+  <section class="block" id="work" aria-labelledby="work-h">
+    <div class="container">
+      <div class="sec-head rise">
+        <h2 id="work-h">One flagship, <em>a growing shelf.</em></h2>
+        <p>Small surface area, maintained with care. ZenFox leads; the rest support the same mission.</p>
+      </div>
+      <article class="proj-flag rise">
+        <div>
+          <p class="kicker"><span class="star" aria-hidden="true">★</span> Flagship · most starred</p>
+          <h3>ZenFox</h3>
+          <p class="what">A Firefox tuning preset that makes the browser <strong>load pages faster, scroll smoother, and use less memory</strong> — the speed people switch to Chrome for, without leaving Firefox.</p>
+          <div class="chiprow" aria-label="Technologies">
+            <span class="chip warm">Firefox</span><span class="chip">user.js</span><span class="chip">performance</span><span class="chip">caching</span>
+          </div>
+          <a class="btn btn-primary" href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener">Open ZenFox on GitHub
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+          </a>
+        </div>
+        <dl class="meta" aria-label="ZenFox at a glance">
+          <div class="row"><dt>License</dt><dd>open source</dd></div>
+          <div class="row"><dt>Stars</dt><dd>8 and climbing</dd></div>
+          <div class="row"><dt>Install</dt><dd>copy one user.js</dd></div>
+          <div class="row"><dt>First run</dt><dd>under 5 minutes</dd></div>
+        </dl>
+      </article>
+      <div class="proj-rows">
+        <article class="proj-row rise">
+          <h3>Desktop-OSS</h3>
+          <p class="what">A curated shelf of <strong>free, privacy-respecting desktop apps</strong> — browsers, mail, media, utilities — each picked to replace a closed default.</p>
+          <div class="chiprow" aria-label="Technologies">
+            <span class="chip cool">open source</span><span class="chip">privacy</span><span class="chip">curation</span>
+          </div>
+          <div class="foot">
+            <a class="link-arrow" href="https://github.com/SHIMORA-6600X/Desktop-OSS" target="_blank" rel="noopener">View project
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+            </a>
+          </div>
+        </article>
+        <article class="proj-row rise" style="--rv-d:90ms">
+          <h3>Website</h3>
+          <p class="what">This page's ancestor: a <strong>single-file, dependency-free site</strong> proving a personal page can be fast without a framework.</p>
+          <div class="chiprow" aria-label="Technologies">
+            <span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">minimal</span>
+          </div>
+          <div class="foot">
+            <a class="link-arrow" href="https://github.com/SHIMORA-6600X/website-" target="_blank" rel="noopener">View project
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+            </a>
+          </div>
+        </article>
+      </div>
+      <div class="codecard rise" aria-label="Sample ZenFox configuration">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>user.js — a taste of ZenFox</span></div>
+        <pre><code><span class="c">// paint sooner, scroll smoother, keep less in RAM</span>
+<span class="k">user_pref</span>(<span class="s">"nglayout.initialpaint.delay"</span>, <span class="f">0</span>);
+<span class="k">user_pref</span>(<span class="s">"general.smoothScroll"</span>, <span class="f">true</span>);
+<span class="k">user_pref</span>(<span class="s">"browser.cache.memory.capacity"</span>, <span class="f">-1</span>);
+<span class="c">// telemetry off — your browser, your business</span>
+<span class="k">user_pref</span>(<span class="s">"toolkit.telemetry.enabled"</span>, <span class="f">false</span>);</code></pre>
+      </div>
+      <div class="stats rise" aria-label="By the numbers">
+        <div class="stat"><p class="n"><span data-count="113">0</span></p><p class="t">Contributions shipped this year</p></div>
+        <div class="stat"><p class="n"><span data-count="8">0</span><span class="warm"> ★</span></p><p class="t">Stars on ZenFox</p></div>
+        <div class="stat"><p class="n"><span data-count="3">0</span>+</p><p class="t">Public repos, all open source</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="block" id="contact" aria-labelledby="contact-h" style="padding-bottom:0">
+    <div class="container">
+      <div class="cta rise">
+        <h2 id="contact-h">Have a slow tool<br>or a closed one? <em>Let's fix it.</em></h2>
+        <p>Browse the repos, steal the configs, or open an issue — collaboration starts with a pull request, not a pitch deck.</p>
+        <div class="row">
+          <a class="btn btn-primary" href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            Follow on GitHub</a>
+          <a class="btn btn-quiet" href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener">Try ZenFox first</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <footer class="site">
+    <div class="foot-panel">
+      <span class="foot-stars" aria-hidden="true"></span>
+      <div class="foot-top">
+        <div class="foot-brand">
+          <div class="foot-brand-row">
+            <span class="logo-mark" aria-hidden="true">S</span>
+            <span class="foot-name">SHIMORA-6600X<small>NIGHT OBSERVATORY</small></span>
+          </div>
+          <p class="who">Quiet, fast, <strong>private software</strong> — shipped in the open.</p>
+          <div class="foot-chips" aria-hidden="true"><span class="foot-chip">OPEN SOURCE</span><span class="foot-chip">LINUX</span><span class="foot-chip">PRIVACY</span></div>
+          <span class="foot-signal"><i aria-hidden="true"></i> ALL SYSTEMS NOMINAL</span>
+        </div>
+        <div class="foot-cols">
+          <div class="foot-col">
+            <h3>INDEX</h3>
+            <ul>
+              <li><a href="#focus">Focus <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg></a></li>
+              <li><a href="#work">Work <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg></a></li>
+              <li><a href="#contact">Contact <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg></a></li>
+            </ul>
+          </div>
+          <div class="foot-col">
+            <h3>ELSEWHERE</h3>
+            <ul>
+              <li><a href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">GitHub <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg></a></li>
+              <li><a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener">ZenFox <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg></a></li>
+              <li><a href="#top" class="topline">Back to top ↑</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="foot-meta">
+        <span><span class="dot-ok" aria-hidden="true">●</span> © <span id="year">2026</span> SHIMORA-6600X<span class="sep">·</span>open source</span>
+        <span>SET IN FRAUNCES + IBM PLEX <span class="sep">·</span> SINGLE FILE</span>
+        <span>LOCAL TIME <span id="utcClock">--:--:--</span> UTC</span>
+      </div>
+      <div class="watermark" aria-hidden="true"><span>SHIMORA</span></div>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <script>
+    (function () {
+      'use strict';
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      document.getElementById('year').textContent = new Date().getFullYear();
+      var clock = document.getElementById('utcClock');
+      function tickClock() {
+        if (!clock) return;
+        var d = new Date(),
+            p = function (n) { return (n < 10 ? '0' : '') + n; };
+        clock.textContent = p(d.getUTCHours()) + ':' + p(d.getUTCMinutes()) + ':' + p(d.getUTCSeconds());
+      }
+      tickClock();
+      setInterval(tickClock, 1000);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { document.body.classList.add('ready'); }); });
+      var nav = document.getElementById('nav'),
+          bar = document.getElementById('scrollProgress'),
+          toTop = document.getElementById('toTop'),
+          links = Array.prototype.slice.call(document.querySelectorAll('[data-nav]')),
+          ticking = false;
+      var rail = document.getElementById('navRail'),
+          thumb = document.getElementById('navThumb');
+      function moveThumb() {
+        if (!rail || !thumb) return;
+        var active = document.querySelector('.nav-links a.active');
+        if (!active) { rail.classList.remove('has-active'); thumb.style.opacity = '0'; return; }
+        rail.classList.add('has-active');
+        thumb.style.opacity = '1';
+        thumb.style.left = (active.offsetLeft) + 'px';
+        thumb.style.width = (active.offsetWidth) + 'px';
+      }
+      function spy() {
+        var ids = ['focus', 'work', 'contact'], best = null, bestTop = Infinity;
+        ids.forEach(function (id) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          var t = el.getBoundingClientRect().top;
+          if (t <= 200 && t < bestTop) { bestTop = t; best = id; }
+        });
+        links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + best); });
+        moveThumb();
+      }
+      var burger = document.getElementById('hamburger'),
+          menu = document.getElementById('mobileMenu'),
+          overlay = document.getElementById('mobileOverlay'),
+          closer = document.getElementById('mobileClose'),
+          lastY = window.scrollY || 0;
+      function onScroll() {
+        if (ticking) return; ticking = true;
+        requestAnimationFrame(function () {
+          var y = window.scrollY || 0,
+              h = document.documentElement.scrollHeight - window.innerHeight;
+          bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+          nav.classList.toggle('scrolled', y > 32);
+          var menuOpen = menu.classList.contains('open');
+          if (!reduce && !menuOpen) {
+            if (y > 420 && y > lastY + 6) nav.classList.add('hide');
+            else if (y < lastY - 4 || y < 420) nav.classList.remove('hide');
+          } else {
+            nav.classList.remove('hide');
+          }
+          lastY = y;
+          toTop.classList.toggle('show', y > 640);
+          spy(); ticking = false;
+        });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', moveThumb);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveThumb);
+      window.addEventListener('load', moveThumb);
+      onScroll();
+      setTimeout(moveThumb, 400);
+      toTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
+      function setMenu(open) {
+        burger.classList.toggle('active', open);
+        menu.classList.toggle('open', open);
+        overlay.classList.toggle('show', open);
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+      burger.addEventListener('click', function () { setMenu(!menu.classList.contains('open')); });
+      overlay.addEventListener('click', function () { setMenu(false); });
+      if (closer) closer.addEventListener('click', function () { setMenu(false); });
+      menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+      window.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+      var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (!en.isIntersecting) return;
+          en.target.classList.add('in');
+          en.target.querySelectorAll('[data-count]').forEach(countUp);
+          if (en.target.hasAttribute('data-count')) countUp(en.target);
+          io.unobserve(en.target);
+        });
+      }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' }) : null;
+      if (io) document.querySelectorAll('.rise').forEach(function (el) { io.observe(el); });
+      else document.querySelectorAll('.rise').forEach(function (el) { el.classList.add('in'); });
+      function countUp(el) {
+        if (el.dataset.done) return; el.dataset.done = '1';
+        var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+        if (reduce) { el.textContent = target; return; }
+        var t0 = null, dur = 1100;
+        function frame(t) {
+          if (!t0) t0 = t;
+          var p = Math.min((t - t0) / dur, 1),
+              e = 1 - Math.pow(1 - p, 4);
+          el.textContent = Math.round(target * e);
+          if (p < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+      var frame = document.querySelector('.portrait .frame'),
+          card = document.getElementById('portrait');
+      if (frame && card && !reduce && window.matchMedia('(pointer: fine)').matches) {
+        var raf = null;
+        card.addEventListener('pointermove', function (e) {
+          var r = frame.getBoundingClientRect(),
+              x = (e.clientX - r.left) / r.width - 0.5,
+              y = (e.clientY - r.top) / r.height - 0.5;
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(function () {
+            frame.style.setProperty('--tilt-x', x.toFixed(3));
+            frame.style.setProperty('--tilt-y', y.toFixed(3));
+          });
+        });
+        card.addEventListener('pointerleave', function () {
+          if (raf) cancelAnimationFrame(raf);
+          frame.style.setProperty('--tilt-x', 0);
+          frame.style.setProperty('--tilt-y', 0);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
