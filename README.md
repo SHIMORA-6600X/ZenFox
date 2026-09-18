@@ -1,7 +1,7 @@
 ### ZenFox
 
 <p align="center">
-  <a href="https://discord.gg/y7NqB8VUAG"><img src="https://img.shields.io/badge/Discord-Join-5865F2?logo=discord&logoColor=blue" alt="Discord"></a>
+  <a href="https://discord.gg/bQxe2dkgMW"><img src="https://img.shields.io/badge/Discord-Join-5865F2?logo=discord&logoColor=blue" alt="Discord"></a>
   <a href="https://t.me/shimora_projects"><img src="https://img.shields.io/badge/Telegram-Join-26A5E4?logo=telegram&logoColor=sky" alt="Join Telegram"></a>
 </p>
 
