@@ -42,6 +42,8 @@ it's a Custom user.js that's make your browser more faster give feel like a chro
 • 🔌 _Modern Website Compatibility – Works flawlessly with heavy sites_ (YouTube, Netflix, etc.).
 
 • 🪄 _Smooth_: _make firefox smooth scrolling_
+
+• 🛠 remove Uneccesery Firefox Services Bloated
  
 #### 💎 _SUPPORT_
 
