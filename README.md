@@ -51,7 +51,7 @@ _if You like MY project please leave a Star_ ⭐
 
 #### 🌹 _SPECIAL THANKS FOR_ 
 [iAHMED](https://github.com/A7md70242602GH)
-_Giving Some Ideas & Testing The Project_
+_Giving Some Ideas & Testing The Project's_
 
 [Kenjaku](https://github.com/kenjaku-dev)
 _For Helping Me To Making a Website For My Projects_
