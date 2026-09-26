@@ -2,7 +2,7 @@
  * LiteFox                                                                 *
  * "SHIMORA"                                                *
  * priority: Debloat Firefox                                             *
- * version: 156                                                             *
+ * version: 157                                                             *
  * url: https://github.com/SHIMORA-6600X/ZenFox                           *
  * license: MIT
  ***************************************************************************/
@@ -44,7 +44,7 @@ user_pref("browser.compactmode.show", true);
 
 // PREF: preferred color scheme for websites
 // Dark (0), Light (1), System (2), Browser (3) [DEFAULT FF95+]
-user_pref("layout.css.prefers-color-scheme.content-override", 0)
+user_pref("layout.css.prefers-color-scheme.content-override", 0);
 
 // PREF: prevent private windows being separate from normal windows in taskbar [WINDOWS] [FF106+]
 user_pref("browser.privateWindowSeparation.enabled", false);
@@ -96,9 +96,10 @@ user_pref("full-screen-api.transition-duration.enter", "0 0"); // default=200 20
 user_pref("full-screen-api.transition-duration.leave", "0 0"); // default=200 200
 
 // PREF: disable fullscreen notice
-// [NOTE] Adjust to a sensible value, like 1250, if you have security concerns.
-user_pref("full-screen-api.warning.timeout", 0); // default=3000; alt=1250
-user_pref("full-screen-api.warning.delay", -1); // default=500
+// [SECURITY v157] Safe defaults kept (1250/500). Setting 0/-1 removes anti-spoofing
+// protection and is opt-in only for trusted kiosk setups.
+user_pref("full-screen-api.warning.timeout", 1250); // default=3000; unsafe opt-in=0
+user_pref("full-screen-api.warning.delay", 500); // default=500; unsafe opt-in=-1
 
 /****************************************************************************
  * SECTION: FONT APPEARANCE                                                 *
@@ -160,7 +161,7 @@ user_pref("browser.urlbar.recentsearches.featureGate", false);
 // PREF: disable tab-to-search [FF85+]
 // Alternatively, you can exclude on a per-engine basis by unchecking them in Options>Search
 // [SETTING] Privacy & Security>Address Bar>When using the address bar, suggest>Search engines
-user_pref("browser.urlbar.suggest.engines", true);
+// [NOTE] browser.urlbar.suggest.engines already set to true above (deduped v157).
 
 // PREF: Adaptive History Autofill
 user_pref("browser.urlbar.autoFill", false); // [DEFAULT]
@@ -244,12 +245,14 @@ user_pref("browser.toolbars.bookmarks.visibility", "newtab"); // DEFAULT
 
 /******************************************************************************
  * SECTION: POCKET                                                            *
-******************************************************************************/
-user_pref("extensions.pocket.enabled", false); // DEFAULT
-user_pref("extensions.pocket.api"," ");
-user_pref("extensions.pocket.oAuthConsumerKey", " ");
-user_pref("extensions.pocket.site", " ");
-user_pref("extensions.pocket.showHome", false);
+ ******************************************************************************/
+// [REMOVED v157] Pocket was removed from modern Firefox; these prefs are dead.
+// Kept commented for ESR reference only.
+//user_pref("extensions.pocket.enabled", false); // DEFAULT
+//user_pref("extensions.pocket.api"," ");
+//user_pref("extensions.pocket.oAuthConsumerKey", " ");
+//user_pref("extensions.pocket.site", " ");
+//user_pref("extensions.pocket.showHome", false);
 
 /******************************************************************************
  * SECTION: DOWNLOADS                                 *

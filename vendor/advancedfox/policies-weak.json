@@ -1,0 +1,23 @@
+{
+  "policies": {
+    "SearchEngines": {
+      "Add": [
+        {
+          "Name": "SearXNG",
+          "Description": "SearXNG is a metasearch engine. Users are neither tracked nor profiled.",
+          "URLTemplate": "https://priv.au/search?q={searchTerms}",
+          "Method": "GET",
+          "SuggestURLTemplate": "https://priv.au/autocompleter?q={searchTerms}"
+        },
+        {
+          "Name": "Brave Search",
+          "Description": "The smarter way to search.",
+          "URLTemplate": "https://search.brave.com/search?q={searchTerms}",
+          "Method": "GET",
+          "IconURL": "https://cdn.search.brave.com/serp/favicon.ico"
+        }
+      ],
+      "Default": "SearXNG"
+    }
+  }
+}

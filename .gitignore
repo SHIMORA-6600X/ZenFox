@@ -1,0 +1,29 @@
+# ZenFox ignores
+# Release artifacts (built by tools/build.sh, never commit)
+ZenFox-*.zip
+checksums.txt
+dist/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Node (only used for --check lint, no deps)
+/node_modules/
+
+# Profiling / local test
+*.log
+
+# Installer (Python stdlib; frozen builds via PyInstaller)
+__pycache__/
+*.pyc
+.qt-venv/
+build/
+dist/
+*.spec
+ZenFox-Setup-*

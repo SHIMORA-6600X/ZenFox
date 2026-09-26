@@ -1,6 +1,7 @@
 {
     "__COMMENT__ More Information": "https://github.com/mozilla/policy-templates/tree/master#readme",
     "policies": {
+        "_version_comment": "ZenFox v157 Balanced. Auto-updates ON by default; set AppAutoUpdate=false + ManualAppUpdateOnly=true to freeze.",
         "AppAutoUpdate": true,
         "AppAutoUpdate_comment": "Change to false to disable auto-updates.",
         "DisableFirefoxStudies": true,
@@ -9,9 +10,9 @@
         "DisableSetDesktopBackground": true,
         "DisableDeveloperTools": false,
         "DontCheckDefaultBrowser": true,
+        "_DNSOverHTTPS_comment": "Disabled by default (uses system DNS). To enable DoH, set Enabled=true and ProviderURL e.g. https://mozilla.cloudflare-dns.com/dns-query.",
         "DNSOverHTTPS": {
             "Enabled": false,
-            "ProviderURL": "",
             "Locked": false
         },
 
@@ -26,12 +27,9 @@
         "ManualAppUpdateOnly": false,
         "ManualAppUpdateOnly_comment": "Change to true to disable auto-updates.",
         "NoDefaultBookmarks": true,
-        "WebsiteFilter": {
-            "Block": [
-                "https://localhost/*"
-            ]
-        },
+        "_WebsiteFilter_comment": "REMOVED v157: previous Block [https://localhost/*] broke local dev servers. Re-add only to kiosk-lock a machine.",
         "Extensions": {
+            "_Install_comment": "Forces uBlock Origin on first run (consent by using this policy file). Delete this key for manual install.",
             "Install": [
                 "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi"
             ],
