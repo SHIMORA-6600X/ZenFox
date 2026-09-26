@@ -129,4 +129,4 @@ _gives me some ideas & testing the project_
 _helps me to make a website for my project_
 
 #### 🧾 _LICENSE_
-_This project is under_ [MIT](https://github.com/SHIMORA-6600X/NitroFox/blob/main/LICENSE) _license_
+_This project is under_ [MIT](https://github.com/SHIMORA-6600X/ZenFox/blob/main/LICENSE) _license_
