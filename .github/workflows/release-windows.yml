@@ -8,6 +8,8 @@ on:
     types: [published]
 jobs:
   build-exe:
+    permissions:
+      contents: write
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4

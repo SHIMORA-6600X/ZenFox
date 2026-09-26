@@ -38,7 +38,9 @@ class TestSources(unittest.TestCase):
                 zf.writestr("subdir/nested.js", "n")
             out = Path(d) / "out"
             got = sources.safe_extract(z, out, allowlist={"user.js"})
-            self.assertEqual(got, [out / "user.js"])
+            # safe_extract resolves (macOS /var→/private/var, Windows 8.3
+            # short names): compare canonical-to-canonical.
+            self.assertEqual(got, [(out / "user.js").resolve()])
             self.assertFalse((out / "evil.js").exists())
             self.assertFalse(any(out.rglob("evil.js")))
 

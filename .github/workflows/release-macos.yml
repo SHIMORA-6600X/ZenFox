@@ -8,6 +8,8 @@ on:
     types: [published]
 jobs:
   build-macos:
+    permissions:
+      contents: write
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
