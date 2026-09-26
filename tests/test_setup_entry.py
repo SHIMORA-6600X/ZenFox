@@ -61,29 +61,34 @@ class TestVenvSelection(unittest.TestCase):
         self.assertFalse(setup_mod._venv_has_qt(Path("/nonexistent/python")))
         self.assertFalse(setup_mod._ensure_venv_marker(Path("/nonexistent-repo")))
 
-    @unittest.skipUnless(__import__("importlib").util.find_spec("PySide6") is not None,
-                         "needs an interpreter with PySide6")
-    def test_venv_with_qt_gets_marked(self):
-        # hardlink THIS interpreter (proven to import PySide6) into a fake
-        # venv layout — instant, portable (NTFS supports hardlinks), no venv
-        # needed since _venv_has_qt only runs `<link> -c "import PySide6"`.
-        import os as _os
-        import shutil as _shutil
-        tmp = tempfile.mkdtemp()
-        # Wine/Windows may lock the executed hardlink: strict assertions,
-        # forgiving teardown.
-        self.addCleanup(lambda: _shutil.rmtree(tmp, ignore_errors=True))
-        repo = Path(tmp)
-        bindir = repo / ".qt-venv" / ("Scripts" if _os.name == "nt" else "bin")
-        bindir.mkdir(parents=True)
-        link = bindir / ("python.exe" if _os.name == "nt" else "python")
-        try:
-            _os.link(sys.executable, link)
-        except OSError:
-            self.skipTest("cannot hardlink interpreter")
-        self.assertTrue(setup_mod._venv_has_qt(link))
-        self.assertTrue(setup_mod._ensure_venv_marker(repo))
-        self.assertTrue((repo / ".qt-venv" / ".zenfox-qt-ready").is_file())
+    def test_venv_has_qt_matches_current_interpreter(self):
+        # no path tricks: the running interpreter either imports PySide6 or not
+        import importlib.util
+        expected = importlib.util.find_spec("PySide6") is not None
+        self.assertEqual(setup_mod._venv_has_qt(Path(sys.executable)), expected)
+
+    def _fake_venv(self, repo):
+        """Layout derived from the product code (bin vs Scripts per OS)."""
+        venv_py = setup_mod._venv_python(repo)
+        venv_py.parent.mkdir(parents=True)
+        venv_py.touch()
+        return venv_py
+
+    def test_working_venv_gets_marked(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            self._fake_venv(repo)
+            with patch.object(setup_mod, "_venv_has_qt", return_value=True):
+                self.assertTrue(setup_mod._ensure_venv_marker(repo))
+            self.assertTrue((repo / ".qt-venv" / ".zenfox-qt-ready").is_file())
+
+    def test_broken_venv_never_gets_marked(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            self._fake_venv(repo)
+            with patch.object(setup_mod, "_venv_has_qt", return_value=False):
+                self.assertFalse(setup_mod._ensure_venv_marker(repo))
+            self.assertFalse((repo / ".qt-venv" / ".zenfox-qt-ready").exists())
 
     def test_reexec_uses_venv_and_loop_guard(self):
         with patch("os.execve") as exe:
