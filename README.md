@@ -54,7 +54,7 @@ Deleting `user.js` does **not** revert applied prefs. Either:
 
 • 🪄 _Smooth – One active scroll profile (ZEN), 60/90/120Hz alternatives commented_
 
-• 🛠 _Debloat (LiteFox) – AI/chatbot/translations/sponsored stories off, Pocket remnants removed_
+• 🛠 _De-bloated (LiteFox) – AI/chatbot/translations/sponsored stories off, Pocket remnants removed_
 
 #### 📊 Benchmarks
 
@@ -119,14 +119,14 @@ left list on/off, center preview, right change log, `apply changes` writes the f
 
 #### 💎 _SUPPORT_
 
-_if You like MY project please leave a Star_ ⭐
+_If you like my project please leave a star_ ⭐ 
 
-#### 🌹 _SPECIAL THANKS FOR_
-[iAHMED](https://github.com/A7md70242602GH)
-_Giving Some Ideas & Testing The Project's_
+#### 🌹 _SPECIAL THANKS FOR_ 
+[A7](https://github.com/A7md70242602GH)
+_gives me some ideas & testing the project_
 
 [Kenjaku](https://github.com/kenjaku-dev)
-_For Helping Me To Making a Website For My Project's_
+_helps me to make a website for my project_
 
 #### 🧾 _LICENSE_
-_This project is under_ [MIT](https://github.com/SHIMORA-6600X/ZenFox/blob/main/LICENSE) _License_
+_This project is under_ [MIT](https://github.com/SHIMORA-6600X/NitroFox/blob/main/LICENSE) _license_
