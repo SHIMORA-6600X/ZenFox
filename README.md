@@ -8,7 +8,7 @@
 Custom `user.js` presets that make Firefox faster and calmer. See `CHANGELOG.md` (current: **v157 Balanced**).
 
 [about:config](https://support.mozilla.org/en-US/kb/about-config-editor-firefox) tweaks for [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/).
-Support range: **Firefox 128 ESR + latest Stable** (Beta/Nightly may need adjustments; see comments with `[FFxxx+]`).
+Support range: ** _Firefox 115 ESR_ + ** (Beta/Nightly may need adjustments; see comments with `[FFxxx+]`).
 
 #### Files (pick what you need)
 
@@ -115,7 +115,7 @@ left list on/off, center preview, right change log, `apply changes` writes the f
 |*It's important to read this* |  *Files*    | _Note_    |
 |-------|-----|-------|
 | *Don't Download it* |  *Source code* ❎ | *that's the source code on main page not in Releases* |
-|  *Download it*      |  *ZenFox-v157.zip* ✔️| *Built by `tools/build.sh`, includes checksums*  |
+|  *Download it*      |  *ZenFox.zip* ✔️| *Built by `tools/build.sh`, includes checksums*  |
 
 #### 💎 _SUPPORT_
 
