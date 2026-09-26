@@ -50,12 +50,11 @@ it's a Custom user.js that's make your browser more faster give feel like a chro
 _if You like MY project please leave a Star_ ⭐ 
 
 #### 🌹 _SPECIAL THANKS FOR_ 
-[iAHMED](https://github.com/A7md70242602GH)
-_Giving Some Ideas & Testing The Project's_
+[A7](https://github.com/A7md70242602GH)
+_Giving Some Ideas & Testing The Project_
 
 [Kenjaku](https://github.com/kenjaku-dev)
-_For Helping Me To Making a Website For My Project's_
+_Helping Me To Make a Website For My Project_
 
 #### 🧾 _LICENSE_
 _This project is under_ [MIT](https://github.com/SHIMORA-6600X/NitroFox/blob/main/LICENSE) _License_
-
