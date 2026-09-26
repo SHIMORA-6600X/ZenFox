@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=ZenFox Setup
-Comment=Install ZenFox / AdvancedFox presets into Firefox — offline, Simple + Custom modes
-Exec=bash -c "cd \\$(dirname %k) && ./setup.sh"
-Icon=firefox
-Terminal=false
-Categories=Settings;
-StartupNotify=true
