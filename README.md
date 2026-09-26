@@ -45,10 +45,15 @@ Deleting `user.js` does **not** revert applied prefs. Either:
 #### ✨ _Features_
 
 • ⚡️ _Faster Page Loads – Balanced network/rendering (pacing on, 900 connections, sane DNS cache)_
+
 • 🛠 _Optimized Cache – 512MB disk + 512MB media defaults; repeat visits faster without 1GB bloat_
+
 • 🔋 _Lightweight – Session restore lazy, 10 undo tabs, tab unload on low memory_
+
 • 🔌 _Compatibility – WebRender + Canvas accel with fallback notes for old GPUs/VMs_
+
 • 🪄 _Smooth – One active scroll profile (ZEN), 60/90/120Hz alternatives commented_
+
 • 🛠 _Debloat (LiteFox) – AI/chatbot/translations/sponsored stories off, Pocket remnants removed_
 
 #### 📊 Benchmarks
