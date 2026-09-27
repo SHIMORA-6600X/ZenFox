@@ -854,10 +854,10 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
   </div>
 
   <div class="stats">
-    <div class="stat"><b data-count="3">0</b><span>Preset Files</span></div>
-    <div class="stat"><b data-count="180" data-suffix="+">0</b><span>Config Tweaks</span></div>
+    <div class="stat"><b data-count="2">0</b><span>Preset Editions</span></div>
+    <div class="stat"><b data-count="60" data-suffix="+">0</b><span>Config Tweaks</span></div>
     <div class="stat"><b data-count="100" data-suffix="%">0</b><span>Open Source</span></div>
-    <div class="stat"><b data-count="157" data-prefix="v">0</b><span>Balanced Release</span></div>
+    <div class="stat"><b data-count="0" data-prefix="$">0</b><span>Free Forever</span></div>
   </div>
 
   <div class="marquee" aria-hidden="true">
@@ -911,10 +911,10 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
 
         <div class="codebox reveal">
           <div class="codebar"><i></i><i></i><i></i><span>zenfox/user.js</span></div>
-<pre><span class="code-line"><span class="c">// ── ZenFox preset v157 Balanced ──</span></span>
+<pre><span class="code-line"><span class="c">// ── ZenFox preset ──</span></span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.http.max-connections"</span>, <span class="p">900</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.http.pacing.requests.enabled"</span>, <span class="p">true</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"browser.cache.disk.capacity"</span>, <span class="p">512000</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.http.pipelining"</span>, <span class="p">true</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"browser.cache.disk.enable"</span>, <span class="p">true</span>);</span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"gfx.webrender.all"</span>, <span class="p">true</span>);</span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"general.smoothScroll"</span>, <span class="p">true</span>);</span></pre>
         </div>
@@ -1466,14 +1466,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 /* ============================================================
-   15) FPS METER (press Shift+D, ignored while typing)
+   15) FPS METER (press D)
    ============================================================ */
 let fpsBox = null, fpsRaf;
 window.addEventListener('keydown', e => {
-  const t = e.target;
-  const typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
-  if (typing) return;
-  if ((e.key.toLowerCase() === 'd' && e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey)){
+  if (e.key.toLowerCase() === 'd' && !e.ctrlKey && !e.metaKey && !e.altKey){
     if (fpsBox){ fpsBox.remove(); fpsBox = null; cancelAnimationFrame(fpsRaf); return; }
     fpsBox = document.createElement('div');
     Object.assign(fpsBox.style, {
