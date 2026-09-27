@@ -24,7 +24,7 @@ _Support : Firefox 115_ +
 
 1. _Create a backup profile_ (`about:profiles > Back up` or copy the folder).
 
-2. _Download `ZenFox-v157.zip` from Releases_ (not the `Source code` archive). Zip contains: `user.js`, `LiteFox.js`, `Softfox.js`, `policies.json`, `README.md`, `LICENSE`, `CHANGELOG.md`, `checksums.txt`.
+2. _Download `ZenFox.zip` from Releases_ (not the `Source code` archive). Zip contains: `ZenFox.js`, `LiteFox.js`, `Softfox.js`, `policies.json`,`LICENSE`.
 
 3. _Review overrides_ — search for `Max opt-in` and `[REMOVED v157]` to see aggressive/legacy options.
 
