@@ -25,11 +25,11 @@ _Support : Firefox 115_ +
 
 2. _Download the latest `ZenFox.zip` file from the **Releases** page. Do not download the **Source code** archive_.
 
-3. _Extract the archive and choose the configuration preset you want to use.
+3. _Extract the archive and choose the configuration preset you want to use_.
 
 4. _Open `about:profiles` in Firefox and click **Open Folder** next to the target profile_.
 
-5. _Copy the selected configuration file into the profile folder and rename it to `user.js_`.
+5. _Copy the selected configuration file into the profile folder and rename it to `user.js_`_.
 
 6. _If you are using `policies.json`, place it inside Firefox’s `distribution/` folder_.
 
