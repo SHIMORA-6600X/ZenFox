@@ -48,7 +48,6 @@ _Support : Firefox 115_ +
 
 • 🛠 _De-bloated – Cleaner browsing with unwanted components removed_
 
-
 |*It's important to read this* |  *Files*    | _Note_    |
 |-------|-----|-------|
 | *Don't Download it* |  *Source code* ❎ | *that's the source code on main page not in Releases* |
