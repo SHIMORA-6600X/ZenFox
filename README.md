@@ -29,7 +29,7 @@ _Support : Firefox 115_ +
 
 4. _Open `about:profiles` in Firefox and click **Open Folder** next to the target profile_.
 
-5. _Copy the selected configuration file into the profile folder and rename it to `user.js_`_.
+5. _Copy the selected configuration file into the profile folder and rename it to `user.js`_.
 
 6. _If you are using `policies.json`, place it inside Firefox’s `distribution/` folder_.
 
