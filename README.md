@@ -51,6 +51,7 @@ _Support : Firefox 115_ +
 • 🛠 _De-bloated – Cleaner browsing with unwanted components removed_
 
 
+
 #### 💎 _SUPPORT_
 
 _If you like my project please leave a star_ ⭐ 
