@@ -16,7 +16,6 @@ _Support : Firefox 115_ +
 | _`Zenfox.js`_ | _Performance_ ⚡️ | _Performance-focused configuration to improve responsiveness,reduce CPU usage,and speed up browsing_ | 
 | _`Litefox.js`_ | _Debloating_ ♻️ | _Strips unnecessary features to keep Firefox clean, lightweight, and distraction-free_ |
 | _`Softfox.js`_ | _Smooth Scrolling_ 🖌 | _Enhances scrolling behavior for a smoother and more fluid browsing experience_ | 
-| _`policies.json`_ | _Force Settings_ | _Applies privacy-oriented enterprise policies, including telemetry reduction and privacy-focused search engine settings_ | 
 
 #### 📥 _Installation_
 
