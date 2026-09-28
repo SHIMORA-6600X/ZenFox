@@ -19,19 +19,21 @@ _Support : Firefox 115_ +
 
 #### 📥 _Installation_
 
-> ⚠️ Back up your profile first. `user.js` values persist in `prefs.js` even after you delete `user.js`.
+> ⚠️ Back up your Firefox profile before applying ZenFox. Changes made through `user.js` may remain in `prefs.js` even after removing the file.
 
-1. _Create a backup profile_ (`about:profiles > Back up` or copy the folder).
+1. _Create a backup from `about:profiles` or copy your profile folder manually_.
 
-2. _Download `ZenFox.zip` from Releases_ (not the `Source code` archive). Zip contains: `ZenFox.js`, `LiteFox.js`, `Softfox.js`, `policies.json`,`LICENSE`.
+2. _Download the latest `ZenFox.zip` file from the **Releases** page. Do not download the **Source code** archive_.
 
-3. _Review overrides_ — search for `Max opt-in` and `[REMOVED v157]` to see aggressive/legacy options.
+3. _Extract the archive and choose the configuration preset you want to use.
 
-4. _Open `about:profiles`_, click **Open Folder** on Root Directory for the target profile.
+4. _Open `about:profiles` in Firefox and click **Open Folder** next to the target profile_.
 
-5. _Copy `user.js` (and optionally `LiteFox.js`/`Softfox.js` merged or as separate test runs) into the folder._ `policies.json` goes to Firefox install `distribution/` folder (admin), not the profile.
+5. _Copy the selected configuration file into the profile folder and rename it to `user.js_`.
 
-6. _Restart Firefox._
+6. _If you are using `policies.json`, place it inside Firefox’s `distribution/` folder_.
+
+7. _Restart Firefox to apply the changes_.
 
 
 #### ✨ _Features_
