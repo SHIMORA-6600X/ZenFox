@@ -13,8 +13,8 @@ _Support : Firefox 115_ +
 
 | _File_ 📂 | _Topic_ 🪄 | _Features_ ✨ |
 |------|---------|-------|
-| _`ZenFox.js`_ | _Performance_ ⚡️ | _Performance-focused configuration to improve responsiveness,reduce CPU usage,and speed up browsing_ | 
-| _`LiteFox.js`_ | _Debloating_ ♻️ | _Strips unnecessary features to keep Firefox clean, lightweight, and distraction-free_ |
+| _`Zenfox.js`_ | _Performance_ ⚡️ | _Performance-focused configuration to improve responsiveness,reduce CPU usage,and speed up browsing_ | 
+| _`Litefox.js`_ | _Debloating_ ♻️ | _Strips unnecessary features to keep Firefox clean, lightweight, and distraction-free_ |
 | _`Softfox.js`_ | _Smooth Scrolling_ 🖌 | _Enhances scrolling behavior for a smoother and more fluid browsing experience_ | 
 | _`policies.json`_ | _Force Settings_ | _Applies privacy-oriented enterprise policies, including telemetry reduction and privacy-focused search engine settings_ | 
 
@@ -35,27 +35,19 @@ _Support : Firefox 115_ +
 6. _Restart Firefox._
 
 
-
-#### ↩️ Uninstall / Revert
-
-Deleting `user.js` does **not** revert applied prefs. Either:
-- Restore your backup profile folder, or
-- `about:support > Refresh Firefox`, or
-- `about:config` → reset each `user_pref` key manually.
-
 #### ✨ _Features_
 
-• ⚡️ _Faster Page Loads – Balanced network/rendering (pacing on, 900 connections, sane DNS cache)_
+• ⚡️ _Faster Page Loads – Reduced loading times for a quicker, more responsive web experience_
 
-• 🛠 _Optimized Cache – 512MB disk + 512MB media defaults; repeat visits faster without 1GB bloat_
+• 🛠 _Optimized Cache – Smart cache settings for faster everyday browsing_
 
-• 🔋 _Lightweight – Session restore lazy, 10 undo tabs, tab unload on low memory_
+• 🔋 _Lightweight – Designed to stay fast with fewer resources_
 
-• 🔌 _Compatibility – WebRender + Canvas accel with fallback notes for old GPUs/VMs_
+• 🔌 _Compatibility – Optimized graphics performance for every setup_
 
-• 🪄 _Smooth – One active scroll profile (ZEN), 60/90/120Hz alternatives commented_
+• 🪄 _Smooth Scrolling – Fluid scrolling profiles designed for 60Hz, 90Hz, and 120Hz displays_
 
-• 🛠 _De-bloated (LiteFox) – AI/chatbot/translations/sponsored stories off, Pocket remnants removed_
+• 🛠 _De-bloated – Cleaner browsing with unwanted components removed_
 
 
 |*It's important to read this* |  *Files*    | _Note_    |
