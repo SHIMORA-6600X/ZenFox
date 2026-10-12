@@ -1,10 +1,9 @@
 # ============================================================
-#  ZenFox File Validation Pipeline
-#  - Validate user.js syntax (with detailed error output)
-#  - Find all .zip files, extract them, validate JS inside
-#  - Detect: empty files, BOM, CRLF, non-ASCII chars
-#  - Show exact line numbers for syntax errors
-#  - No automatic release creation
+#  ZenFox Validation Pipeline
+#  - Validate user.js syntax and detect file issues
+#  - Validate ZIP files uploaded in every new GitHub Release
+#  - Detect errors inside ZIP contents
+#  - All checks are read-only (no release creation)
 # ============================================================
 
 name: Validate Files
@@ -14,6 +13,8 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+  release:
+    types: [published]
   workflow_dispatch:
 
 permissions:
@@ -26,6 +27,7 @@ jobs:
   validate-userjs:
     name: 🔍 Validate user.js
     runs-on: ubuntu-latest
+    if: github.event_name != 'release'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -80,7 +82,7 @@ jobs:
           fi
 
           # Check for trailing whitespace
-          trailing=$(grep -n ' $' user.js 2>/dev/null | head -10)
+          trailing=$(grep -n ' $' user.js 2>/dev/null || true)
           if [ -n "$trailing" ]; then
             echo "⚠️ Trailing whitespace found on lines:" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
@@ -96,7 +98,7 @@ jobs:
           fi
 
           # Check for non-ASCII characters
-          nonascii=$(grep -nP '[^\x00-\x7F]' user.js 2>/dev/null | head -10)
+          nonascii=$(grep -nP '[^\x00-\x7F]' user.js 2>/dev/null | head -10 || true)
           if [ -n "$nonascii" ]; then
             echo "⚠️ Non-ASCII characters found on lines:" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
@@ -106,7 +108,7 @@ jobs:
           fi
 
           # Check for TODO/FIXME markers
-          todos=$(grep -nE 'TODO|FIXME|XXX|HACK' user.js 2>/dev/null)
+          todos=$(grep -nE 'TODO|FIXME|XXX|HACK' user.js 2>/dev/null || true)
           if [ -n "$todos" ]; then
             echo "⚠️ TODO/FIXME markers found:" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
@@ -125,66 +127,84 @@ jobs:
           echo "ℹ️ No \`user.js\` file at root." >> $GITHUB_STEP_SUMMARY
 
   # ============================================================
-  #  JOB 2: Validate all .zip files
+  #  JOB 2: Validate ZIP files in new Releases
   # ============================================================
-  validate-zips:
-    name: 📦 Validate ZIP Files
+  validate-release-zips:
+    name: 📦 Validate Release ZIPs
     runs-on: ubuntu-latest
+    if: github.event_name == 'release'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Download release assets
+        run: |
+          mkdir -p assets
+          gh release download "${{ github.event.release.tag_name }}" \
+            --dir assets \
+            --repo "${{ github.repository }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: List downloaded assets
+        run: |
+          echo "## 📦 Release Assets" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Tag:** \`${{ github.event.release.tag_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          ls -lh assets/ >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Find ZIP files
+      - name: Find ZIP files in release
         id: find
         run: |
-          # Search entire repository except .git
-          zips=$(find . -name "*.zip" -not -path "./.git/*" | sort)
+          zips=$(find assets -name "*.zip" -type f | sort)
           if [ -z "$zips" ]; then
             echo "found=false" >> $GITHUB_OUTPUT
           else
             echo "found=true" >> $GITHUB_OUTPUT
             echo "$zips" > /tmp/zip_list.txt
-            echo "📦 Found ZIP files:"
-            cat /tmp/zip_list.txt
           fi
 
-      - name: Skip if no ZIP
+      - name: No ZIP files warning
         if: steps.find.outputs.found == 'false'
         run: |
-          echo "## 📦 ZIP Validation" >> $GITHUB_STEP_SUMMARY
-          echo "ℹ️ No ZIP files found in repository." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "⚠️ No ZIP files found in this release." >> $GITHUB_STEP_SUMMARY
 
-      - name: Validate each ZIP
+      - name: Validate each release ZIP
         if: steps.find.outputs.found == 'true'
         run: |
-          echo "## 📦 ZIP Validation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🧪 ZIP Content Validation" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           failed=0
+
           while IFS= read -r zip; do
-            echo "### 📁 Processing: \`$zip\`" >> $GITHUB_STEP_SUMMARY
+            name=$(basename "$zip")
+            echo "### 📁 \`$name\`" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
 
-            # Create temp dir for extraction
             tmpdir=$(mktemp -d)
 
-            # Test ZIP integrity first
+            # Test ZIP integrity
             if ! unzip -t "$zip" > /dev/null 2>&1; then
-              echo "❌ \`$zip\` is corrupted (failed integrity test)" >> $GITHUB_STEP_SUMMARY
+              echo "❌ **ZIP is corrupted** (failed integrity test)" >> $GITHUB_STEP_SUMMARY
               failed=1
               rm -rf "$tmpdir"
+              echo "" >> $GITHUB_STEP_SUMMARY
               continue
             fi
 
             # Extract
             if ! unzip -o "$zip" -d "$tmpdir" > /dev/null 2>&1; then
-              echo "❌ Failed to extract \`$zip\`" >> $GITHUB_STEP_SUMMARY
+              echo "❌ **Failed to extract ZIP**" >> $GITHUB_STEP_SUMMARY
               failed=1
               rm -rf "$tmpdir"
+              echo "" >> $GITHUB_STEP_SUMMARY
               continue
             fi
 
@@ -193,30 +213,31 @@ jobs:
             echo '```' >> $GITHUB_STEP_SUMMARY
             find "$tmpdir" -type f -printf '%P\n' | sort >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
 
             # Check for empty files
             empty_found=0
             while IFS= read -r file; do
               if [ -f "$file" ] && [ ! -s "$file" ]; then
-                echo "⚠️ Empty file inside ZIP: \`${file#$tmpdir/}\`" >> $GITHUB_STEP_SUMMARY
+                echo "⚠️ Empty file: \`${file#$tmpdir/}\`" >> $GITHUB_STEP_SUMMARY
                 empty_found=1
               fi
             done < <(find "$tmpdir" -type f)
 
-            # Validate all .js files inside with detailed errors
-            js_failed=0
+            # Validate all .js files
             js_count=0
+            js_failed=0
             while IFS= read -r jsfile; do
               js_count=$((js_count + 1))
               relpath="${jsfile#$tmpdir/}"
-              if ! node --check "$jsfile" 2>/tmp/jserr.txt; then
-                echo "❌ Syntax error in \`$relpath\`:" >> $GITHUB_STEP_SUMMARY
+              if node --check "$jsfile" 2>/tmp/jserr.txt; then
+                echo "✅ \`$relpath\` — valid JS" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "❌ \`$relpath\` — syntax error:" >> $GITHUB_STEP_SUMMARY
                 echo '```' >> $GITHUB_STEP_SUMMARY
                 cat /tmp/jserr.txt >> $GITHUB_STEP_SUMMARY
                 echo '```' >> $GITHUB_STEP_SUMMARY
                 js_failed=1
-              else
-                echo "✅ \`$relpath\` — valid JS" >> $GITHUB_STEP_SUMMARY
               fi
             done < <(find "$tmpdir" -name "*.js" -type f)
 
@@ -224,12 +245,11 @@ jobs:
               echo "ℹ️ No .js files found inside this ZIP" >> $GITHUB_STEP_SUMMARY
             fi
 
-            # Summary for this ZIP
             echo "" >> $GITHUB_STEP_SUMMARY
             if [ $js_failed -eq 0 ] && [ $empty_found -eq 0 ]; then
-              echo "✅ **\`$zip\` passed all checks**" >> $GITHUB_STEP_SUMMARY
+              echo "✅ **\`$name\` passed all checks**" >> $GITHUB_STEP_SUMMARY
             else
-              echo "❌ **\`$zip\` failed validation**" >> $GITHUB_STEP_SUMMARY
+              echo "❌ **\`$name\` failed validation**" >> $GITHUB_STEP_SUMMARY
               failed=1
             fi
             echo "" >> $GITHUB_STEP_SUMMARY
@@ -238,11 +258,21 @@ jobs:
 
           echo "---" >> $GITHUB_STEP_SUMMARY
           if [ $failed -eq 0 ]; then
-            echo "### ✅ All ZIP files passed validation." >> $GITHUB_STEP_SUMMARY
+            echo "### ✅ All release ZIPs passed validation." >> $GITHUB_STEP_SUMMARY
           else
-            echo "### ❌ Some ZIP files failed validation. See details above." >> $GITHUB_STEP_SUMMARY
+            echo "### ❌ Some release ZIPs failed validation." >> $GITHUB_STEP_SUMMARY
             exit 1
           fi
+
+      - name: Convert release to draft on failure
+        if: failure() && steps.find.outputs.found == 'true'
+        run: |
+          gh release edit "${{ github.event.release.tag_name }}" \
+            --draft \
+            --repo "${{ github.repository }}"
+          echo "⚠️ Release converted to Draft due to validation failure."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # ============================================================
   #  JOB 3: Final Report
@@ -250,21 +280,25 @@ jobs:
   report:
     name: 📊 Final Report
     runs-on: ubuntu-latest
-    needs: [validate-userjs, validate-zips]
+    needs: [validate-userjs, validate-release-zips]
     if: always()
     steps:
       - name: Summary
         run: |
           echo "## 🏁 Validation Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|" >> $GITHUB_STEP_SUMMARY
           echo "| user.js | ${{ needs.validate-userjs.result }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| ZIP files | ${{ needs.validate-zips.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Release ZIPs | ${{ needs.validate-release-zips.result }} |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ needs.validate-userjs.result }}" = "success" ] && \
-             [ "${{ needs.validate-zips.result }}" = "success" ]; then
-            echo "✅ **All checks passed. Ready for release.**" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ needs.validate-userjs.result }}" = "success" ] || \
+             [ "${{ needs.validate-userjs.result }}" = "skipped" ]; then
+            if [ "${{ needs.validate-release-zips.result }}" = "success" ] || \
+               [ "${{ needs.validate-release-zips.result }}" = "skipped" ]; then
+              echo "✅ **All checks passed.**" >> $GITHUB_STEP_SUMMARY
+            fi
           else
-            echo "❌ **Some checks failed. Fix errors before releasing.**" >> $GITHUB_STEP_SUMMARY
+            echo "❌ **Some checks failed. See details above.**" >> $GITHUB_STEP_SUMMARY
           fi
