@@ -1,0 +1,254 @@
+# ============================================================
+#  ZenFox CI/CD Pipeline
+#  - Validate all JavaScript preset files
+#  - Build ZenFox.zip package on tag
+#  - Upload as artifact (manual release afterward)
+#  - No automatic GitHub Release creation
+# ============================================================
+
+name: ZenFox CI/CD
+
+on:
+  push:
+    branches: [main, master]
+    tags: ['v*', 'V*']
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version label for artifact (e.g. v1.5.8)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  # ============================================================
+  #  JOB 1: Validate all JS files
+  # ============================================================
+  validate:
+    name: 🔍 Validate JS Files
+    runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check JS syntax
+        run: |
+          echo "## 🔍 JavaScript Syntax Check" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          failed=0
+          count=0
+          for file in *.js; do
+            [ -f "$file" ] || continue
+            count=$((count + 1))
+            if node --check "$file" 2>/tmp/err.txt; then
+              echo "✅ \`$file\`" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "❌ \`$file\` — syntax error:" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              cat /tmp/err.txt >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              failed=1
+            fi
+          done
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Total files checked:** $count" >> $GITHUB_STEP_SUMMARY
+          exit $failed
+
+      - name: Check for common issues
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🧪 File Health" >> $GITHUB_STEP_SUMMARY
+          issues=0
+
+          for file in *.js; do
+            [ -f "$file" ] || continue
+
+            # BOM check
+            if head -c 3 "$file" | grep -q $'\xEF\xBB\xBF'; then
+              echo "⚠️ \`$file\` — BOM detected" >> $GITHUB_STEP_SUMMARY
+              issues=1
+            fi
+
+            # CRLF check
+            if grep -q $'\r' "$file" 2>/dev/null; then
+              echo "⚠️ \`$file\` — CRLF line endings" >> $GITHUB_STEP_SUMMARY
+              issues=1
+            fi
+
+            # Empty file
+            if [ ! -s "$file" ]; then
+              echo "⚠️ \`$file\` — empty file" >> $GITHUB_STEP_SUMMARY
+              issues=1
+            fi
+          done
+
+          if [ $issues -eq 0 ]; then
+            echo "✅ No issues detected" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # ============================================================
+  #  JOB 2: Build ZenFox.zip
+  # ============================================================
+  build:
+    name: 📦 Build ZenFox.zip
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Determine version
+        id: ver
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            V="${{ github.event.inputs.version }}"
+          else
+            V="${GITHUB_REF#refs/tags/}"
+          fi
+          echo "version=$V" >> $GITHUB_OUTPUT
+          echo "📦 Version: $V"
+
+      - name: Validate JS before build
+        run: |
+          for f in *.js; do
+            [ -f "$f" ] || continue
+            node --check "$f" || exit 1
+          done
+          echo "✅ All JS files valid"
+
+      - name: Prepare build folder
+        run: |
+          mkdir -p dist
+
+          # Copy all preset JS files
+          for f in *.js; do
+            [ -f "$f" ] || continue
+            cp "$f" dist/
+            echo "  📄 $f"
+          done
+
+          # Copy documentation
+          [ -f README.md ] && cp README.md dist/
+          [ -f LICENSE ] && cp LICENSE dist/
+          [ -d docs ] && cp -r docs dist/
+
+          echo "--- Build contents ---"
+          ls -la dist/
+
+      - name: Create ZIP archive
+        run: |
+          cd dist
+          zip -r ../ZenFox.zip . -x "*.DS_Store" "*.git*"
+          cd ..
+
+          echo "📦 Size: $(du -h ZenFox.zip | cut -f1)"
+          echo "--- Contents ---"
+          unzip -l ZenFox.zip
+
+      - name: Generate checksum
+        run: |
+          sha256sum ZenFox.zip > ZenFox.zip.sha256
+          echo "🔐 SHA256:"
+          cat ZenFox.zip.sha256
+
+      - name: Verify ZIP integrity
+        run: |
+          if unzip -t ZenFox.zip > /dev/null 2>&1; then
+            echo "✅ ZIP integrity verified"
+          else
+            echo "❌ ZIP is corrupted"
+            exit 1
+          fi
+
+      - name: Verify expected files
+        run: |
+          echo "## ✅ ZIP Content Verification" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          tmpdir=$(mktemp -d)
+          unzip -o ZenFox.zip -d "$tmpdir" > /dev/null
+
+          echo "**Files inside ZIP:**" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          find "$tmpdir" -type f -printf '%P\n' | sort >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          # Verify common files
+          expected=("user.js")
+          for f in "${expected[@]}"; do
+            if [ -f "$tmpdir/$f" ]; then
+              echo "✅ \`$f\` present" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "⚠️ \`$f\` missing" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
+
+          rm -rf "$tmpdir"
+
+      - name: Upload ZenFox.zip as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZenFox-${{ steps.ver.outputs.version }}
+          path: |
+            ZenFox.zip
+            ZenFox.zip.sha256
+          retention-days: 90
+
+      - name: Build summary
+        run: |
+          echo "## 🎉 Build Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Item | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Version | \`${{ steps.ver.outputs.version }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Size | $(du -h ZenFox.zip \| cut -f1) |" >> $GITHUB_STEP_SUMMARY
+          echo "| Files | $(unzip -l ZenFox.zip \| tail -1 \| awk '{print $2}') |" >> $GITHUB_STEP_SUMMARY
+          echo "| Checksum | \`$(cut -d' ' -f1 ZenFox.zip.sha256)\` |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📥 **Download the artifact from the Actions page**, then create the Release manually." >> $GITHUB_STEP_SUMMARY
+
+  # ============================================================
+  #  JOB 3: Final Report
+  # ============================================================
+  report:
+    name: 📊 Final Report
+    runs-on: ubuntu-latest
+    needs: [validate, build]
+    if: always()
+    steps:
+      - name: Summary
+        run: |
+          echo "## 🏁 Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Stage | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|" >> $GITHUB_STEP_SUMMARY
+          echo "| Validate | ${{ needs.validate.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build | ${{ needs.build.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ needs.validate.result }}" = "success" ] || \
+             [ "${{ needs.validate.result }}" = "skipped" ]; then
+            if [ "${{ needs.build.result }}" = "success" ] || \
+               [ "${{ needs.build.result }}" = "skipped" ]; then
+              echo "✅ **All stages passed.**" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "❌ **Build failed. Check details above.**" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "❌ **Validation failed. Check details above.**" >> $GITHUB_STEP_SUMMARY
+          fi
