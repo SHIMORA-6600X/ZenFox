@@ -1,9 +1,4 @@
 ## ZenFox 
-
-<p align="center">
-  <a href="https://t.me/shimora_projects"><img src="https://img.shields.io/badge/Telegram-Join-26A5E4?logo=telegram&logoColor=sky" alt="Join Telegram"></a>
-</p>
-
 [about:config](https://support.mozilla.org/en-US/kb/about-config-editor-firefox) tweaks for [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/).
 
 _Support : Firefox 115_ +
