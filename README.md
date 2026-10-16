@@ -1,4 +1,9 @@
 ## ZenFox 
+
+ <!-- Telegram -->
+  <a href="https://t.me/zenfox_firefox"><img src="https://img.shields.io/badge/TELEGRAM-000000?style=for-the-badge&logo=telegram&logoColor=sky" alt="Telegram"/></a>
+</p>
+
 [about:config](https://support.mozilla.org/en-US/kb/about-config-editor-firefox) tweaks for [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/).
 
 _Support : Firefox 115_ +
