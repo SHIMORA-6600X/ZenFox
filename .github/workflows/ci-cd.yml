@@ -4,7 +4,6 @@
 #  - Generate SHA256 for existing ZenFox.zip (hash only, no build)
 #  - Verify ZIP integrity inside GitHub Releases
 #  - Review repository for duplication / common errors
-#  - No automatic release creation
 # ============================================================
 
 name: ZenFox CI/CD
@@ -12,7 +11,8 @@ name: ZenFox CI/CD
 on:
   push:
     branches: [main, master]
-    tags: ['v*', 'V*']
+    # تم التعديل هنا: إضافة [0-9]* لتقبل إصدارات مثل 115.1
+    tags: ['v*', 'V*', '[0-9]*']
   pull_request:
     branches: [main, master]
   release:
@@ -34,7 +34,8 @@ jobs:
   validate-js:
     name: 🔍 Validate JS Files
     runs-on: ubuntu-latest
-    if: github.event_name != 'release'
+    # يعمل فقط عند الـ Push أو Pull Request، يتم تخطيه عند عمل Release
+    if: github.event_name != 'release' 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -50,8 +51,8 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           failed=0
           count=0
+          shopt -s nullglob # يتجاهل *.js إذا لم توجد ملفات
           for file in *.js; do
-            [ -f "$file" ] || continue
             count=$((count + 1))
             if node --check "$file" 2>/tmp/err.txt; then
               echo "✅ \`$file\`" >> $GITHUB_STEP_SUMMARY
@@ -72,37 +73,32 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## 🧪 File Health" >> $GITHUB_STEP_SUMMARY
           issues=0
-
+          shopt -s nullglob
           for file in *.js; do
-            [ -f "$file" ] || continue
-
             if head -c 3 "$file" | grep -q $'\xEF\xBB\xBF'; then
               echo "⚠️ \`$file\` — BOM detected" >> $GITHUB_STEP_SUMMARY
               issues=1
             fi
-
             if grep -q $'\r' "$file" 2>/dev/null; then
               echo "⚠️ \`$file\` — CRLF line endings" >> $GITHUB_STEP_SUMMARY
               issues=1
             fi
-
             if [ ! -s "$file" ]; then
               echo "⚠️ \`$file\` — empty file" >> $GITHUB_STEP_SUMMARY
               issues=1
             fi
           done
-
           if [ $issues -eq 0 ]; then
             echo "✅ No file health issues detected" >> $GITHUB_STEP_SUMMARY
           fi
 
   # ============================================================
   #  JOB 2: Generate SHA256 hash for existing ZenFox.zip
-  #         (hash only — no ZIP build)
   # ============================================================
   hash:
     name: 🔐 Generate SHA256
     runs-on: ubuntu-latest
+    # يعمل فقط عند إنشاء Tag أو تشغيل يدوي
     if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
@@ -124,15 +120,12 @@ jobs:
         run: |
           echo "## 🔐 SHA256 Generation" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-
           if [ -f "ZenFox.zip" ]; then
             echo "found=true" >> $GITHUB_OUTPUT
             echo "✅ Found \`ZenFox.zip\` in repository root" >> $GITHUB_STEP_SUMMARY
           else
             echo "found=false" >> $GITHUB_OUTPUT
             echo "⚠️ No \`ZenFox.zip\` found in repository root" >> $GITHUB_STEP_SUMMARY
-            echo "" >> $GITHUB_STEP_SUMMARY
-            echo "ℹ️ Place your pre-built \`ZenFox.zip\` at the repo root, or skip this step." >> $GITHUB_STEP_SUMMARY
           fi
 
       - name: Generate hash
@@ -163,18 +156,13 @@ jobs:
           path: ZenFox.zip.sha256
           retention-days: 90
 
-      - name: Summary
-        if: steps.find.outputs.found == 'true'
-        run: |
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📥 **Download the SHA256 file from the Artifacts section below.**" >> $GITHUB_STEP_SUMMARY
-
   # ============================================================
   #  JOB 3: Verify Release ZIP integrity (on release publish)
   # ============================================================
   verify-release:
     name: ✅ Verify Release ZIP
     runs-on: ubuntu-latest
+    # يعمل فقط عندما يتم نشر إصدار (Release) جديد
     if: github.event_name == 'release'
     steps:
       - name: Download release assets
@@ -204,7 +192,6 @@ jobs:
             exit 0
           fi
 
-          # Test integrity
           if ! unzip -t "$zip" > /dev/null 2>&1; then
             echo "❌ **ZIP is corrupted**" >> $GITHUB_STEP_SUMMARY
             exit 1
@@ -220,7 +207,6 @@ jobs:
           find "$tmpdir" -type f -printf '%P\n' | sort >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
 
-          # Validate every .js inside
           failed=0
           js_count=0
           while IFS= read -r jsfile; do
@@ -255,6 +241,7 @@ jobs:
   review-repo:
     name: 🧐 Review Repository
     runs-on: ubuntu-latest
+    # يعمل فقط عند الـ Push أو Pull Request، يتم تخطيه عند عمل Release
     if: github.event_name != 'release'
     steps:
       - name: Checkout
@@ -268,8 +255,8 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
 
           found=0
+          shopt -s nullglob
           for file in *.js; do
-            [ -f "$file" ] || continue
             dups=$(grep -v '^\s*//' "$file" | grep -v '^\s*$' | sort | uniq -d)
             if [ -n "$dups" ]; then
               echo "⚠️ **\`$file\`** has duplicate lines:" >> $GITHUB_STEP_SUMMARY
@@ -290,10 +277,12 @@ jobs:
           echo "### 📁 Duplicate Files (same content)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          duplicates=$(md5sum *.js 2>/dev/null | sort | awk '{print $1}' | uniq -d)
+          # استخدام find لتجنب أخطاء إذا لم توجد ملفات js
+          duplicates=$(find . -maxdepth 1 -name "*.js" -type f -exec md5sum {} + 2>/dev/null | awk '{print $1}' | sort | uniq -d)
+          
           if [ -n "$duplicates" ]; then
             for hash in $duplicates; do
-              files=$(md5sum *.js 2>/dev/null | grep "^$hash" | awk '{print $2}' | tr '\n' ' ')
+              files=$(find . -maxdepth 1 -name "*.js" -type f -exec md5sum {} + 2>/dev/null | grep "^$hash" | awk '{$1=""; print $0}' | xargs -r basename -a | tr '\n' ' ')
               echo "⚠️ Duplicate content in: \`$files\`" >> $GITHUB_STEP_SUMMARY
             done
           else
@@ -307,16 +296,13 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
 
           issues=0
+          shopt -s nullglob
           for file in *.js; do
-            [ -f "$file" ] || continue
-
-            # eval() usage
             if grep -q 'eval(' "$file"; then
               echo "⚠️ \`$file\` contains \`eval()\`" >> $GITHUB_STEP_SUMMARY
               issues=1
             fi
 
-            # Missing semicolon after user_pref (basic check)
             bad_lines=$(grep -nE 'user_pref\([^;]*$' "$file" 2>/dev/null | head -5 || true)
             if [ -n "$bad_lines" ]; then
               echo "⚠️ \`$file\` may have missing semicolons:" >> $GITHUB_STEP_SUMMARY
@@ -338,7 +324,7 @@ jobs:
     name: 📊 Final Report
     runs-on: ubuntu-latest
     needs: [validate-js, hash, verify-release, review-repo]
-    if: always()
+    if: always() # يعمل دائماً حتى لو فشلت أو تخطت المهام السابقة
     steps:
       - name: Summary
         run: |
