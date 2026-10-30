@@ -16,23 +16,49 @@ _Support : Firefox 115_ +
 | _`Litefox.js`_ | _Debloating_ ♻️ | _Strips unnecessary features to keep Firefox clean, lightweight, and distraction-free_ |
 | _`Softfox.js`_ | _Smooth Scrolling_ 🖌 | _Enhances scrolling behavior for a smoother and more fluid browsing experience_ | 
 
-#### 📥 _Installation_
+### _How to install ZenFox (easy steps)_
 
-> ⚠️ Back up your Firefox profile before applying ZenFox. Changes made through `user.js` may remain in `prefs.js` even after removing the file.
+1. _Back up your Firefox profile first (important)_
 
-1. _Create a backup from `about:profiles` or copy your profile folder manually_.
+    _Open Firefox and go to: about:profiles_
 
-2. _Download the latest `ZenFox.zip` file from the **Releases** page. Do not download the **Source code** archive_.
+    _Find the profile you use and click Open Folder_
 
-3. _Extract the archive and choose the configuration preset you want to use_.
+    _Copy that whole folder somewhere safe (e.g., Desktop or an external folder)_
 
-4. _Open `about:profiles` in Firefox and click **Open Folder** next to the target profile_.
+   ⚠️ _Why: user.js changes can stay in prefs.js even after you remove the file, so a backup is essential._
 
-5. _Copy the selected configuration file into the profile folder and rename it to `user.js`_.
+2. _Download the correct file_
 
-6. _If you are using `policies.json`, place it inside Firefox’s `distribution/` folder_.
+    _Go to the Releases page of the repo_
 
-7. _Restart Firefox to apply the changes_.
+    _**Download ZenFox.zip**_
+
+    _Do not download the Source code archive_
+
+3. _Extract and choose a preset_
+
+   _After extracting, pick the file you want_:
+
+    _Zenfox.js → performance / speed_
+
+    _Litefox.js → debloating / lighter Firefox_
+
+    _Softfox.js → smoother scrolling_
+
+4.  _Copy it into your profile folder_
+
+   • _Go back to about:profiles in Firefox_
+
+   • _Click Open Folder next to your target profile_
+
+   • _Copy your chosen file (e.g. Zenfox.js) into that folder_
+
+   • _Rename it to exactly: user.js_
+
+5. • Restart Firefox
+
+_**Close Firefox completely, then reopen it. The changes should apply**._
 
 
 #### ✨ _Features_
