@@ -16,49 +16,24 @@ _Support : Firefox 115_ +
 | _`Litefox.js`_ | _Debloating_ ♻️ | _Strips unnecessary features to keep Firefox clean, lightweight, and distraction-free_ |
 | _`Softfox.js`_ | _Smooth Scrolling_ 🖌 | _Enhances scrolling behavior for a smoother and more fluid browsing experience_ | 
 
-### _How to install ZenFox (easy steps)_
+  ###  _Installation_ 
+  
+   _Back up first: open Firefox → type about:profiles → click Open Folder next to Profile in use → copy that folder somewhere safe._
 
-1. _Back up your Firefox profile first (important)_
+   _Go to the GitHub Releases page → download ZenFox.zip (not Source code)._
 
-    _Open Firefox and go to: about:profiles_
+   _Extract it → choose Zenfox.js (or Litefox.js / Softfox.js if you know what you want)._
 
-    _Find the profile you use and click Open Folder_
+   _Rename the chosen file to exactly user.js._
 
-    _Copy that whole folder somewhere safe (e.g., Desktop or an external folder)_
+   _Close Firefox completely._
 
-   ⚠️ _Why: user.js changes can stay in prefs.js even after you remove the file, so a backup is essential._
+   _Go back to about:profiles → Open Folder → copy user.js into that folder._
 
-2. _Download the correct file_
+   _Open Firefox again. Done._
 
-    _Go to the Releases page of the repo_
+_To undo: delete user.js from the profile folder, then restore your backup if needed._
 
-    _Download ZenFox.zip_
-
-    _Do not download the Source code archive_
-
-3. _Extract and choose a preset_
-
-   _After extracting, pick the file you want_:
-
-    _Zenfox.js → performance / speed_
-
-    _Litefox.js → debloating / lighter Firefox_
-
-    _Softfox.js → smoother scrolling_
-
-4.  _Copy it into your profile folder_
-
-   • _Go back to about:profiles in Firefox_
-
-   • _Click Open Folder next to your target profile_
-
-   • _Copy your chosen file (e.g. Zenfox.js) into that folder_
-
-   • _Rename it to exactly: user.js_
-
-5. • Restart Firefox
-
-_**Close Firefox completely, then reopen it. The changes should apply**._
 
 
 #### ✨ _Features_
