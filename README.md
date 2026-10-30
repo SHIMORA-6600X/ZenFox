@@ -32,7 +32,7 @@ _Support : Firefox 115_ +
 
     _Go to the Releases page of the repo_
 
-    _**Download ZenFox.zip**_
+    _Download ZenFox.zip_
 
     _Do not download the Source code archive_
 
