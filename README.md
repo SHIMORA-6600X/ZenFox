@@ -6,7 +6,7 @@
 
 [about:config](https://support.mozilla.org/en-US/kb/about-config-editor-firefox) tweaks for [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/).
 
-_Support : Firefox 115_ +
+
 
 #### Files (pick what you need)
 
