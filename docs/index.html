@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#14121a" media="(prefers-color-scheme: dark)" />
 <meta name="theme-color" content="#f7f5fb" media="(prefers-color-scheme: light)" />
-<title>SHIMORA — ZenFox & AdvancedFox | Firefox Performance Presets</title>
+<meta name="description" content="ZenFox — an open-source Firefox configuration preset for faster page loads, smarter caching, debloating and smoother scrolling." />
+<title>ZenFox — Firefox Performance Preset | SHIMORA</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -411,7 +412,7 @@ section{
 .reveal.in .eyebrow::after{transform:scaleX(1)}
 
 /* ============================================================
-   12) PRODUCT SWITCHER
+   12) PRODUCT SWITCHER (3 files)
    ============================================================ */
 .switch-tabs{
   display:flex; justify-content:center; gap:6px; margin-bottom:44px;
@@ -421,15 +422,16 @@ section{
 }
 .switch-tabs::before{
   content:""; position:absolute; top:5px; bottom:5px; left:5px;
-  width:calc(50% - 5px); border-radius:50px;
+  width:calc((100% - 22px) / 3); border-radius:50px;
   background:linear-gradient(135deg,var(--accent),var(--accent-2));
   transition:transform .45s var(--ease-out-expo);
   box-shadow:0 6px 18px color-mix(in srgb, var(--accent) 35%, transparent);
   z-index:0;
 }
-.switch-tabs[data-active="adv"]::before{transform:translateX(100%)}
+.switch-tabs[data-active="lite"]::before{transform:translateX(calc(100% + 6px))}
+.switch-tabs[data-active="soft"]::before{transform:translateX(calc(200% + 12px))}
 .tab{
-  position:relative; z-index:1;
+  position:relative; z-index:1; flex:1; justify-content:center;
   padding:10px 24px; border-radius:50px; font-weight:600; font-size:.88rem;
   color:var(--muted); transition:color .3s;
   display:flex; align-items:center; gap:8px;
@@ -456,7 +458,8 @@ section{
 }
 @keyframes tagPop{from{opacity:0; transform:scale(.7) rotate(-6deg)} to{opacity:1; transform:scale(1) rotate(0)}}
 .tag-zen{background:color-mix(in srgb, var(--accent-3) 16%, transparent); color:var(--accent-3); border:1px solid color-mix(in srgb, var(--accent-3) 32%, transparent)}
-.tag-adv{background:color-mix(in srgb, var(--accent-2) 16%, transparent); color:var(--accent-2); border:1px solid color-mix(in srgb, var(--accent-2) 32%, transparent)}
+.tag-lite{background:color-mix(in srgb, var(--accent-2) 16%, transparent); color:var(--accent-2); border:1px solid color-mix(in srgb, var(--accent-2) 32%, transparent)}
+.tag-soft{background:color-mix(in srgb, var(--accent-4) 16%, transparent); color:var(--accent-4); border:1px solid color-mix(in srgb, var(--accent-4) 32%, transparent)}
 .product-hero p{color:var(--muted); margin-bottom:22px; font-weight:300}
 .product-hero .pills{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px}
 .pill{
@@ -635,6 +638,12 @@ pre{
   .quote:hover{transform:translateY(-6px); border-color:color-mix(in srgb, var(--accent-2) 40%, transparent); box-shadow:var(--shadow-card)}
 }
 
+/* telegram row */
+.tg-row{
+  display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+  margin-top:40px;
+}
+
 /* ============================================================
    18) CTA
    ============================================================ */
@@ -751,7 +760,7 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
   .about-wrap{grid-template-columns:1fr; gap:34px}
   .stats{gap:28px; margin-top:48px}
   .nav-links > a:not(.btn){display:none}
-  .tab{padding:9px 16px; font-size:.84rem}
+  .tab{padding:8px 10px; font-size:.78rem; gap:5px}
 
   .reveal{filter:none; transform:translateY(24px); transition-duration:.55s}
   .reveal-scale{filter:none}
@@ -801,7 +810,7 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
 <!-- PRELOADER -->
 <div class="preloader" id="preloader">
   <div class="preloader-inner">
-    <div class="pre-logo">SHIMORA</div>
+    <div class="pre-logo">ZENFOX</div>
     <div class="pre-bar"></div>
   </div>
 </div>
@@ -818,43 +827,45 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
 <!-- ================= NAV ================= -->
 <nav id="nav">
   <div class="nav-inner">
-    <div class="logo"><span class="dot"></span>SHIMORA</div>
+    <div class="logo"><span class="dot"></span>ZenFox</div>
     <div class="nav-links">
-      <a href="#products">Products</a>
+      <a href="#products">Files</a>
       <a href="#features">Features</a>
       <a href="#about">About</a>
       <a href="#install">Install</a>
       <a href="#community">Community</a>
+      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener">Telegram</a>
       <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
       </button>
-      <a href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener" class="btn btn-primary">GitHub ★</a>
+      <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-primary">GitHub ★</a>
     </div>
   </div>
 </nav>
 
 <!-- ================= HERO ================= -->
 <header class="hero">
-  <div class="badge"><span class="star">★</span> Open Source · MIT Licensed · Firefox Presets</div>
+  <div class="badge"><span class="star">★</span> Open Source · MIT Licensed · Firefox Preset</div>
 
   <h1>
-    <span class="split-line" data-split>Two Presets.</span>
-    <span class="split-line" data-split><span class="grad">One Faster Firefox.</span></span>
+    <span class="split-line" data-split>ZenFox.</span>
+    <span class="split-line" data-split><span class="grad">A Faster Firefox.</span></span>
   </h1>
 
   <p class="sub">
     <b>ZenFox</b> for everyday <span class="typing" data-words='["speed.","performance.","snappiness.","smoothness."]'></span><br>
-    <b>AdvancedFox</b> adds privacy, hardening &amp; edge-case tuning.
+    Plus <b>Litefox</b> to debloat and <b>Softfox</b> for buttery scrolling.
   </p>
 
   <div class="hero-cta">
-    <a href="#products" class="btn btn-primary">Explore Presets</a>
+    <a href="#products" class="btn btn-primary">Explore Files</a>
     <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost">View on GitHub</a>
+    <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-ghost">✈️ Telegram</a>
   </div>
 
   <div class="stats">
-    <div class="stat"><b data-count="2">0</b><span>Preset Editions</span></div>
+    <div class="stat"><b data-count="3">0</b><span>Config Files</span></div>
     <div class="stat"><b data-count="60" data-suffix="+">0</b><span>Config Tweaks</span></div>
     <div class="stat"><b data-count="100" data-suffix="%">0</b><span>Open Source</span></div>
     <div class="stat"><b data-count="0" data-prefix="$">0</b><span>Free Forever</span></div>
@@ -865,38 +876,39 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
       <span class="marquee-item">Network Tuning</span>
       <span class="marquee-item">Cache Optimization</span>
       <span class="marquee-item">WebRender</span>
-      <span class="marquee-item">Smooth Scroll</span>
-      <span class="marquee-item">Anti-Fingerprint</span>
-      <span class="marquee-item">DNS over HTTPS</span>
-      <span class="marquee-item">Telemetry Off</span>
-      <span class="marquee-item">Tracking Protection</span>
+      <span class="marquee-item">Smooth Scrolling</span>
+      <span class="marquee-item">Debloating</span>
       <span class="marquee-item">Low Memory</span>
+      <span class="marquee-item">60 / 90 / 120Hz Profiles</span>
+      <span class="marquee-item">about:config</span>
+      <span class="marquee-item">Firefox</span>
       <span class="marquee-item">MIT License</span>
     </div>
   </div>
 </header>
 
-<!-- ================= PRODUCTS ================= -->
+<!-- ================= PRODUCTS / FILES ================= -->
 <section id="products">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">Products</span>
-      <h2 data-split-heading>Pick Your Firefox Preset</h2>
-      <p>Both ship as a single <code>user.js</code>. ZenFox is the everyday choice — AdvancedFox adds privacy &amp; hardening on top.</p>
+      <span class="eyebrow">Config Files</span>
+      <h2 data-split-heading>Pick Your Config File</h2>
+      <p>Everything ships inside <code>ZenFox.zip</code>. Pick one file, rename it to <code>user.js</code>, and drop it into your profile.</p>
     </div>
 
     <div class="switch-tabs reveal" data-active="zen" id="switchTabs">
-      <button class="tab active" data-target="zen">🦊 ZenFox</button>
-      <button class="tab" data-target="adv">🚀 AdvancedFox</button>
+      <button class="tab active" data-target="zen">⚡ Zenfox.js</button>
+      <button class="tab" data-target="lite">♻️ Litefox.js</button>
+      <button class="tab" data-target="soft">🖌 Softfox.js</button>
     </div>
 
-    <!-- ZenFox -->
+    <!-- Zenfox.js -->
     <div class="product-panel active" id="panel-zen">
       <div class="product-hero">
         <div class="reveal">
-          <span class="tag tag-zen">Everyday Speed</span>
-          <h3>ZenFox — Make Firefox Feel Blazing Fast</h3>
-          <p>A precision-crafted preset that tunes Firefox's network, cache and rendering layers so pages load instantly and feel as snappy as Chrome.</p>
+          <span class="tag tag-zen">Performance ⚡️</span>
+          <h3>Zenfox.js — Make Firefox Feel Blazing Fast</h3>
+          <p>A performance-focused configuration that improves responsiveness, reduces CPU usage and speeds up everyday browsing — pages load instantly and feel as snappy as Chrome.</p>
           <div class="pills">
             <span class="pill">Performance</span>
             <span class="pill">Cache Tuning</span>
@@ -904,16 +916,16 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
             <span class="pill">MIT</span>
           </div>
           <div class="actions">
-            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ Download ZenFox</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ Download ZenFox.zip</a>
             <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost">View Repo</a>
           </div>
         </div>
 
         <div class="codebox reveal">
-          <div class="codebar"><i></i><i></i><i></i><span>zenfox/user.js</span></div>
-<pre><span class="code-line"><span class="c">// ── ZenFox preset ──</span></span>
+          <div class="codebar"><i></i><i></i><i></i><span>zenfox.js</span></div>
+<pre><span class="code-line"><span class="c">// ── Zenfox.js · performance ──</span></span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.http.max-connections"</span>, <span class="p">900</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.http.pipelining"</span>, <span class="p">true</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.http.max-persistent-connections-per-server"</span>, <span class="p">10</span>);</span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"browser.cache.disk.enable"</span>, <span class="p">true</span>);</span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"gfx.webrender.all"</span>, <span class="p">true</span>);</span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"general.smoothScroll"</span>, <span class="p">true</span>);</span></pre>
@@ -921,35 +933,64 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
       </div>
     </div>
 
-    <!-- AdvancedFox -->
-    <div class="product-panel" id="panel-adv">
+    <!-- Litefox.js -->
+    <div class="product-panel" id="panel-lite">
       <div class="product-hero">
         <div class="reveal">
-          <span class="tag tag-adv">Power Edition</span>
-          <h3>AdvancedFox — Max Performance + Hardening</h3>
-          <p>Everything ZenFox does, plus telemetry removal, strict tracking protection, DNS-over-HTTPS tuning and optional fingerprint resistance.</p>
+          <span class="tag tag-lite">Debloating ♻️</span>
+          <h3>Litefox.js — Strip Firefox Down to What Matters</h3>
+          <p>Removes unnecessary features and sponsored content so Firefox stays clean, lightweight and distraction-free — less bloat, fewer background tasks, more speed.</p>
           <div class="pills">
-            <span class="pill">Privacy</span>
-            <span class="pill">Hardening</span>
-            <span class="pill">Anti-Fingerprint</span>
-            <span class="pill">DoH</span>
-            <span class="pill">Telemetry-Free</span>
+            <span class="pill">Debloating</span>
+            <span class="pill">Lightweight</span>
+            <span class="pill">Clean UI</span>
+            <span class="pill">MIT</span>
           </div>
           <div class="actions">
-            <a href="https://gitlab.com/iahmed_7024-group/advancedfox/-/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ Download AdvancedFox</a>
-            <a href="https://gitlab.com/iahmed_7024-group/advancedfox" target="_blank" rel="noopener" class="btn btn-ghost">View Repo</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ Download ZenFox.zip</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost">View Repo</a>
           </div>
         </div>
 
         <div class="codebox reveal">
-          <div class="codebar"><i></i><i></i><i></i><span>advancedfox/user.js</span></div>
-<pre><span class="code-line"><span class="c">// ── AdvancedFox preset ──</span></span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"toolkit.telemetry.enabled"</span>, <span class="p">false</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"privacy.trackingprotection.enabled"</span>, <span class="p">true</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"browser.contentblocking.category"</span>, <span class="s">"strict"</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.trr.mode"</span>, <span class="p">2</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"beacon.enabled"</span>, <span class="p">false</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"geo.enabled"</span>, <span class="p">false</span>);</span></pre>
+          <div class="codebar"><i></i><i></i><i></i><span>litefox.js</span></div>
+<pre><span class="code-line"><span class="c">// ── Litefox.js · debloating ──</span></span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"extensions.pocket.enabled"</span>, <span class="p">false</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"browser.newtabpage.activity-stream.showSponsored"</span>, <span class="p">false</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"browser.newtabpage.activity-stream.feeds.section.topstories"</span>, <span class="p">false</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"browser.tabs.firefox-view"</span>, <span class="p">false</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"browser.uitour.enabled"</span>, <span class="p">false</span>);</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Softfox.js -->
+    <div class="product-panel" id="panel-soft">
+      <div class="product-hero">
+        <div class="reveal">
+          <span class="tag tag-soft">Smooth Scrolling 🖌</span>
+          <h3>Softfox.js — Buttery Scrolling on Every Display</h3>
+          <p>Enhanced scrolling behaviour with tuned physics for smoother, more fluid browsing — profiles designed for 60Hz, 90Hz and 120Hz displays.</p>
+          <div class="pills">
+            <span class="pill">Smooth Scrolling</span>
+            <span class="pill">60 / 90 / 120Hz</span>
+            <span class="pill">Fluid Motion</span>
+            <span class="pill">MIT</span>
+          </div>
+          <div class="actions">
+            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ Download ZenFox.zip</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost">View Repo</a>
+          </div>
+        </div>
+
+        <div class="codebox reveal">
+          <div class="codebar"><i></i><i></i><i></i><span>softfox.js</span></div>
+<pre><span class="code-line"><span class="c">// ── Softfox.js · smooth scrolling ──</span></span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"general.smoothScroll"</span>, <span class="p">true</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"general.smoothScroll.msdPhysics.enabled"</span>, <span class="p">true</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"general.smoothScroll.msdPhysics.motionBeginSpringConstant"</span>, <span class="p">450</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"general.smoothScroll.msdPhysics.slowdownMinDeltaMS"</span>, <span class="p">25</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"mousewheel.min_line_scroll_amount"</span>, <span class="p">36</span>);</span></pre>
         </div>
       </div>
     </div>
@@ -960,18 +1001,18 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
 <section id="features">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">Shared Features</span>
-      <h2 data-split-heading>What both presets give you</h2>
-      <p>Carefully tuned about:config overrides wrapped in a single clean user.js file.</p>
+      <span class="eyebrow">Features</span>
+      <h2 data-split-heading>What ZenFox gives you</h2>
+      <p>Carefully tuned <code>about:config</code> overrides, split into three focused files.</p>
     </div>
 
     <div class="grid grid-3">
-      <div class="card reveal reveal-scale"><div class="ico">⚡️</div><h4>Faster Page Loads</h4><p>Network and rendering tweaks so pages appear before you notice the wait.</p></div>
-      <div class="card reveal reveal-scale"><div class="ico">🧠</div><h4>Optimized Cache</h4><p>Smarter storage strategies that cut load times on repeat visits dramatically.</p></div>
-      <div class="card reveal reveal-scale"><div class="ico">🪶</div><h4>Lightweight</h4><p>Minimal memory and CPU footprint, even with dozens of tabs open.</p></div>
-      <div class="card reveal reveal-scale"><div class="ico">🎬</div><h4>Site Compatibility</h4><p>Works flawlessly with YouTube, Netflix, Twitch and other media-heavy sites.</p></div>
-      <div class="card reveal reveal-scale"><div class="ico">🌀</div><h4>Smooth Scrolling</h4><p>Buttery scrolling across every page and device profile.</p></div>
-      <div class="card reveal reveal-scale"><div class="ico">🛡️</div><h4>AdvancedFox Hardening</h4><p>Telemetry off, strict tracking protection, DoH and anti-fingerprint options.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">⚡️</div><h4>Faster Page Loads</h4><p>Reduced loading times for a quicker, more responsive web experience.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">🧠</div><h4>Optimized Cache</h4><p>Smart cache settings that cut load times on everyday browsing.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">🔋</div><h4>Lightweight</h4><p>Designed to stay fast with fewer resources, even with dozens of tabs open.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">🔌</div><h4>Compatibility</h4><p>Optimized graphics performance for every setup — YouTube, Netflix, Twitch and more.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">🪄</div><h4>Smooth Scrolling</h4><p>Fluid scrolling profiles designed for 60Hz, 90Hz and 120Hz displays.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">♻️</div><h4>De-bloated</h4><p>Cleaner browsing with unwanted components and distractions removed.</p></div>
     </div>
   </div>
 </section>
@@ -981,30 +1022,29 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
   <div class="container">
     <div class="about-wrap">
       <div class="about-text reveal">
-        <span class="eyebrow">About the Presets</span>
-        <h2>Why SHIMORA?</h2>
-        <p>SHIMORA is a careful engineering effort around Firefox configuration. Instead of hunting through hundreds of <code>about:config</code> entries, you drop in one file and get a browser that feels dramatically faster.</p>
-        <p><b>ZenFox</b> keeps things simple: performance only.<br><b>AdvancedFox</b> is for power users who also want privacy and hardening.</p>
+        <span class="eyebrow">About the Project</span>
+        <h2>Why ZenFox?</h2>
+        <p>ZenFox is a careful engineering effort around Firefox configuration. Instead of hunting through hundreds of <code>about:config</code> entries, you drop in one file and get a browser that feels dramatically faster.</p>
+        <p><b>Zenfox.js</b> for performance.<br><b>Litefox.js</b> for debloating.<br><b>Softfox.js</b> for smooth scrolling.</p>
         <ul class="checks">
           <li><span class="tick">✓</span> Network &amp; rendering optimizations</li>
-          <li><span class="tick">✓</span> Aggressive but safe cache tuning</li>
-          <li><span class="tick">✓</span> Lower memory footprint under load</li>
-          <li><span class="tick">✓</span> Optional hardening &amp; privacy options</li>
+          <li><span class="tick">✓</span> Smart, safe cache settings</li>
+          <li><span class="tick">✓</span> Lower resource usage under load</li>
+          <li><span class="tick">✓</span> De-bloated, distraction-free browsing</li>
           <li><span class="tick">✓</span> MIT licensed &amp; fully open source</li>
         </ul>
       </div>
 
       <div class="codebox reveal">
-        <div class="codebar"><i></i><i></i><i></i><span>shimora — shared base</span></div>
-<pre><span class="code-line"><span class="c">// Base layer shared by both editions</span></span>
+        <div class="codebar"><i></i><i></i><i></i><span>zenfox — the three files</span></div>
+<pre><span class="code-line"><span class="c">// ZenFox.zip → pick one file</span></span>
+<span class="code-line"><span class="c">//   zenfox.js  · performance</span></span>
+<span class="code-line"><span class="c">//   litefox.js · debloating</span></span>
+<span class="code-line"><span class="c">//   softfox.js · smooth scrolling</span></span>
+<span class="code-line">&nbsp;</span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.http.max-connections"</span>, <span class="p">900</span>);</span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"gfx.webrender.all"</span>, <span class="p">true</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"general.smoothScroll"</span>, <span class="p">true</span>);</span>
-<span class="code-line"></span>
-<span class="code-line"><span class="c">// ZenFox stops here · AdvancedFox extends ↓</span></span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"toolkit.telemetry.enabled"</span>, <span class="p">false</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"privacy.trackingprotection.enabled"</span>, <span class="p">true</span>);</span>
-<span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.trr.mode"</span>, <span class="p">2</span>);</span></pre>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"general.smoothScroll"</span>, <span class="p">true</span>);</span></pre>
       </div>
     </div>
   </div>
@@ -1016,27 +1056,27 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
     <div class="sec-head reveal">
       <span class="eyebrow">Installation</span>
       <h2 data-split-heading>Up and running in 6 steps</h2>
-      <p>⚠️ Works the same for both presets — just swap the file you drop in.</p>
+      <p>⚠️ Back up your profile first — you can always undo by deleting <code>user.js</code>.</p>
     </div>
 
     <div class="steps">
-      <div class="step reveal"><div class="num">1</div><div><h4>Create a backup profile</h4><p>Always keep a safe copy of your current Firefox profile before applying any config.</p></div></div>
-      <div class="step reveal"><div class="num">2</div><div><h4>Download <code>ZenFox.zip</code> or <code>AdvancedFox.zip</code></h4><p>Grab the latest release from GitHub Releases — not the source archive.</p></div></div>
-      <div class="step reveal"><div class="num">3</div><div><h4>Review overrides</h4><p>Check Common Overrides and Optional Hardening and tweak anything you don't want.</p></div></div>
-      <div class="step reveal"><div class="num">4</div><div><h4>Open Firefox profiles page</h4><p>Type <code>about:profiles</code> in the URL bar and press Enter.</p></div></div>
+      <div class="step reveal"><div class="num">1</div><div><h4>Create a backup profile</h4><p>Open Firefox → <code>about:profiles</code> → <b>Open Folder</b> next to Profile in use → copy that folder somewhere safe.</p></div></div>
+      <div class="step reveal"><div class="num">2</div><div><h4>Download <code>ZenFox.zip</code></h4><p>Grab the latest release from GitHub Releases — not the source archive.</p></div></div>
+      <div class="step reveal"><div class="num">3</div><div><h4>Pick your file</h4><p>Extract the zip and choose <code>zenfox.js</code>, <code>litefox.js</code> or <code>softfox.js</code>.</p></div></div>
+      <div class="step reveal"><div class="num">4</div><div><h4>Close Firefox &amp; open profiles</h4><p>Fully close Firefox, reopen it, then type <code>about:profiles</code> in the URL bar.</p></div></div>
       <div class="step reveal"><div class="num">5</div><div><h4>Open the profile root folder</h4><p>For your target profile, click <b>Open Folder</b> next to Root Directory.</p></div></div>
-      <div class="step reveal"><div class="num">6</div><div><h4>Move <code>user.js</code> into the folder</h4><p>Restart Firefox — enjoy the speed boost.</p></div></div>
+      <div class="step reveal"><div class="num">6</div><div><h4>Rename to <code>user.js</code> &amp; copy it in</h4><p>Rename the chosen file to exactly <code>user.js</code>, copy it into the folder, and restart Firefox. Done.</p></div></div>
     </div>
   </div>
 </section>
 
-<!-- ================= SUPPORT ================= -->
-<section id="Support">
+<!-- ================= COMMUNITY ================= -->
+<section id="community">
   <div class="container">
     <div class="sec-head reveal">
       <span class="eyebrow">Community</span>
-      <h2 data-split-heading>Loved by the Firefox crowd</h2>
-      <p>Feedback from people who Support SHIMORA Projects.</p>
+      <h2 data-split-heading>Join the ZenFox crowd</h2>
+      <p>Feedback, ideas and release news from the people using and supporting the project.</p>
     </div>
 
     <div class="grid grid-3">
@@ -1048,7 +1088,7 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
         </div>
       </div>
       <div class="quote reveal reveal-scale">
-        <p>"AdvancedFox is exactly what I needed — harden the browser, kill telemetry, and it's still fast."</p>
+        <p>"The project and the site both feel premium — ZenFox genuinely made my browser feel brand new."</p>
         <div class="who">
           <div class="av" style="background:linear-gradient(135deg,var(--accent-3),var(--accent))">KJ</div>
           <div><b>Kenjaku</b><span>Web Creator &amp; Project Support</span></div>
@@ -1062,6 +1102,11 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
         </div>
       </div>
     </div>
+
+    <div class="tg-row reveal">
+      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-primary">✈️ Telegram Channel</a>
+      <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener" class="btn btn-ghost">💬 Telegram Group</a>
+    </div>
   </div>
 </section>
 
@@ -1070,11 +1115,12 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
   <div class="container">
     <div class="cta reveal">
       <h2>Ready to speed up your Firefox?</h2>
-      <p>Grab ZenFox for everyday speed, or go full power-user with AdvancedFox.</p>
+      <p>Download <b>ZenFox.zip</b>, pick your file, and feel the difference in minutes.</p>
       <div class="hero-cta">
-        <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ ZenFox</a>
-        <a href="https://gitlab.com/iahmed_7024-group/advancedfox/-/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ AdvancedFox</a>
-        <a href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener" class="btn btn-ghost">⭐ All Repos</a>
+        <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ Download ZenFox</a>
+        <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-primary">✈️ Channel</a>
+        <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener" class="btn btn-ghost">💬 Group</a>
+        <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost">⭐ GitHub</a>
       </div>
     </div>
   </div>
@@ -1085,11 +1131,12 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
   <div class="container">
     <div class="flinks">
       <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener">ZenFox</a>
-      <a href="https://gitlab.com/iahmed_7024-group/advancedfox" target="_blank" rel="noopener">AdvancedFox</a>
-      <a href="https://github.com/SHIMORA-6600X" target="_blank" rel="noopener">All Repositories</a>
+      <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener">Releases</a>
+      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener">Telegram Channel</a>
+      <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener">Telegram Group</a>
       <a href="https://github.com/SHIMORA-6600X/ZenFox/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
     </div>
-    <p>Built with <span class="heart">♥</span> by <b>SHIMORA</b> · ZenFox &amp; AdvancedFox are open-source Firefox presets.</p>
+    <p>Built with <span class="heart">♥</span> by <b>SHIMORA</b> · ZenFox is an open-source Firefox preset.</p>
   </div>
 </footer>
 
@@ -1301,7 +1348,7 @@ if (!reducedMotion && 'IntersectionObserver' in window){
 })();
 
 /* ============================================================
-   8) PRODUCT TABS
+   8) FILE TABS
    ============================================================ */
 (function tabs(){
   const tabsEl = document.getElementById('switchTabs');
