@@ -394,8 +394,8 @@ user_pref("browser.download.manager.addToRecentDocs", false);
 /****************************************************************************
  * SECTION: TAB BEHAVIOR                                                    *
 ****************************************************************************/
-user_pref("browser.search.openintab", true); // SEARCH BOX
-user_pref("browser.urlbar.openintab", true); // URL BAR
+user_pref("browser.search.openintab", false); // SEARCH BOX
+user_pref("browser.urlbar.openintab", false); // URL BAR
 user_pref("browser.link.open_newwindow", 2); // DEFAULT
 
 // PREF: override <browser.link.open_newwindow> for external links
