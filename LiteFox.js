@@ -292,8 +292,8 @@ user_pref("browser.download.manager.addToRecentDocs", false);
 ****************************************************************************/
 
 // PREF: search query opens in a new tab (instead of the current tab)
-user_pref("browser.search.openintab", true); // SEARCH BOX
-user_pref("browser.urlbar.openintab", true); // URL BAR
+user_pref("browser.search.openintab", false); // SEARCH BOX
+user_pref("browser.urlbar.openintab", false); // URL BAR
 
 // PREF: control behavior of links that would normally open in a new window
 // [NOTE] You can still right-click a link and open in a new window
