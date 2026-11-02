@@ -1,9 +1,9 @@
 
 /****************************************************************************************
- * ZenFox                                                                             *
+ * SmartFox                                                                             *
  * "SHIMORA"                                                                     *
- * priority: Better browsing                                                            *
- * version: 155                                                                         *
+ * priority: Better Browsing                                                           *
+ * version: 157                                                                         *
  * url: https://github.com/SHIMORA-6600X/ZenFox                                       *
  ***************************************************************************************/
 
