@@ -8,7 +8,7 @@
  * license: MIT                                                                       *
  ***************************************************************************************/
 
-// [PICK ONE] Uncomment only ONE option block below. Leave the other four commented.
+// [PICK ONE] Uncomment only ONE option from below.
 // Reset procedure when switching: close Firefox, open profile folder
 // (about:profiles > Root Directory), delete the related lines from prefs.js
 // or use about:support > Refresh Firefox, then apply the new option.
