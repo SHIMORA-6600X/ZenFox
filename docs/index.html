@@ -412,7 +412,7 @@ section{
 .reveal.in .eyebrow::after{transform:scaleX(1)}
 
 /* ============================================================
-   12) PRODUCT SWITCHER (3 files)
+   12) PRODUCT SWITCHER (4 files)
    ============================================================ */
 .switch-tabs{
   display:flex; justify-content:center; gap:6px; margin-bottom:44px;
@@ -422,7 +422,7 @@ section{
 }
 .switch-tabs::before{
   content:""; position:absolute; top:5px; bottom:5px; left:5px;
-  width:calc((100% - 22px) / 3); border-radius:50px;
+  width:calc((100% - 28px) / 4); border-radius:50px;
   background:linear-gradient(135deg,var(--accent),var(--accent-2));
   transition:transform .45s var(--ease-out-expo);
   box-shadow:0 6px 18px color-mix(in srgb, var(--accent) 35%, transparent);
@@ -430,6 +430,7 @@ section{
 }
 .switch-tabs[data-active="lite"]::before{transform:translateX(calc(100% + 6px))}
 .switch-tabs[data-active="soft"]::before{transform:translateX(calc(200% + 12px))}
+.switch-tabs[data-active="smart"]::before{transform:translateX(calc(300% + 18px))}
 .tab{
   position:relative; z-index:1; flex:1; justify-content:center;
   padding:10px 24px; border-radius:50px; font-weight:600; font-size:.88rem;
@@ -460,6 +461,7 @@ section{
 .tag-zen{background:color-mix(in srgb, var(--accent-3) 16%, transparent); color:var(--accent-3); border:1px solid color-mix(in srgb, var(--accent-3) 32%, transparent)}
 .tag-lite{background:color-mix(in srgb, var(--accent-2) 16%, transparent); color:var(--accent-2); border:1px solid color-mix(in srgb, var(--accent-2) 32%, transparent)}
 .tag-soft{background:color-mix(in srgb, var(--accent-4) 16%, transparent); color:var(--accent-4); border:1px solid color-mix(in srgb, var(--accent-4) 32%, transparent)}
+.tag-smart{background:color-mix(in srgb, var(--accent) 16%, transparent); color:var(--accent); border:1px solid color-mix(in srgb, var(--accent) 32%, transparent)}
 .product-hero p{color:var(--muted); margin-bottom:22px; font-weight:300}
 .product-hero .pills{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px}
 .pill{
@@ -793,6 +795,39 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
   .spotlight{display:none !important}
   .cta{animation:none}
 }
+
+/* ============================================================
+   24) LANGUAGE TOGGLE + RTL
+   ============================================================ */
+.lang-btn{font-weight:800; font-size:.85rem; line-height:1}
+.lang-btn span{display:block; font-size:.92rem; font-weight:800; letter-spacing:0}
+
+html[dir="rtl"] body{font-family:'Inter','Segoe UI',Tahoma,Arial,sans-serif}
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] .logo,
+html[dir="rtl"] .pre-logo,
+html[dir="rtl"] .eyebrow,
+html[dir="rtl"] .badge,
+html[dir="rtl"] .product-hero .tag,
+html[dir="rtl"] .marquee-item,
+html[dir="rtl"] .stat span{letter-spacing:0}
+html[dir="rtl"] pre{direction:ltr; text-align:left}
+html[dir="rtl"] .codebar span{margin-left:0; margin-right:auto; direction:ltr}
+html[dir="rtl"] code{unicode-bidi:isolate}
+html[dir="rtl"] .step::before{left:auto; right:0}
+html[dir="rtl"] .checks li:hover{padding-left:0; padding-right:8px}
+html[dir="rtl"] .switch-tabs::before{left:auto; right:5px}
+html[dir="rtl"] .switch-tabs[data-active="lite"]::before{transform:translateX(calc(-100% - 6px))}
+html[dir="rtl"] .switch-tabs[data-active="soft"]::before{transform:translateX(calc(-200% - 12px))}
+html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(calc(-300% - 18px))}
+
+@media (max-width: 860px){
+  .tab{padding:8px 6px; font-size:.72rem; gap:4px}
+  .tab-ico{display:none}
+}
 </style>
 </head>
 <body>
@@ -829,16 +864,17 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
   <div class="nav-inner">
     <div class="logo"><span class="dot"></span>ZenFox</div>
     <div class="nav-links">
-      <a href="#products">Files</a>
-      <a href="#features">Features</a>
-      <a href="#about">About</a>
-      <a href="#install">Install</a>
-      <a href="#community">Community</a>
-      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener">Telegram</a>
+      <a href="#products" data-i18n="nav.files">Files</a>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#install" data-i18n="nav.install">Install</a>
+      <a href="#community" data-i18n="nav.community">Community</a>
+      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" data-i18n="nav.telegram">Telegram</a>
       <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
       </button>
+      <button class="theme-toggle lang-btn" id="langBtn" aria-label="Switch language"><span id="langLabel">ع</span></button>
       <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-primary">GitHub ★</a>
     </div>
   </div>
@@ -846,29 +882,29 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
 
 <!-- ================= HERO ================= -->
 <header class="hero">
-  <div class="badge"><span class="star">★</span> Open Source · MIT Licensed · Firefox Preset</div>
+  <div class="badge" data-i18n="hero.badge"><span class="star">★</span> Open Source · MIT Licensed · Firefox Preset</div>
 
   <h1>
-    <span class="split-line" data-split>ZenFox.</span>
-    <span class="split-line" data-split><span class="grad">A Faster Firefox.</span></span>
+    <span class="split-line" data-split data-i18n="hero.title1">ZenFox.</span>
+    <span class="split-line" data-split data-i18n="hero.title2"><span class="grad">A Faster Firefox.</span></span>
   </h1>
 
   <p class="sub">
-    <b>ZenFox</b> for everyday <span class="typing" data-words='["speed.","performance.","snappiness.","smoothness."]'></span><br>
-    Plus <b>Litefox</b> to debloat and <b>Softfox</b> for buttery scrolling.
+    <span data-i18n="hero.sub1"><b>ZenFox</b> for everyday</span> <span class="typing" data-words='["speed.","performance.","snappiness.","smoothness."]'></span><br>
+    <span data-i18n="hero.sub2">Plus <b>Litefox</b> to debloat and <b>Softfox</b> for buttery scrolling.</span>
   </p>
 
   <div class="hero-cta">
-    <a href="#products" class="btn btn-primary">Explore Files</a>
-    <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost">View on GitHub</a>
-    <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-ghost">✈️ Telegram</a>
+    <a href="#products" class="btn btn-primary" data-i18n="hero.cta1">Explore Files</a>
+    <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="hero.cta2">View on GitHub</a>
+    <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="hero.cta3">✈️ Telegram</a>
   </div>
 
   <div class="stats">
-    <div class="stat"><b data-count="3">0</b><span>Config Files</span></div>
-    <div class="stat"><b data-count="60" data-suffix="+">0</b><span>Config Tweaks</span></div>
-    <div class="stat"><b data-count="100" data-suffix="%">0</b><span>Open Source</span></div>
-    <div class="stat"><b data-count="0" data-prefix="$">0</b><span>Free Forever</span></div>
+    <div class="stat"><b data-count="4">0</b><span data-i18n="stat.files">Config Files</span></div>
+    <div class="stat"><b data-count="60" data-suffix="+">0</b><span data-i18n="stat.tweaks">Config Tweaks</span></div>
+    <div class="stat"><b data-count="100" data-suffix="%">0</b><span data-i18n="stat.oss">Open Source</span></div>
+    <div class="stat"><b data-count="0" data-prefix="$">0</b><span data-i18n="stat.free">Free Forever</span></div>
   </div>
 
   <div class="marquee" aria-hidden="true">
@@ -881,6 +917,7 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
       <span class="marquee-item">Low Memory</span>
       <span class="marquee-item">60 / 90 / 120Hz Profiles</span>
       <span class="marquee-item">about:config</span>
+      <span class="marquee-item">SmartFox.js</span>
       <span class="marquee-item">Firefox</span>
       <span class="marquee-item">MIT License</span>
     </div>
@@ -891,33 +928,34 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
 <section id="products">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">Config Files</span>
-      <h2 data-split-heading>Pick Your Config File</h2>
-      <p>Everything ships inside <code>ZenFox.zip</code>. Pick one file, rename it to <code>user.js</code>, and drop it into your profile.</p>
+      <span class="eyebrow" data-i18n="prod.eyebrow">Config Files</span>
+      <h2 data-split-heading data-i18n="prod.h2">Pick Your Config File</h2>
+      <p data-i18n="prod.p">Everything ships inside <code>ZenFox.zip</code>. Pick one file, rename it to <code>user.js</code>, and drop it into your profile.</p>
     </div>
 
     <div class="switch-tabs reveal" data-active="zen" id="switchTabs">
-      <button class="tab active" data-target="zen">⚡ Zenfox.js</button>
-      <button class="tab" data-target="lite">♻️ Litefox.js</button>
-      <button class="tab" data-target="soft">🖌 Softfox.js</button>
+      <button class="tab active" data-target="zen"><span class="tab-ico">⚡</span><span data-i18n="tab.zen">Zenfox.js</span></button>
+      <button class="tab" data-target="lite"><span class="tab-ico">♻️</span><span data-i18n="tab.lite">Litefox.js</span></button>
+      <button class="tab" data-target="soft"><span class="tab-ico">🖌</span><span data-i18n="tab.soft">Softfox.js</span></button>
+      <button class="tab" data-target="smart"><span class="tab-ico">⭐</span><span data-i18n="tab.smart">SmartFox.js</span></button>
     </div>
 
     <!-- Zenfox.js -->
     <div class="product-panel active" id="panel-zen">
       <div class="product-hero">
         <div class="reveal">
-          <span class="tag tag-zen">Performance ⚡️</span>
-          <h3>Zenfox.js — Make Firefox Feel Blazing Fast</h3>
-          <p>A performance-focused configuration that improves responsiveness, reduces CPU usage and speeds up everyday browsing — pages load instantly and feel as snappy as Chrome.</p>
+          <span class="tag tag-zen" data-i18n="zen.tag">Performance ⚡️</span>
+          <h3 data-i18n="zen.h3">Zenfox.js — Make Firefox Feel Blazing Fast</h3>
+          <p data-i18n="zen.p">A performance-focused configuration that improves responsiveness, reduces CPU usage and speeds up everyday browsing — pages load instantly and feel as snappy as Chrome.</p>
           <div class="pills">
-            <span class="pill">Performance</span>
-            <span class="pill">Cache Tuning</span>
-            <span class="pill">Lightweight</span>
-            <span class="pill">MIT</span>
+            <span class="pill" data-i18n="pill.perf">Performance</span>
+            <span class="pill" data-i18n="pill.cache">Cache Tuning</span>
+            <span class="pill" data-i18n="pill.light">Lightweight</span>
+            <span class="pill" data-i18n="pill.mit">MIT</span>
           </div>
           <div class="actions">
-            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ Download ZenFox.zip</a>
-            <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost">View Repo</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="btn.download">⬇ Download ZenFox.zip</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="btn.repo">View Repo</a>
           </div>
         </div>
 
@@ -937,18 +975,18 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
     <div class="product-panel" id="panel-lite">
       <div class="product-hero">
         <div class="reveal">
-          <span class="tag tag-lite">Debloating ♻️</span>
-          <h3>Litefox.js — Strip Firefox Down to What Matters</h3>
-          <p>Removes unnecessary features and sponsored content so Firefox stays clean, lightweight and distraction-free — less bloat, fewer background tasks, more speed.</p>
+          <span class="tag tag-lite" data-i18n="lite.tag">Debloating ♻️</span>
+          <h3 data-i18n="lite.h3">Litefox.js — Strip Firefox Down to What Matters</h3>
+          <p data-i18n="lite.p">Removes unnecessary features and sponsored content so Firefox stays clean, lightweight and distraction-free — less bloat, fewer background tasks, more speed.</p>
           <div class="pills">
-            <span class="pill">Debloating</span>
-            <span class="pill">Lightweight</span>
-            <span class="pill">Clean UI</span>
-            <span class="pill">MIT</span>
+            <span class="pill" data-i18n="pill.debloat">Debloating</span>
+            <span class="pill" data-i18n="pill.light">Lightweight</span>
+            <span class="pill" data-i18n="pill.clean">Clean UI</span>
+            <span class="pill" data-i18n="pill.mit">MIT</span>
           </div>
           <div class="actions">
-            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ Download ZenFox.zip</a>
-            <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost">View Repo</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="btn.download">⬇ Download ZenFox.zip</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="btn.repo">View Repo</a>
           </div>
         </div>
 
@@ -968,18 +1006,18 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
     <div class="product-panel" id="panel-soft">
       <div class="product-hero">
         <div class="reveal">
-          <span class="tag tag-soft">Smooth Scrolling 🖌</span>
-          <h3>Softfox.js — Buttery Scrolling on Every Display</h3>
-          <p>Enhanced scrolling behaviour with tuned physics for smoother, more fluid browsing — profiles designed for 60Hz, 90Hz and 120Hz displays.</p>
+          <span class="tag tag-soft" data-i18n="soft.tag">Smooth Scrolling 🖌</span>
+          <h3 data-i18n="soft.h3">Softfox.js — Buttery Scrolling on Every Display</h3>
+          <p data-i18n="soft.p">Enhanced scrolling behaviour with tuned physics for smoother, more fluid browsing — profiles designed for 60Hz, 90Hz and 120Hz displays.</p>
           <div class="pills">
-            <span class="pill">Smooth Scrolling</span>
-            <span class="pill">60 / 90 / 120Hz</span>
-            <span class="pill">Fluid Motion</span>
-            <span class="pill">MIT</span>
+            <span class="pill" data-i18n="pill.smooth">Smooth Scrolling</span>
+            <span class="pill" data-i18n="pill.hz">60 / 90 / 120Hz</span>
+            <span class="pill" data-i18n="pill.fluid">Fluid Motion</span>
+            <span class="pill" data-i18n="pill.mit">MIT</span>
           </div>
           <div class="actions">
-            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ Download ZenFox.zip</a>
-            <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost">View Repo</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="btn.download">⬇ Download ZenFox.zip</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="btn.repo">View Repo</a>
           </div>
         </div>
 
@@ -994,6 +1032,41 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
         </div>
       </div>
     </div>
+
+    <!-- SmartFox.js -->
+    <div class="product-panel" id="panel-smart">
+      <div class="product-hero">
+        <div class="reveal">
+          <span class="tag tag-smart" data-i18n="smart.tag">All Settings ⭐️</span>
+          <h3 data-i18n="smart.h3">SmartFox.js — ZenFox, LiteFox &amp; SoftFox in One File</h3>
+          <p data-i18n="smart.p">A unified layer that combines ZenFox, LiteFox and SoftFox into one simple, flexible solution — enable the parts you want and keep everything in a single file.</p>
+          <div class="pills">
+            <span class="pill" data-i18n="pill.allinone">All-in-One</span>
+            <span class="pill">ZenFox</span>
+            <span class="pill">LiteFox</span>
+            <span class="pill">SoftFox</span>
+            <span class="pill" data-i18n="pill.mit">MIT</span>
+          </div>
+          <div class="actions">
+            <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="btn.download">⬇ Download ZenFox.zip</a>
+            <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="btn.repo">View Repo</a>
+          </div>
+        </div>
+
+        <div class="codebox reveal">
+          <div class="codebar"><i></i><i></i><i></i><span>smartfox.js</span></div>
+<pre><span class="code-line"><span class="c">// ── SmartFox.js · all-in-one ──</span></span>
+<span class="code-line"><span class="c">// pick what you need</span></span>
+<span class="code-line"><span class="k">const</span> <span class="p">ZenFox</span>  = <span class="p">true</span>; <span class="c">// performance</span></span>
+<span class="code-line"><span class="k">const</span> <span class="p">LiteFox</span> = <span class="p">true</span>; <span class="c">// debloating</span></span>
+<span class="code-line"><span class="k">const</span> <span class="p">SoftFox</span> = <span class="p">true</span>; <span class="c">// smooth scrolling</span></span>
+<span class="code-line">&nbsp;</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.http.max-connections"</span>, <span class="p">900</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"extensions.pocket.enabled"</span>, <span class="p">false</span>);</span>
+<span class="code-line"><span class="k">user_pref</span>(<span class="s">"general.smoothScroll"</span>, <span class="p">true</span>);</span></pre>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1001,18 +1074,18 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
 <section id="features">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">Features</span>
-      <h2 data-split-heading>What ZenFox gives you</h2>
-      <p>Carefully tuned <code>about:config</code> overrides, split into three focused files.</p>
+      <span class="eyebrow" data-i18n="feat.eyebrow">Features</span>
+      <h2 data-split-heading data-i18n="feat.h2">What ZenFox gives you</h2>
+      <p data-i18n="feat.p">Carefully tuned <code>about:config</code> overrides, split into three focused files.</p>
     </div>
 
     <div class="grid grid-3">
-      <div class="card reveal reveal-scale"><div class="ico">⚡️</div><h4>Faster Page Loads</h4><p>Reduced loading times for a quicker, more responsive web experience.</p></div>
-      <div class="card reveal reveal-scale"><div class="ico">🧠</div><h4>Optimized Cache</h4><p>Smart cache settings that cut load times on everyday browsing.</p></div>
-      <div class="card reveal reveal-scale"><div class="ico">🔋</div><h4>Lightweight</h4><p>Designed to stay fast with fewer resources, even with dozens of tabs open.</p></div>
-      <div class="card reveal reveal-scale"><div class="ico">🔌</div><h4>Compatibility</h4><p>Optimized graphics performance for every setup — YouTube, Netflix, Twitch and more.</p></div>
-      <div class="card reveal reveal-scale"><div class="ico">🪄</div><h4>Smooth Scrolling</h4><p>Fluid scrolling profiles designed for 60Hz, 90Hz and 120Hz displays.</p></div>
-      <div class="card reveal reveal-scale"><div class="ico">♻️</div><h4>De-bloated</h4><p>Cleaner browsing with unwanted components and distractions removed.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">⚡️</div><h4 data-i18n="feat.1.t">Faster Page Loads</h4><p data-i18n="feat.1.d">Reduced loading times for a quicker, more responsive web experience.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">🧠</div><h4 data-i18n="feat.2.t">Optimized Cache</h4><p data-i18n="feat.2.d">Smart cache settings that cut load times on everyday browsing.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">🔋</div><h4 data-i18n="feat.3.t">Lightweight</h4><p data-i18n="feat.3.d">Designed to stay fast with fewer resources, even with dozens of tabs open.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">🔌</div><h4 data-i18n="feat.4.t">Compatibility</h4><p data-i18n="feat.4.d">Optimized graphics performance for every setup — YouTube, Netflix, Twitch and more.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">🪄</div><h4 data-i18n="feat.5.t">Smooth Scrolling</h4><p data-i18n="feat.5.d">Fluid scrolling profiles designed for 60Hz, 90Hz and 120Hz displays.</p></div>
+      <div class="card reveal reveal-scale"><div class="ico">♻️</div><h4 data-i18n="feat.6.t">De-bloated</h4><p data-i18n="feat.6.d">Cleaner browsing with unwanted components and distractions removed.</p></div>
     </div>
   </div>
 </section>
@@ -1022,25 +1095,27 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
   <div class="container">
     <div class="about-wrap">
       <div class="about-text reveal">
-        <span class="eyebrow">About the Project</span>
-        <h2>Why ZenFox?</h2>
-        <p>ZenFox is a careful engineering effort around Firefox configuration. Instead of hunting through hundreds of <code>about:config</code> entries, you drop in one file and get a browser that feels dramatically faster.</p>
-        <p><b>Zenfox.js</b> for performance.<br><b>Litefox.js</b> for debloating.<br><b>Softfox.js</b> for smooth scrolling.</p>
+        <span class="eyebrow" data-i18n="about.eyebrow">About the Project</span>
+        <h2 data-i18n="about.h2">Why ZenFox?</h2>
+        <p data-i18n="about.p1">ZenFox is a careful engineering effort around Firefox configuration. Instead of hunting through hundreds of <code>about:config</code> entries, you drop in one file and get a browser that feels dramatically faster.</p>
+        <p data-i18n="about.p2"><b>Zenfox.js</b> for performance.<br><b>Litefox.js</b> for debloating.<br><b>Softfox.js</b> for smooth scrolling.</p>
         <ul class="checks">
-          <li><span class="tick">✓</span> Network &amp; rendering optimizations</li>
-          <li><span class="tick">✓</span> Smart, safe cache settings</li>
-          <li><span class="tick">✓</span> Lower resource usage under load</li>
-          <li><span class="tick">✓</span> De-bloated, distraction-free browsing</li>
-          <li><span class="tick">✓</span> MIT licensed &amp; fully open source</li>
+          <li><span class="tick">✓</span> <span data-i18n="about.l1">Network &amp; rendering optimizations</span></li>
+          <li><span class="tick">✓</span> <span data-i18n="about.l2">Smart, safe cache settings</span></li>
+          <li><span class="tick">✓</span> <span data-i18n="about.l3">Lower resource usage under load</span></li>
+          <li><span class="tick">✓</span> <span data-i18n="about.l4">De-bloated, distraction-free browsing</span></li>
+          <li><span class="tick">✓</span> <span data-i18n="about.l5">MIT licensed &amp; fully open source</span></li>
+          <li><span class="tick">✓</span> <span data-i18n="about.l6">SmartFox.js combines all three files into one</span></li>
         </ul>
       </div>
 
       <div class="codebox reveal">
-        <div class="codebar"><i></i><i></i><i></i><span>zenfox — the three files</span></div>
+        <div class="codebar"><i></i><i></i><i></i><span>zenfox — the four files</span></div>
 <pre><span class="code-line"><span class="c">// ZenFox.zip → pick one file</span></span>
 <span class="code-line"><span class="c">//   zenfox.js  · performance</span></span>
 <span class="code-line"><span class="c">//   litefox.js · debloating</span></span>
 <span class="code-line"><span class="c">//   softfox.js · smooth scrolling</span></span>
+<span class="code-line"><span class="c">//   smartfox.js · all of the above</span></span>
 <span class="code-line">&nbsp;</span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"network.http.max-connections"</span>, <span class="p">900</span>);</span>
 <span class="code-line"><span class="k">user_pref</span>(<span class="s">"gfx.webrender.all"</span>, <span class="p">true</span>);</span>
@@ -1054,18 +1129,18 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
 <section id="install">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">Installation</span>
-      <h2 data-split-heading>Up and running in 6 steps</h2>
-      <p>⚠️ Back up your profile first — you can always undo by deleting <code>user.js</code>.</p>
+      <span class="eyebrow" data-i18n="inst.eyebrow">Installation</span>
+      <h2 data-split-heading data-i18n="inst.h2">Up and running in 6 steps</h2>
+      <p data-i18n="inst.p">⚠️ Back up your profile first — you can always undo by deleting <code>user.js</code>.</p>
     </div>
 
     <div class="steps">
-      <div class="step reveal"><div class="num">1</div><div><h4>Create a backup profile</h4><p>Open Firefox → <code>about:profiles</code> → <b>Open Folder</b> next to Profile in use → copy that folder somewhere safe.</p></div></div>
-      <div class="step reveal"><div class="num">2</div><div><h4>Download <code>ZenFox.zip</code></h4><p>Grab the latest release from GitHub Releases — not the source archive.</p></div></div>
-      <div class="step reveal"><div class="num">3</div><div><h4>Pick your file</h4><p>Extract the zip and choose <code>zenfox.js</code>, <code>litefox.js</code> or <code>softfox.js</code>.</p></div></div>
-      <div class="step reveal"><div class="num">4</div><div><h4>Close Firefox &amp; open profiles</h4><p>Fully close Firefox, reopen it, then type <code>about:profiles</code> in the URL bar.</p></div></div>
-      <div class="step reveal"><div class="num">5</div><div><h4>Open the profile root folder</h4><p>For your target profile, click <b>Open Folder</b> next to Root Directory.</p></div></div>
-      <div class="step reveal"><div class="num">6</div><div><h4>Rename to <code>user.js</code> &amp; copy it in</h4><p>Rename the chosen file to exactly <code>user.js</code>, copy it into the folder, and restart Firefox. Done.</p></div></div>
+      <div class="step reveal"><div class="num">1</div><div><h4 data-i18n="inst.1.t">Create a backup profile</h4><p data-i18n="inst.1.d">Open Firefox → <code>about:profiles</code> → <b>Open Folder</b> next to Profile in use → copy that folder somewhere safe.</p></div></div>
+      <div class="step reveal"><div class="num">2</div><div><h4 data-i18n="inst.2.t">Download <code>ZenFox.zip</code></h4><p data-i18n="inst.2.d">Grab the latest release from GitHub Releases — not the source archive.</p></div></div>
+      <div class="step reveal"><div class="num">3</div><div><h4 data-i18n="inst.3.t">Pick your file</h4><p data-i18n="inst.3.d">Extract the zip and choose <code>zenfox.js</code>, <code>litefox.js</code> or <code>softfox.js</code>.</p></div></div>
+      <div class="step reveal"><div class="num">4</div><div><h4 data-i18n="inst.4.t">Close Firefox &amp; open profiles</h4><p data-i18n="inst.4.d">Fully close Firefox, reopen it, then type <code>about:profiles</code> in the URL bar.</p></div></div>
+      <div class="step reveal"><div class="num">5</div><div><h4 data-i18n="inst.5.t">Open the profile root folder</h4><p data-i18n="inst.5.d">For your target profile, click <b>Open Folder</b> next to Root Directory.</p></div></div>
+      <div class="step reveal"><div class="num">6</div><div><h4 data-i18n="inst.6.t">Rename to <code>user.js</code> &amp; copy it in</h4><p data-i18n="inst.6.d">Rename the chosen file to exactly <code>user.js</code>, copy it into the folder, and restart Firefox. Done.</p></div></div>
     </div>
   </div>
 </section>
@@ -1074,38 +1149,38 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
 <section id="community">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">Community</span>
-      <h2 data-split-heading>Join the ZenFox crowd</h2>
-      <p>Feedback, ideas and release news from the people using and supporting the project.</p>
+      <span class="eyebrow" data-i18n="comm.eyebrow">Community</span>
+      <h2 data-split-heading data-i18n="comm.h2">Join the ZenFox crowd</h2>
+      <p data-i18n="comm.p">Feedback, ideas and release news from the people using and supporting the project.</p>
     </div>
 
     <div class="grid grid-3">
       <div class="quote reveal reveal-scale">
-        <p>"I didn't think Firefox could feel this fast. Pages render instantly and scrolling is finally smooth on my old laptop."</p>
+        <p data-i18n="comm.q1">"I didn't think Firefox could feel this fast. Pages render instantly and scrolling is finally smooth on my old laptop."</p>
         <div class="who">
           <div class="av" style="background:linear-gradient(135deg,var(--accent),var(--accent-2))">A7</div>
-          <div><b>A7</b><span>Ideas &amp; Tester</span></div>
+          <div><b data-i18n="comm.n1">A7</b><span data-i18n="comm.r1">Ideas &amp; Tester</span></div>
         </div>
       </div>
       <div class="quote reveal reveal-scale">
-        <p>"The project and the site both feel premium — ZenFox genuinely made my browser feel brand new."</p>
+        <p data-i18n="comm.q2">"The project and the site both feel premium — ZenFox genuinely made my browser feel brand new."</p>
         <div class="who">
           <div class="av" style="background:linear-gradient(135deg,var(--accent-3),var(--accent))">KJ</div>
-          <div><b>Kenjaku</b><span>Web Creator &amp; Project Support</span></div>
+          <div><b data-i18n="comm.n2">Kenjaku</b><span data-i18n="comm.r2">Web Creator &amp; Project Support</span></div>
         </div>
       </div>
       <div class="quote reveal reveal-scale">
-        <p>"The cache tuning alone was worth it. YouTube and Netflix load without stutter now."</p>
+        <p data-i18n="comm.q3">"The cache tuning alone was worth it. YouTube and Netflix load without stutter now."</p>
         <div class="who">
           <div class="av" style="background:linear-gradient(135deg,var(--accent-4),var(--accent-2))">AN</div>
-          <div><b>Arnas</b><span>Community Member</span></div>
+          <div><b data-i18n="comm.n3">Arnas</b><span data-i18n="comm.r3">Community Member</span></div>
         </div>
       </div>
     </div>
 
     <div class="tg-row reveal">
-      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-primary">✈️ Telegram Channel</a>
-      <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener" class="btn btn-ghost">💬 Telegram Group</a>
+      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="comm.btn1">✈️ Telegram Channel</a>
+      <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="comm.btn2">💬 Telegram Group</a>
     </div>
   </div>
 </section>
@@ -1114,13 +1189,13 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
 <section>
   <div class="container">
     <div class="cta reveal">
-      <h2>Ready to speed up your Firefox?</h2>
-      <p>Download <b>ZenFox.zip</b>, pick your file, and feel the difference in minutes.</p>
+      <h2 data-i18n="cta.h2">Ready to speed up your Firefox?</h2>
+      <p data-i18n="cta.p">Download <b>ZenFox.zip</b>, pick your file, and feel the difference in minutes.</p>
       <div class="hero-cta">
-        <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary">⬇ Download ZenFox</a>
-        <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-primary">✈️ Channel</a>
-        <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener" class="btn btn-ghost">💬 Group</a>
-        <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost">⭐ GitHub</a>
+        <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="cta.btn1">⬇ Download ZenFox</a>
+        <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="cta.btn2">✈️ Channel</a>
+        <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="cta.btn3">💬 Group</a>
+        <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="cta.btn4">⭐ GitHub</a>
       </div>
     </div>
   </div>
@@ -1131,12 +1206,12 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
   <div class="container">
     <div class="flinks">
       <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener">ZenFox</a>
-      <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener">Releases</a>
-      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener">Telegram Channel</a>
-      <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener">Telegram Group</a>
-      <a href="https://github.com/SHIMORA-6600X/ZenFox/blob/main/LICENSE" target="_blank" rel="noopener">MIT License</a>
+      <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" data-i18n="foot.releases">Releases</a>
+      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" data-i18n="foot.tgchannel">Telegram Channel</a>
+      <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener" data-i18n="foot.tggroup">Telegram Group</a>
+      <a href="https://github.com/SHIMORA-6600X/ZenFox/blob/main/LICENSE" target="_blank" rel="noopener" data-i18n="foot.license">MIT License</a>
     </div>
-    <p>Built with <span class="heart">♥</span> by <b>SHIMORA</b> · ZenFox is an open-source Firefox preset.</p>
+    <p data-i18n="foot.copy">Built with <span class="heart">♥</span> by <b>SHIMORA</b> · ZenFox is an open-source Firefox preset.</p>
   </div>
 </footer>
 
@@ -1205,14 +1280,40 @@ function splitText(el){
     wordIndex++;
   });
 }
-document.querySelectorAll('.hero .split-line').forEach(line => {
-  if (line.children.length === 0) {
-    splitText(line);
-  } else {
-    line.querySelectorAll('.grad').forEach(splitText);
-  }
-});
-document.querySelectorAll('[data-split-heading]').forEach(h => splitText(h));
+
+function splitHeroAndHeadings(){
+  document.querySelectorAll('.hero .split-line').forEach(line => {
+    if (line.children.length === 0) {
+      splitText(line);
+    } else {
+      line.querySelectorAll('.grad').forEach(splitText);
+    }
+  });
+  document.querySelectorAll('[data-split-heading]').forEach(h => splitText(h));
+}
+splitHeroAndHeadings();
+
+/* re-split after a language change so the animations still work */
+function refreshSplit(){
+  document.querySelectorAll('.hero .split-line').forEach(line => {
+    line.classList.remove('in');
+    if (line.children.length === 0) splitText(line);
+    else line.querySelectorAll('.grad').forEach(splitText);
+  });
+  document.querySelectorAll('[data-split-heading]').forEach(h => {
+    h.classList.remove('in');
+    splitText(h);
+  });
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.hero .split-line').forEach(l => l.classList.add('in'));
+    document.querySelectorAll('[data-split-heading]').forEach(h => {
+      h.querySelectorAll('.split-word').forEach((w, i) => {
+        w.style.transitionDelay = (i * 0.06) + 's';
+      });
+      h.classList.add('in');
+    });
+  });
+}
 
 /* ============================================================
    3) SCROLL REVEAL
@@ -1283,30 +1384,40 @@ if (!reducedMotion && 'IntersectionObserver' in window){
 })();
 
 /* ============================================================
-   5) TYPING
+   5) TYPING (restartable, used by the language switcher)
    ============================================================ */
-(function typing(){
+let typingTimer = null;
+function startTyping(words){
   const el = document.querySelector('.typing');
-  if (!el) return;
-  const words = JSON.parse(el.dataset.words);
+  if (!el || !words || !words.length) return;
+  clearTimeout(typingTimer);
+  el.dataset.words = JSON.stringify(words);
+
   if (reducedMotion){ el.textContent = words[0]; return; }
 
   let wi = 0, ci = 0, deleting = false;
   const typeSpeed = 60, deleteSpeed = 28, hold = 1500;
+
   function loop(){
     const w = words[wi];
     if (!deleting){
       ci++;
       el.textContent = w.slice(0, ci);
-      if (ci === w.length){ deleting = true; return setTimeout(loop, hold); }
-      return setTimeout(loop, typeSpeed);
+      if (ci === w.length){ deleting = true; typingTimer = setTimeout(loop, hold); return; }
+      typingTimer = setTimeout(loop, typeSpeed);
+      return;
     }
     ci--;
     el.textContent = w.slice(0, ci);
-    if (ci === 0){ deleting = false; wi = (wi + 1) % words.length; return setTimeout(loop, 300); }
-    return setTimeout(loop, deleteSpeed);
+    if (ci === 0){ deleting = false; wi = (wi + 1) % words.length; typingTimer = setTimeout(loop, 300); return; }
+    typingTimer = setTimeout(loop, deleteSpeed);
   }
-  setTimeout(loop, 1100);
+  typingTimer = setTimeout(loop, 1100);
+}
+(function typingInit(){
+  const el = document.querySelector('.typing');
+  if (!el) return;
+  startTyping(JSON.parse(el.dataset.words));
 })();
 
 /* ============================================================
@@ -1538,6 +1649,195 @@ window.addEventListener('keydown', e => {
     })(performance.now());
   }
 });
+
+/* ============================================================
+   16) LANGUAGE — AR / EN
+   ============================================================ */
+(function i18n(){
+  const EN_TYPING = ["speed.","performance.","snappiness.","smoothness."];
+  const AR_TYPING = ["سرعة.","أداء.","استجابة.","سلاسة."];
+
+  const AR = {
+    /* nav */
+    "nav.files":"الملفات",
+    "nav.features":"المميزات",
+    "nav.about":"عن المشروع",
+    "nav.install":"التثبيت",
+    "nav.community":"المجتمع",
+    "nav.telegram":"تليجرام",
+
+    /* hero */
+    "hero.badge":'<span class="star">★</span> مفتوح المصدر · رخصة MIT · إعداد Firefox',
+    "hero.title1":"ZenFox.",
+    "hero.title2":'<span class="grad">فايرفوكس أسرع.</span>',
+    "hero.sub1":"<b>ZenFox</b> لتصفح أسرع كل يوم",
+    "hero.sub2":"مع <b>Litefox</b> لتخفيف المتصفح، و<b>Softfox</b> لتمرير سلس، و<b>SmartFox</b> يجمع كل ذلك في ملف واحد.",
+    "hero.cta1":"استكشف الملفات",
+    "hero.cta2":"عرض على GitHub",
+    "hero.cta3":"✈️ تليجرام",
+
+    /* stats */
+    "stat.files":"ملفات الإعداد",
+    "stat.tweaks":"تعديلات مضبوطة",
+    "stat.oss":"مفتوح المصدر",
+    "stat.free":"مجاني للأبد",
+
+    /* products */
+    "prod.eyebrow":"ملفات الإعداد",
+    "prod.h2":"اختر ملف الإعداد",
+    "prod.p":'كل شيء يأتي داخل <code>ZenFox.zip</code>. اختر ملفًا واحدًا، أعد تسميته إلى <code>user.js</code>، ثم ضعه في مجلد البروفايل.',
+
+    "tab.zen":"Zenfox.js",
+    "tab.lite":"Litefox.js",
+    "tab.soft":"Softfox.js",
+    "tab.smart":"SmartFox.js",
+
+    "zen.tag":"الأداء ⚡️",
+    "zen.h3":"Zenfox.js — اجعل فايرفوكس فائق السرعة",
+    "zen.p":"إعداد يركّز على الأداء: يحسّن الاستجابة، يقلّل استهلاك المعالج، ويسرّع التصفح اليومي — الصفحات تُحمّل فورًا وتصبح بسرعة Chrome.",
+
+    "lite.tag":"تخفيف المتصفح ♻️",
+    "lite.h3":"Litefox.js — فايرفوكس بلا زوائد",
+    "lite.p":"يزيل الميزات غير الضرورية والمحتوى المموّل ليبقى فايرفوكس نظيفًا وخفيفًا وبعيدًا عن التشتيت — زوائد أقل، مهام خلفية أقل، وسرعة أكبر.",
+
+    "soft.tag":"تمرير سلس 🖌",
+    "soft.h3":"Softfox.js — تمرير ناعم على كل شاشة",
+    "soft.p":"سلوك تمرير محسّن بفيزياء مضبوطة لتجربة تصفح أكثر سلاسة — إعدادات مخصّصة لشاشات 60 و90 و120 هرتز.",
+
+    "smart.tag":"كل الإعدادات ⭐️",
+    "smart.h3":"SmartFox.js — ZenFox وLiteFox وSoftFox في ملف واحد",
+    "smart.p":"طبقة موحّدة تجمع ZenFox وLiteFox وSoftFox في حل واحد بسيط ومرن — فعّل ما تريده واحتفظ بكل شيء في ملف واحد.",
+
+    "pill.perf":"الأداء",
+    "pill.cache":"ضبط الكاش",
+    "pill.light":"خفيف",
+    "pill.mit":"MIT",
+    "pill.debloat":"إزالة الزوائد",
+    "pill.clean":"واجهة نظيفة",
+    "pill.smooth":"تمرير سلس",
+    "pill.hz":"60 / 90 / 120Hz",
+    "pill.fluid":"حركة سلسة",
+    "pill.allinone":"الكل في واحد",
+
+    "btn.download":"⬇ تحميل ZenFox.zip",
+    "btn.repo":"عرض المستودع",
+
+    /* features */
+    "feat.eyebrow":"المميزات",
+    "feat.h2":"ما الذي يقدّمه ZenFox",
+    "feat.p":'تعديلات <code>about:config</code> مضبوطة بعناية، موزّعة على أربعة ملفات متخصصة.',
+    "feat.1.t":"تحميل أسرع للصفحات",
+    "feat.1.d":"أوقات تحميل أقل لتجربة ويب أسرع وأكثر استجابة.",
+    "feat.2.t":"كاش محسّن",
+    "feat.2.d":"إعدادات كاش ذكية تقلّل وقت التحميل في التصفح اليومي.",
+    "feat.3.t":"خفيف",
+    "feat.3.d":"مصمّم ليبقى سريعًا بموارد أقل، حتى مع عشرات التبويبات المفتوحة.",
+    "feat.4.t":"توافق",
+    "feat.4.d":"أداء رسومات محسّن لكل إعداد — YouTube وNetflix وTwitch وغيرها.",
+    "feat.5.t":"تمرير سلس",
+    "feat.5.d":"إعدادات تمرير سلسة مصمّمة لشاشات 60 و90 و120 هرتز.",
+    "feat.6.t":"بلا زوائد",
+    "feat.6.d":"تصفح أنظف بعد إزالة المكوّنات والمشتتات غير المرغوبة.",
+
+    /* about */
+    "about.eyebrow":"عن المشروع",
+    "about.h2":"لماذا ZenFox؟",
+    "about.p1":'ZenFox جهد هندسي دقيق حول إعدادات فايرفوكس. بدلًا من البحث في مئات خيارات <code>about:config</code>، تضع ملفًا واحدًا وتحصل على متصفح أسرع بشكل ملحوظ.',
+    "about.p2":'<b>Zenfox.js</b> للأداء.<br><b>Litefox.js</b> لإزالة الزوائد.<br><b>Softfox.js</b> للتمرير السلس.<br><b>SmartFox.js</b> لكل ذلك في ملف واحد.',
+    "about.l1":"تحسينات الشبكة والرسم",
+    "about.l2":"إعدادات كاش ذكية وآمنة",
+    "about.l3":"استهلاك موارد أقل تحت الضغط",
+    "about.l4":"تصفح نظيف بلا زوائد أو تشتيت",
+    "about.l5":"رخصة MIT ومفتوح المصدر بالكامل",
+    "about.l6":"SmartFox.js يجمع الملفات الثلاثة في ملف واحد",
+
+    /* install */
+    "inst.eyebrow":"التثبيت",
+    "inst.h2":"جاهز في 6 خطوات",
+    "inst.p":'⚠️ خذ نسخة احتياطية من البروفايل أولًا — يمكنك التراجع دائمًا بحذف <code>user.js</code>.',
+    "inst.1.t":"أنشئ بروفايل احتياطي",
+    "inst.1.d":'افتح فايرفوكس ← <code>about:profiles</code> ← <b>Open Folder</b> بجانب Profile in use ← انسخ المجلد إلى مكان آمن.',
+    "inst.2.t":'حمّل <code>ZenFox.zip</code>',
+    "inst.2.d":"احصل على أحدث إصدار من صفحة GitHub Releases — وليس من ملفات المصدر.",
+    "inst.3.t":"اختر ملفك",
+    "inst.3.d":'فك الضغط واختر <code>zenfox.js</code> أو <code>litefox.js</code> أو <code>softfox.js</code> أو <code>smartfox.js</code>.',
+    "inst.4.t":"أغلق فايرفوكس وافتح البروفايلات",
+    "inst.4.d":'أغلق فايرفوكس تمامًا، ثم افتحه واكتب <code>about:profiles</code> في شريط العنوان.',
+    "inst.5.t":"افتح مجلد البروفايل الرئيسي",
+    "inst.5.d":'للبروفايل المطلوب، اضغط <b>Open Folder</b> بجانب Root Directory.',
+    "inst.6.t":'أعد التسمية إلى <code>user.js</code> وانسخه',
+    "inst.6.d":'أعد تسمية الملف المختار إلى <code>user.js</code> بالضبط، وانسخه داخل المجلد، ثم أعد تشغيل فايرفوكس. انتهيت.',
+
+    /* community */
+    "comm.eyebrow":"المجتمع",
+    "comm.h2":"انضم إلى مجتمع ZenFox",
+    "comm.p":"آراء وأفكار وأخبار الإصدارات من المستخدمين والداعمين للمشروع.",
+    "comm.q1":"«لم أتخيّل أن فايرفوكس يمكن أن يكون بهذه السرعة. الصفحات تُفتح فورًا والتمرير أصبح سلسًا أخيرًا على لابتوبي القديم.»",
+    "comm.n1":"A7",
+    "comm.r1":"أفكار وتجربة",
+    "comm.q2":"«المشروع والموقع كلاهما يبدو احترافيًا — ZenFox جعل المتصفح يبدو جديدًا تمامًا.»",
+    "comm.n2":"Kenjaku",
+    "comm.r2":"منشئ الموقع ودعم المشروع",
+    "comm.q3":"«ضبط الكاش وحده كان يستحق التجربة. YouTube وNetflix يفتحان الآن بدون تقطيع.»",
+    "comm.n3":"Arnas",
+    "comm.r3":"عضو في المجتمع",
+    "comm.btn1":"✈️ قناة تليجرام",
+    "comm.btn2":"💬 مجموعة تليجرام",
+
+    /* cta */
+    "cta.h2":"جاهز لتسريع فايرفوكس؟",
+    "cta.p":'حمّل <b>ZenFox.zip</b>، اختر ملفك، ولاحظ الفرق في دقائق.',
+    "cta.btn1":"⬇ تحميل ZenFox",
+    "cta.btn2":"✈️ القناة",
+    "cta.btn3":"💬 المجموعة",
+    "cta.btn4":"⭐ GitHub",
+
+    /* footer */
+    "foot.releases":"الإصدارات",
+    "foot.tgchannel":"قناة تليجرام",
+    "foot.tggroup":"مجموعة تليجرام",
+    "foot.license":"رخصة MIT",
+    "foot.copy":'صُنع بـ <span class="heart">♥</span> بواسطة <b>SHIMORA</b> · ZenFox إعداد مفتوح المصدر لفايرفوكس.'
+  };
+
+  /* keep the original English markup so nothing is lost */
+  const originals = new Map();
+  document.querySelectorAll('[data-i18n]').forEach(el => originals.set(el, el.innerHTML));
+
+  const btn = document.getElementById('langBtn');
+  const label = document.getElementById('langLabel');
+  let lang = localStorage.getItem('zenfox-lang') || 'en';
+
+  function apply(l){
+    const isAr = l === 'ar';
+    document.documentElement.setAttribute('lang', isAr ? 'ar' : 'en');
+    document.documentElement.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      const html = (isAr && AR[key]) ? AR[key] : originals.get(el);
+      if (html != null) el.innerHTML = html;
+    });
+
+    if (label) label.textContent = isAr ? 'EN' : 'ع';
+    startTyping(isAr ? AR_TYPING : EN_TYPING);
+    refreshSplit();
+  }
+
+  if (lang === 'ar'){
+    apply('ar');
+  } else {
+    document.documentElement.setAttribute('lang', 'en');
+    document.documentElement.setAttribute('dir', 'ltr');
+    if (label) label.textContent = 'ع';
+  }
+
+  btn?.addEventListener('click', () => {
+    lang = (lang === 'ar') ? 'en' : 'ar';
+    localStorage.setItem('zenfox-lang', lang);
+    apply(lang);
+  });
+})();
 </script>
 </body>
 </html>
