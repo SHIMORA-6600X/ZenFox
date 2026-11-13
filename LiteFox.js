@@ -126,11 +126,11 @@ user_pref("gfx.font_rendering.directwrite.use_gdi_table_loading", false);
 // Dropdown options in the URL bar:
 user_pref("browser.urlbar.suggest.history", false);
 user_pref("browser.urlbar.suggest.bookmark", false); // DEFAULT
-user_pref("browser.urlbar.suggest.clipboard", true);
+user_pref("browser.urlbar.suggest.clipboard", false);
 user_pref("browser.urlbar.suggest.openpage",false);
 user_pref("browser.urlbar.suggest.engines", true);
 user_pref("browser.urlbar.suggest.searches", true);
-user_pref("browser.urlbar.quickactions.enabled", true);
+user_pref("browser.urlbar.quickactions.enabled", false);
 user_pref("browser.urlbar.suggest.weather", false); // DEFAULT [FF108]
 user_pref("browser.urlbar.weather.ignoreVPN", false); // DEFAULT
 user_pref("browser.urlbar.suggest.calculator", false); // [DEFAULT FF137+]
