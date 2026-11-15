@@ -329,7 +329,7 @@ user_pref("gfx.font_rendering.directwrite.use_gdi_table_loading", false);
  * SECTION: URL BAR                                                         *
 ****************************************************************************/
 user_pref("browser.urlbar.autoFill", true); // [DEFAULT]
-user_pref("browser.urlbar.maxRichResults", 5); // default=10
+user_pref("browser.urlbar.maxRichResults", 6); // default=10
 
 /****************************************************************************
  * SECTION: AUTOPLAY                                                        *
