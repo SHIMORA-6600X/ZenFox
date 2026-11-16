@@ -34,6 +34,7 @@
 
 _To undo: delete user.js from the profile folder, then restore your backup if needed._
 
+_After Restarting I'm Recommend Installing_ _[Ublock Origin](https://github.com/gorhill/uBlock)_ _For More Privacy and Security_
 
 
 #### ✨ _Features_
