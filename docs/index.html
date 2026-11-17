@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#14121a" media="(prefers-color-scheme: dark)" />
 <meta name="theme-color" content="#f7f5fb" media="(prefers-color-scheme: light)" />
 <meta name="description" content="ZenFox — an open-source Firefox configuration preset for faster page loads, smarter caching, debloating and smoother scrolling." />
-<title>ZenFox — Firefox Performance Preset | SHIMORA</title>
+<title>ZenFox</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -828,6 +828,47 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
   .tab{padding:8px 6px; font-size:.72rem; gap:4px}
   .tab-ico{display:none}
 }
+
+/* ============================================================
+   BRAND ICONS — GitHub & Telegram (survive language switch)
+   ============================================================ */
+   .brand-github,
+.brand-telegram {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-github::before,
+.brand-telegram::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  flex: none;
+  background: currentColor;
+  -webkit-mask: var(--brand-ico) center / contain no-repeat;
+          mask: var(--brand-ico) center / contain no-repeat;
+  transition: transform .35s var(--ease-out-back);
+}
+
+.brand-github:hover::before,
+.brand-telegram:hover::before {
+  transform: scale(1.2) rotate(-10deg);
+}
+
+.brand-github {
+  --brand-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z'/%3E%3C/svg%3E");
+}
+
+.brand-telegram {
+  --brand-ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z'/%3E%3C/svg%3E");
+}
+
+/* على الموبايل: تصغير الأيقونة شوية */
+@media (max-width: 860px) {
+  .brand-github::before,
+  .brand-telegram::before { width: 14px; height: 14px; }
+}
 </style>
 </head>
 <body>
@@ -869,13 +910,13 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
       <a href="#about" data-i18n="nav.about">About</a>
       <a href="#install" data-i18n="nav.install">Install</a>
       <a href="#community" data-i18n="nav.community">Community</a>
-      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" data-i18n="nav.telegram">Telegram</a>
+      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" data-i18n="nav.telegram" class="brand-telegram">Telegram</a>
       <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme">
         <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
       </button>
       <button class="theme-toggle lang-btn" id="langBtn" aria-label="Switch language"><span id="langLabel">ع</span></button>
-      <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-primary">GitHub ★</a>
+      <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-primary brand-github">GitHub</a>
     </div>
   </div>
 </nav>
@@ -897,7 +938,7 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
   <div class="hero-cta">
     <a href="#products" class="btn btn-primary" data-i18n="hero.cta1">Explore Files</a>
     <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="hero.cta2">View on GitHub</a>
-    <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="hero.cta3">✈️ Telegram</a>
+    <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-ghost brand-telegram" data-i18n="hero.cta3">Telegram</a>
   </div>
 
   <div class="stats">
@@ -1179,8 +1220,7 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
     </div>
 
     <div class="tg-row reveal">
-      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="comm.btn1">✈️ Telegram Channel</a>
-      <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="comm.btn2">💬 Telegram Group</a>
+      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-primary brand-telegram" data-i18n="comm.btn1">Telegram Channel</a>
     </div>
   </div>
 </section>
@@ -1193,9 +1233,8 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
       <p data-i18n="cta.p">Download <b>ZenFox.zip</b>, pick your file, and feel the difference in minutes.</p>
       <div class="hero-cta">
         <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="cta.btn1">⬇ Download ZenFox</a>
-        <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-primary" data-i18n="cta.btn2">✈️ Channel</a>
-        <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="cta.btn3">💬 Group</a>
-        <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost" data-i18n="cta.btn4">⭐ GitHub</a>
+        <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" class="btn btn-primary brand-telegram" data-i18n="cta.btn2">Channel</a>
+        <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener" class="btn btn-ghost brand-github" data-i18n="cta.btn4">GitHub</a>
       </div>
     </div>
   </div>
@@ -1207,8 +1246,7 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
     <div class="flinks">
       <a href="https://github.com/SHIMORA-6600X/ZenFox" target="_blank" rel="noopener">ZenFox</a>
       <a href="https://github.com/SHIMORA-6600X/ZenFox/releases" target="_blank" rel="noopener" data-i18n="foot.releases">Releases</a>
-      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" data-i18n="foot.tgchannel">Telegram Channel</a>
-      <a href="https://t.me/Zenfox_Project" target="_blank" rel="noopener" data-i18n="foot.tggroup">Telegram Group</a>
+      <a href="https://t.me/zenfox_firefox" target="_blank" rel="noopener" data-i18n="foot.tgchannel" class="brand-telegram">Telegram Channel</a>
       <a href="https://github.com/SHIMORA-6600X/ZenFox/blob/main/LICENSE" target="_blank" rel="noopener" data-i18n="foot.license">MIT License</a>
     </div>
     <p data-i18n="foot.copy">Built with <span class="heart">♥</span> by <b>SHIMORA</b> · ZenFox is an open-source Firefox preset.</p>
@@ -1674,7 +1712,7 @@ window.addEventListener('keydown', e => {
     "hero.sub2":"مع <b>Litefox</b> لتخفيف المتصفح، و<b>Softfox</b> لتمرير سلس، و<b>SmartFox</b> يجمع كل ذلك في ملف واحد.",
     "hero.cta1":"استكشف الملفات",
     "hero.cta2":"عرض على GitHub",
-    "hero.cta3":"✈️ تليجرام",
+    "hero.cta3":"تيليجرام",
 
     /* stats */
     "stat.files":"ملفات الإعداد",
@@ -1781,16 +1819,14 @@ window.addEventListener('keydown', e => {
     "comm.q3":"«ضبط الكاش وحده كان يستحق التجربة. YouTube وNetflix يفتحان الآن بدون تقطيع.»",
     "comm.n3":"Arnas",
     "comm.r3":"عضو في المجتمع",
-    "comm.btn1":"✈️ قناة تليجرام",
-    "comm.btn2":"💬 مجموعة تليجرام",
+    "comm.btn1":" قناة تليجرام",
 
     /* cta */
     "cta.h2":"جاهز لتسريع فايرفوكس؟",
     "cta.p":'حمّل <b>ZenFox.zip</b>، اختر ملفك، ولاحظ الفرق في دقائق.',
     "cta.btn1":"⬇ تحميل ZenFox",
-    "cta.btn2":"✈️ القناة",
-    "cta.btn3":"💬 المجموعة",
-    "cta.btn4":"⭐ GitHub",
+    "cta.btn2":"القناة",
+    "cta.btn4":"GitHub",
 
     /* footer */
     "foot.releases":"الإصدارات",
