@@ -225,81 +225,6 @@ user_pref("browser.preferences.defaultPerformanceSettings.enabled", false);
 user_pref("dom.ipc.processCount.webIsolated", 1); // one process per site origin (high value)
 user_pref("dom.ipc.processCount", 8); // determine by number of CPU cores/processors
 
-/****************************************************************************
- * SECTION: MOZILLA UI                                                      *
-****************************************************************************/
-// PREF: disable Firefox from asking to set as the default browser
-user_pref("browser.shell.checkDefaultBrowser", false);
-
-// PREF: disable welcome notices
-user_pref("browser.startup.homepage_override.mstone", "ignore");
-user_pref("browser.aboutwelcome.enabled", false); // disable Intro screens
-user_pref("startup.homepage_welcome_url", "");
-user_pref("startup.homepage_welcome_url.additional", "");
-user_pref("startup.homepage_override_url", ""); // What's New page after updates
-
-// PREF: disable "What's New" toolbar icon [FF69+]
-//user_pref("browser.messaging-system.whatsNewPanel.enabled", false);
-
-// PREF: new profile switcher
-user_pref("browser.profiles.enabled", true);
-
-// PREF: use native title bar buttons [LINUX]
-user_pref("widget.gtk.non-native-titlebar-buttons.enabled", true);
-user_pref("browser.tabs.firefox-view", true);
-/****************************************************************************
- * SECTION: THEME ADJUSTMENTS                                              *
-****************************************************************************/
-
-user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
-user_pref("browser.compactmode.show", true);
-
-// PREF: preferred color scheme for websites
-// Dark (0), Light (1), System (2), Browser (3) [DEFAULT FF95+]
-user_pref("layout.css.prefers-color-scheme.content-override", 0);
-user_pref("browser.privateWindowSeparation.enabled", false);
-
-// PREF: show search bar [FF122+]
-// Mozilla has removed the search bar option from the settings window.
-user_pref("browser.search.widget.inNavBar", true);
-
-// PREF: browser scrollbar styles
-// 0 - Default
-// 1 - Thin and round, more like Chromium ones
-// 2 - Thinner than 1
-// 3 - Even thinner than 1
-// 4 - Very bold and square
-user_pref("widget.non-native-theme.scrollbar.style", 2); // [DEFAULT]
-
-/****************************************************************************
- * SECTION: AI                                                              *
-****************************************************************************/
-// PREF: AI default controls
-user_pref("browser.ai.control.default", "blocked");
-user_pref("browser.ml.enable", false);
-
-// PREF: Translations
-user_pref("browser.ai.control.translations", "blocked");
-
-// PREF: Key points in link previews
-user_pref("browser.ai.control.linkPreviewKeyPoints", "blocked");
-user_pref("browser.ml.linkPreview.enabled", false);
-
-// PREF: Chatbot in sidebar
-user_pref("browser.ai.control.sidebarChatbot", "blocked");
-user_pref("browser.ml.chat.enabled", false);
-user_pref("browser.ml.chat.menu", false);
-
-/****************************************************************************
- * SECTION: TRANSLATIONS                                                    *
-****************************************************************************/
-
-// PREF: Firefox Translations [FF118+]
-// Automated translation of web content is done locally in Firefox, so that
-// the text being translated does not leave your machine.
-// [ABOUT] Visit about:translations to translate your own text as well.
-user_pref("browser.translations.enable", true); // DEFAULT
-user_pref("browser.translations.autoTranslate", true);
 
 /****************************************************************************
  * SECTION: FULLSCREEN NOTICE                                               *
@@ -371,17 +296,6 @@ user_pref("browser.newtabpage.activity-stream.section.highlights.includeVisited"
 user_pref("browser.newtabpage.activity-stream.feeds.snippets", false); // [DEFAULT]
 
 /******************************************************************************
- * SECTION: POCKET                                                            *
-******************************************************************************/
-
-// PREF: disable built-in Pocket extension
-user_pref("extensions.pocket.enabled", false); // DEFAULT
-user_pref("extensions.pocket.api"," ");
-user_pref("extensions.pocket.oAuthConsumerKey", " ");
-user_pref("extensions.pocket.site", " ");
-user_pref("extensions.pocket.showHome", false);
-
-/******************************************************************************
  * SECTION: DOWNLOADS                                 *
 ******************************************************************************/
 user_pref("browser.download.folderList", 1); // DEFAULT
@@ -426,23 +340,3 @@ user_pref("widget.gtk.hide-pointer-while-typing.enabled", false);
 // PREF: enable Tab Previews [FF122+, FF128+]
 user_pref("browser.tabs.hoverPreview.enabled", true);
 user_pref("browser.tabs.hoverPreview.showThumbnails", true); // DEFAULT
-
-/****************************************************************************************
- * OPTION: SHARPEN SCROLLING                                                           *
-****************************************************************************************/
-// only sharpen scrolling
-user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
-user_pref("general.smoothScroll", true); // DEFAULT
-user_pref("mousewheel.min_line_scroll_amount", 10); // adjust this number to your liking; default=5
-user_pref("general.smoothScroll.mouseWheel.durationMinMS", 80); // default=50
-user_pref("general.smoothScroll.currentVelocityWeighting", "0.15"); // default=.25
-user_pref("general.smoothScroll.stopDecelerationWeighting", "0.6"); // default=.4
-
-/****************************************************************************************
- * OPTION: SMOOTH SCROLLING                                                            *
-****************************************************************************************/
-// recommended for 90hz+ displays
-user_pref("apz.overscroll.enabled", true); // DEFAULT NON-LINUX
-user_pref("general.smoothScroll", true); // DEFAULT
-user_pref("general.smoothScroll.msdPhysics.enabled", true);
-user_pref("mousewheel.default.delta_multiplier_y", 300); // 250-400; adjust this number to your liking
