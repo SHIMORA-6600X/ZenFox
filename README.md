@@ -12,10 +12,10 @@
 
 | _File_ 📂 | _Topic_ 🪄 | _Features_ ✨ |
 |------|---------|-------|
-| _`Zenfox.js`_ | _Performance_ ⚡️ | _Performance-focused configuration to improve responsiveness,reduce CPU usage,and speed up browsing_ | 
-| _`Litefox.js`_ | _Debloating_ ♻️ | _Strips unnecessary features to keep Firefox clean, lightweight, and distraction-free_ |
-| _`Softfox.js`_ | _Smooth Scrolling_ 🖌 | _Enhances scrolling behavior for a smoother and more fluid browsing experience_ | 
-| _`SmartFox.js`_ | _All Settings_ ⭐️  | _SmartFox.js is a unified layer that combines ZenFox, LiteFox, and SoftFox into one simple, flexible solution_ |
+| _[`Zenfox.js`](https://github.com/SHIMORA-6600X/ZenFox/blob/main/user.js)_ | _Performance_ ⚡️ | _Performance-focused configuration to improve responsiveness,reduce CPU usage,and speed up browsing_ | 
+| _[`Litefox.js`](https://github.com/SHIMORA-6600X/ZenFox/blob/main/LiteFox.js)_ | _Debloating_ ♻️ | _Strips unnecessary features to keep Firefox clean, lightweight, and distraction-free_ |
+| _[`Softfox.js`](https://github.com/SHIMORA-6600X/ZenFox/blob/main/Softfox.js)_ | _Smooth Scrolling_ 🖌 | _Enhances scrolling behavior for a smoother and more fluid browsing experience_ | 
+| _[`SmartFox.js`](https://github.com/SHIMORA-6600X/ZenFox/blob/main/SmartFox.js)_ | _All Settings_ ⭐️  | _SmartFox.js is a unified layer that combines ZenFox, LiteFox, and SoftFox into one simple, flexible solution_ |
   ###  _Installation_ 
   
    _Back up first: open Firefox → type about:profiles → click Open Folder next to Profile in use → copy that folder somewhere safe._
