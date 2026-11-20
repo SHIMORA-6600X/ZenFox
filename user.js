@@ -61,8 +61,10 @@ user_pref("gfx.canvas.max-size", 65535); // [DEFAULT FF152]
 /****************************************************************************
  * SECTION: JAVASCRIPT OPTIONS                                              *
 ****************************************************************************/
+
 user_pref("javascript.options.baselinejit.threshold", 50); // default=100
 user_pref("javascript.options.ion.threshold", 1500); // DEFAULT
+
 /****************************************************************************
  * SECTION: DISK CACHE                                                     *
 ****************************************************************************/
