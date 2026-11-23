@@ -9,7 +9,8 @@
 <title>ZenFox</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"></noscript>
 <style>
 /* ============================================================
    1) THEME TOKENS
@@ -26,6 +27,7 @@
   --blob-1:#b8a9ff; --blob-2:#ffb4c8;
   --btn-text:#14121a;
   --preloader-bg:#14121a;
+  --aur-1:#cba6f7; --aur-2:#89b4fa; --aur-3:#94e2d5; --aur-4:#f5c2e7; --aur-s:24%; /* Mocha: mauve, blue, teal, pink */
 }
 :root[data-theme="light"]{
   --bg:#f7f5fb; --bg-soft:#efeaf7; --card:#ffffff; --card-2:#f3eefb;
@@ -39,6 +41,7 @@
   --blob-1:#c7b6ff; --blob-2:#ffc2d6;
   --btn-text:#ffffff;
   --preloader-bg:#f7f5fb;
+  --aur-1:#8839ef; --aur-2:#1e66f5; --aur-3:#179299; --aur-4:#ea76cb; --aur-s:11%; /* Latte */
 }
 
 /* shared easings */
@@ -58,7 +61,6 @@ body{
   background:var(--bg); color:var(--text); line-height:1.7;
   overflow-x:hidden; -webkit-font-smoothing:antialiased;
   transition:background .4s ease,color .4s ease;
-  transform:translateZ(0);
 }
 body.locked{overflow:hidden}
 img,svg{display:block;max-width:100%}
@@ -71,11 +73,26 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .preloader{
   position:fixed; inset:0; z-index:9999;
   display:grid; place-items:center;
-  background:var(--preloader-bg);
-  transition:opacity .55s var(--ease-out-expo), visibility .55s;
+  transition:visibility 0s linear .95s;
+  animation:preFailsafe .01s linear 6s forwards;
 }
-.preloader.done{opacity:0; visibility:hidden; pointer-events:none}
-.preloader-inner{display:flex; flex-direction:column; align-items:center; gap:26px}
+@keyframes preFailsafe{to{visibility:hidden; opacity:0; pointer-events:none}}
+.preloader::before,.preloader::after{
+  content:""; position:absolute; left:0; right:0; height:50.5%;
+  background:var(--preloader-bg);
+  transition:transform .9s cubic-bezier(.76,0,.18,1);
+}
+.preloader::before{top:0}
+.preloader::after{bottom:0}
+.preloader.done{visibility:hidden; pointer-events:none}
+.preloader.done::before{transform:translateY(-101%)}
+.preloader.done::after{transform:translateY(101%)}
+.preloader-inner{
+  position:relative; z-index:1;
+  display:flex; flex-direction:column; align-items:center; gap:20px;
+  transition:opacity .35s ease, transform .6s var(--ease-out-expo);
+}
+.preloader.done .preloader-inner{opacity:0; transform:scale(.94)}
 .pre-logo{
   font-weight:900; font-size:1.9rem; letter-spacing:6px;
   background:linear-gradient(90deg,var(--accent),var(--accent-2),var(--accent-3),var(--accent));
@@ -88,16 +105,18 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   to{opacity:1; letter-spacing:6px; filter:blur(0)}
 }
 .pre-bar{
-  width:200px; height:2px; background:var(--border); border-radius:2px; overflow:hidden;
-  position:relative;
+  width:220px; height:2px; background:var(--border-strong); border-radius:2px; overflow:hidden;
+  position:relative; direction:ltr;
 }
 .pre-bar::after{
   content:""; position:absolute; inset:0;
   background:linear-gradient(90deg,var(--accent),var(--accent-2));
-  transform:scaleX(0); transform-origin:left;
-  animation:preFill 1.1s var(--ease-out-expo) .2s forwards;
+  transform:scaleX(var(--p,0)); transform-origin:left;
 }
-@keyframes preFill{to{transform:scaleX(1)}}
+.pre-count{
+  direction:ltr; font-variant-numeric:tabular-nums;
+  font-size:.78rem; font-weight:600; letter-spacing:2px; color:var(--muted);
+}
 
 /* ============================================================
    4) SCROLL PROGRESS
@@ -118,44 +137,30 @@ button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
    5) BACKGROUND LAYERS
    ============================================================ */
 .bg-layer{
-  position:fixed; inset:0; z-index:-2; pointer-events:none;
+  position:fixed; inset:0; z-index:-2; pointer-events:none; overflow:hidden;
+}
+.bg-layer::before,.bg-layer::after{
+  content:""; position:absolute; inset:-30%; will-change:transform;
+}
+.bg-layer::before{
   background:
-    radial-gradient(60vw 60vw at 12% 8%,  color-mix(in srgb, var(--blob-1) 40%, transparent) 0%, transparent 60%),
-    radial-gradient(55vw 55vw at 88% 92%, color-mix(in srgb, var(--blob-2) 38%, transparent) 0%, transparent 60%);
-  opacity:.55;
-  transition:opacity .4s;
+    radial-gradient(38% 34% at 22% 28%, color-mix(in srgb, var(--aur-1) var(--aur-s), transparent), transparent 70%),
+    radial-gradient(34% 30% at 78% 22%, color-mix(in srgb, var(--aur-2) var(--aur-s), transparent), transparent 70%);
+  animation:auroraA 38s ease-in-out infinite alternate;
 }
-.bg-blob{display:none}
-@media (hover:hover) and (pointer:fine) and (min-width:900px){
-  .bg-layer{opacity:.35}
-  .bg-blob{
-    display:block; position:fixed; z-index:-1; pointer-events:none;
-    width:520px; height:520px; border-radius:50%;
-    filter:blur(90px); opacity:.35; will-change:transform;
-  }
-  .bg-blob.b1{background:var(--blob-1); top:-180px; left:-140px; animation:floatA 22s ease-in-out infinite}
-  .bg-blob.b2{background:var(--blob-2); bottom:-160px; right:-120px; animation:floatA 28s ease-in-out infinite reverse}
+.bg-layer::after{
+  background:
+    radial-gradient(36% 32% at 72% 78%, color-mix(in srgb, var(--aur-3) var(--aur-s), transparent), transparent 70%),
+    radial-gradient(32% 30% at 20% 82%, color-mix(in srgb, var(--aur-4) var(--aur-s), transparent), transparent 70%);
+  animation:auroraB 46s ease-in-out infinite alternate;
 }
-@keyframes floatA{
-  0%,100%{transform:translate3d(0,0,0) scale(1)}
-  50%{transform:translate3d(30px,-40px,0) scale(1.06)}
+@keyframes auroraA{
+  from{transform:translate3d(-4%,-3%,0) rotate(-6deg) scale(1)}
+  to{transform:translate3d(5%,4%,0) rotate(7deg) scale(1.12)}
 }
-
-/* ============================================================
-   6) CURSOR SPOTLIGHT (desktop only)
-   ============================================================ */
-.spotlight{
-  display:none;
-  position:fixed; top:0; left:0; z-index:-1; pointer-events:none;
-  width:600px; height:600px; border-radius:50%;
-  background:radial-gradient(circle, color-mix(in srgb,var(--accent) 18%,transparent) 0%, transparent 55%);
-  transform:translate3d(-50%,-50%,0);
-  opacity:0; transition:opacity .5s;
-  will-change:transform;
-}
-@media (hover:hover) and (pointer:fine){
-  .spotlight{display:block}
-  body:hover .spotlight{opacity:1}
+@keyframes auroraB{
+  from{transform:translate3d(4%,3%,0) rotate(5deg) scale(1.08)}
+  to{transform:translate3d(-5%,-4%,0) rotate(-8deg) scale(1)}
 }
 
 /* ============================================================
@@ -311,10 +316,11 @@ nav.hidden{transform:translateY(-105%)}
   display:inline-block;
   transform:translateY(110%) rotate(4deg);
   opacity:0;
-  transition:transform .9s var(--ease-out-expo), opacity .6s ease;
-  will-change:transform, opacity;
+  filter:blur(10px);
+  transition:transform .9s var(--ease-out-expo), opacity .6s ease, filter .8s ease;
+  will-change:transform, opacity, filter;
 }
-.split-line.in .split-word{transform:translateY(0) rotate(0); opacity:1}
+.split-line.in .split-word{transform:translateY(0) rotate(0); opacity:1; filter:blur(0)}
 
 .hero .sub{
   max-width:640px; margin:24px auto 36px; color:var(--muted);
@@ -322,6 +328,7 @@ nav.hidden{transform:translateY(-105%)}
   opacity:0; animation:fadeUp .8s var(--ease-out-expo) .55s forwards;
 }
 .hero .sub b{color:var(--text); font-weight:600}
+.hero .compat{display:block; margin-top:12px; font-size:.92rem}
 .typing{
   display:inline-block; font-weight:600;
   background:linear-gradient(90deg,var(--accent),var(--accent-2));
@@ -379,6 +386,7 @@ nav.hidden{transform:translateY(-105%)}
 .marquee-item:hover{color:var(--text)}
 .marquee-item:hover::before{transform:rotate(180deg) scale(1.3)}
 @keyframes scrollX{from{transform:translateX(0)} to{transform:translateX(-50%)}}
+.marquee{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent); mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
 
 /* ============================================================
    11) SECTIONS
@@ -690,16 +698,18 @@ footer a:hover::after{transform:scaleX(1)}
 footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s ease-in-out infinite}
 @keyframes beat{0%,100%{transform:scale(1)} 25%{transform:scale(1.2)} 45%{transform:scale(1)}}
 
+::view-transition-old(root),::view-transition-new(root){animation:none; mix-blend-mode:normal}
+
 /* ============================================================
    20) REVEAL SYSTEM
    ============================================================ */
 .reveal{
-  opacity:0; transform:translateY(32px);
-  transition:opacity .8s var(--ease-out-expo), transform .8s var(--ease-out-expo), filter .8s;
+  opacity:0; transform:translateY(36px) scale(.97);
+  transition:opacity .9s var(--ease-out-expo), transform 1s var(--ease-out-expo), filter .9s;
   filter:blur(6px);
   will-change:opacity, transform, filter;
 }
-.reveal.in{opacity:1; transform:translateY(0); filter:blur(0); will-change:auto}
+.reveal.in{opacity:1; transform:translateY(0) scale(1); filter:blur(0); will-change:auto}
 
 .reveal-scale{opacity:0; transform:scale(.92) translateY(20px); filter:blur(4px)}
 .reveal-scale.in{opacity:1; transform:scale(1) translateY(0); filter:blur(0)}
@@ -748,11 +758,10 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
       background:color-mix(in srgb, var(--bg) 94%, transparent)}
   .codebox{box-shadow:none}
   .card:hover,.quote:hover,.step:hover{transform:none}
-  .spotlight{display:none !important}
 
   .hero h1 .grad{animation:none; background-size:100% 100%}
   .marquee-track{animation-duration:24s}
-  .bg-layer{opacity:.4}
+  .bg-layer::after{display:none}
   .cta{animation:none}
 
   section{padding:72px 0}
@@ -788,11 +797,10 @@ footer .heart{color:var(--accent-2); display:inline-block; animation:beat 1.6s e
     scroll-behavior:auto !important;
   }
   .reveal,.reveal-scale,.reveal-fade{opacity:1 !important; transform:none !important; filter:none !important}
-  .split-word{transform:none !important; opacity:1 !important}
+  .split-word{transform:none !important; opacity:1 !important; filter:none !important}
   .marquee-track{animation:none}
   .bg-blob{display:none}
   .preloader{display:none}
-  .spotlight{display:none !important}
   .cta{animation:none}
 }
 
@@ -888,6 +896,7 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
   <div class="preloader-inner">
     <div class="pre-logo">ZENFOX</div>
     <div class="pre-bar"></div>
+    <div class="pre-count"><span id="preCount">0</span>%</div>
   </div>
 </div>
 
@@ -896,9 +905,6 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
 
 <!-- BACKGROUND -->
 <div class="bg-layer"></div>
-<div class="bg-blob b1" aria-hidden="true"></div>
-<div class="bg-blob b2" aria-hidden="true"></div>
-<div class="spotlight" id="spotlight" aria-hidden="true"></div>
 
 <!-- ================= NAV ================= -->
 <nav id="nav">
@@ -933,6 +939,7 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
   <p class="sub">
     <span data-i18n="hero.sub1"><b>ZenFox</b> for everyday</span> <span class="typing" data-words='["speed.","performance.","snappiness.","smoothness."]'></span><br>
     <span data-i18n="hero.sub2">Plus <b>Litefox</b> to debloat and <b>Softfox</b> for buttery scrolling.</span>
+    <span class="compat" data-i18n="hero.compat">Also works with Firefox forks like <b>Zen Browser</b>, <b>LibreWolf</b> and <b>Mullvad Browser</b>.</span>
   </p>
 
   <div class="hero-cta">
@@ -1147,6 +1154,7 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
           <li><span class="tick">✓</span> <span data-i18n="about.l4">De-bloated, distraction-free browsing</span></li>
           <li><span class="tick">✓</span> <span data-i18n="about.l5">MIT licensed &amp; fully open source</span></li>
           <li><span class="tick">✓</span> <span data-i18n="about.l6">SmartFox.js combines all three files into one</span></li>
+          <li><span class="tick">✓</span> <span data-i18n="about.l7">Works with Firefox forks: Zen Browser, LibreWolf and Mullvad Browser</span></li>
         </ul>
       </div>
 
@@ -1269,6 +1277,10 @@ html[dir="rtl"] .switch-tabs[data-active="smart"]::before{transform:translateX(c
 const canHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
 const isMobile = matchMedia('(max-width: 860px)').matches;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store = {
+  get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } },
+  set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+};
 const root = document.documentElement;
 
 const easeOutExpo = t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
@@ -1284,20 +1296,45 @@ const easeOutBack = t => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math
 
   document.body.classList.add('locked');
 
+  const bar = el.querySelector('.pre-bar');
+  const num = document.getElementById('preCount');
+  let shown = 0, ready = false, done = false, raf = 0;
+  const t0 = performance.now();
+
+  const paint = v => {
+    num.textContent = Math.round(v);
+    bar.style.setProperty('--p', (v / 100).toFixed(3));
+  };
+
   const finish = () => {
+    if (done) return;
+    done = true;
+    cancelAnimationFrame(raf);
+    paint(100);
     el.classList.add('done');
     document.body.classList.remove('locked');
-    setTimeout(() => document.querySelectorAll('.hero .split-line').forEach(l => l.classList.add('in')), 80);
-    setTimeout(() => el.remove(), 800);
+    setTimeout(() => document.querySelectorAll('.hero .split-line').forEach(l => l.classList.add('in')), 350);
+    setTimeout(() => el.remove(), 1100);
   };
+
+  /* counter creeps toward 90% while loading, then runs to 100% */
+  const tick = now => {
+    const t = Math.min((now - t0) / 1200, 1);
+    const target = ready ? 100 : 90 * (1 - Math.pow(1 - t, 3));
+    shown += (target - shown) * 0.16;
+    if (ready && shown > 99.5) return finish();
+    paint(shown);
+    raf = requestAnimationFrame(tick);
+  };
+  raf = requestAnimationFrame(tick);
 
   const minWait = new Promise(r => setTimeout(r, 900));
   const pageLoad = new Promise(r => {
     if (document.readyState === 'complete') r();
     else window.addEventListener('load', r, { once: true });
   });
-  Promise.all([minWait, pageLoad]).then(finish);
-  setTimeout(finish, 2500);
+  Promise.all([minWait, pageLoad]).then(() => { ready = true; });
+  setTimeout(finish, 3000);
 })();
 
 /* ============================================================
@@ -1473,10 +1510,10 @@ function startTyping(words){
    ============================================================ */
 (function theme(){
   const btn = document.getElementById('themeBtn');
-  const saved = localStorage.getItem('shimora-theme');
+  const saved = store.get('shimora-theme');
 
   // 🌙 Dark is ALWAYS the default — saved user choice wins if exists
-  root.setAttribute('data-theme', saved || 'dark');
+  root.setAttribute('data-theme', (saved === 'light' || saved === 'dark') ? saved : 'dark');
 
   function syncMeta(){
     const theme = root.getAttribute('data-theme');
@@ -1490,9 +1527,21 @@ function startTyping(words){
 
   btn?.addEventListener('click', () => {
     const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('shimora-theme', next);
-    syncMeta();
+    const apply = () => {
+      root.setAttribute('data-theme', next);
+      store.set('shimora-theme', next);
+      syncMeta();
+    };
+    if (!document.startViewTransition || reducedMotion) return apply();
+    const r = btn.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    document.startViewTransition(apply).ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 750, easing: 'cubic-bezier(.16,1,.3,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(() => {});
   });
 })();
 
@@ -1562,30 +1611,6 @@ if (canHover && !reducedMotion){
     });
   });
 }
-
-/* ============================================================
-   11) CURSOR SPOTLIGHT (desktop)
-   ============================================================ */
-(function spotlight(){
-  const el = document.getElementById('spotlight');
-  if (!el || !canHover || reducedMotion) return;
-  let x = window.innerWidth / 2, y = window.innerHeight / 2;
-  let tx = x, ty = y;
-  let running = false;
-
-  window.addEventListener('mousemove', e => {
-    tx = e.clientX; ty = e.clientY;
-    if (!running){ running = true; loop(); }
-  }, { passive: true });
-
-  function loop(){
-    x += (tx - x) * 0.12;
-    y += (ty - y) * 0.12;
-    el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
-    if (Math.abs(tx - x) > 0.5 || Math.abs(ty - y) > 0.5) requestAnimationFrame(loop);
-    else running = false;
-  }
-})();
 
 /* ============================================================
    12) SCROLL — progress + nav + back-to-top
@@ -1788,6 +1813,8 @@ window.addEventListener('keydown', e => {
     "about.l4":"تصفح نظيف بلا زوائد أو تشتيت",
     "about.l5":"رخصة MIT ومفتوح المصدر بالكامل",
     "about.l6":"SmartFox.js يجمع الملفات الثلاثة في ملف واحد",
+    "about.l7":"يدعم مشتقات Firefox مثل Zen Browser وLibreWolf وMullvad Browser",
+    "hero.compat":"ويعمل أيضاً مع مشتقات Firefox مثل <b>Zen Browser</b> و<b>LibreWolf</b> و<b>Mullvad Browser</b>.",
 
     /* install */
     "inst.eyebrow":"التثبيت",
@@ -1842,7 +1869,7 @@ window.addEventListener('keydown', e => {
 
   const btn = document.getElementById('langBtn');
   const label = document.getElementById('langLabel');
-  let lang = localStorage.getItem('zenfox-lang') || 'en';
+  let lang = store.get('zenfox-lang') === 'ar' ? 'ar' : 'en';
 
   function apply(l){
     const isAr = l === 'ar';
@@ -1870,7 +1897,7 @@ window.addEventListener('keydown', e => {
 
   btn?.addEventListener('click', () => {
     lang = (lang === 'ar') ? 'en' : 'ar';
-    localStorage.setItem('zenfox-lang', lang);
+    store.set('zenfox-lang', lang);
     apply(lang);
   });
 })();
