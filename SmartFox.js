@@ -4,7 +4,7 @@
  * "SHIMORA"                                                                     *
  * priority: Better Browsing                                                           *
  * version: 157                                                                         *
- * url: https://github.com/SHIMORA-6600X/ZenFox      
+ * url: https://github.com/SHIMORA-6600X/SwiftFox
  * License: MIT
  ***************************************************************************************/
 
