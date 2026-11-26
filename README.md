@@ -1,7 +1,7 @@
-## ZenFox 
+##  SwiftFox 
 
  <!-- Telegram -->
-  <a href="https://t.me/zenfox_firefox"><img src="https://img.shields.io/badge/TELEGRAM-000000?style=for-the-badge&logo=telegram&logoColor=sky" alt="Telegram"/></a>
+  <a href="https://t.me/SwiftFox_firefox"><img src="https://img.shields.io/badge/TELEGRAM-000000?style=for-the-badge&logo=telegram&logoColor=sky" alt="Telegram"/></a>
 </p>
 
 [about:config](https://support.mozilla.org/en-US/kb/about-config-editor-firefox) tweaks for [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new/).
@@ -12,10 +12,12 @@
 
 | _File_ 📂 | _Topic_ 🪄 | _Features_ ✨ |
 |------|---------|-------|
-| _[`Zenfox.js`](https://github.com/SHIMORA-6600X/ZenFox/blob/main/user.js)_ | _Performance_ ⚡️ | _Performance-focused configuration to improve responsiveness,reduce CPU usage,and speed up browsing_ | 
-| _[`Litefox.js`](https://github.com/SHIMORA-6600X/ZenFox/blob/main/LiteFox.js)_ | _Debloating_ ♻️ | _Strips unnecessary features to keep Firefox clean, lightweight, and distraction-free_ |
-| _[`Softfox.js`](https://github.com/SHIMORA-6600X/ZenFox/blob/main/Softfox.js)_ | _Smooth Scrolling_ 🖌 | _Enhances scrolling behavior for a smoother and more fluid browsing experience_ | 
-| _[`SmartFox.js`](https://github.com/SHIMORA-6600X/ZenFox/blob/main/SmartFox.js)_ | _All Settings_ ⭐️  | _SmartFox.js is a unified layer that combines ZenFox, LiteFox, and SoftFox into one simple, flexible solution_ |
+| _[`SwiftFox.js`](https://github.com/SHIMORA-6600X/SwiftFox/blob/main/user.js)_ | _Performance_ ⚡️ | _Performance-focused configuration to improve responsiveness,reduce CPU usage,and speed up browsing_ | 
+| _[`Litefox.js`](https://github.com/SHIMORA-6600X/SwiftFox/blob/main/LiteFox.js)_ | _Debloating_ ♻️ | _Strips unnecessary features to keep Firefox clean, lightweight, and distraction-free_ |
+| _[`Softfox.js`](https://github.com/SHIMORA-6600X/SwiftFox/blob/main/Softfox.js)_ | _Smooth Scrolling_ 🖌 | _Enhances scrolling behavior for a smoother and more fluid browsing experience_ | 
+| _[`SmartFox.js`](https://github.com/SHIMORA-6600X/SwiftFox/blob/main/SmartFox.js)_ | _All Settings_ ⭐️  | _SmartFox.js is a unified layer that combines ZenFox, LiteFox, and SoftFox into one simple, flexible solution_ |
+
+
   ###  _Installation_ 
   
    _Back up first: open Firefox → type about:profiles → click Open Folder next to Profile in use → copy that folder somewhere safe._
@@ -34,8 +36,11 @@
 
 _To undo: delete user.js from the profile folder, then restore your backup if needed._
 
-_After Restarting I'm Recommend Installing_ _[Ublock Origin](https://github.com/gorhill/uBlock)_ _For More Privacy and Security_
+### _Note_
 
+_I'm Recommend Installing_ _[Ublock Origin](https://github.com/gorhill/uBlock)_ _For More Privacy and Security_
+
+_I'm Recommend Installing_ _[NoScript](https://github.com/hackademix/noscript)_ _If You Are a Advanced User_
 
 #### ✨ _Features_
 
@@ -58,8 +63,8 @@ _After Restarting I'm Recommend Installing_ _[Ublock Origin](https://github.com/
 _If you like my project please leave a star_ ⭐ 
 
 #### 🌹 _SPECIAL THANKS FOR_ 
-[A7](https://github.com/A7md70242602GH)
-_gives me some ideas & testing the project_
+[A7MD](https://github.com/A7md70242602GH)
+_testing the project & Helping me to Improve The Project_
 
 [Kenjaku](https://github.com/kenjaku-dev)
 _helps me to make a website for my project_
